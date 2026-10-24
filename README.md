@@ -12,6 +12,10 @@
 - 사용자 제공 실행 결과: 2026-10-24 v2.6 / PostgreSQL 16.15 / 63개 검사 PASS. 원본 JSON은 사용자 컴퓨터에 있으며 저장소에 업로드된 증거는 아닙니다.
 - 앱 화면·실제 OIDC·외부 제품 연동·운영 배포는 완료되지 않았습니다.
 
+## 앱 구현 시작
+
+[Flutter 앱 0.1.0](apps/church-os/README.md)에 첫 화면과 앱 내 관리자 시연 흐름을 추가했습니다. 실제 API는 미연결이고 Flutter 분석·테스트·실기기 검증은 NOT_RUN입니다. 준비 스크립트는 Android/iOS만 생성합니다.
+
 ## 후속 전체 운영 기획
 
 [일곱 제품 운영 시나리오 v1.4](docs/operations/ecosystem-v1/OPERATING_SCENARIOS.md)에 교회 개설부터 개인 활동·교육·철회·탈퇴·장애까지 23개 시나리오와 유지·제거·분리 처분을 정리했습니다. [도입 유형·Academy 참여 교회·전 제품 CHGO 관계](docs/operations/ecosystem-v1/PRODUCT_RELATIONSHIPS.md)를 함께 따릅니다. 신규 제안은 제공자 계약·구현·실행 검증 전이며, v2.6 검증 스냅샷은 변경하지 않습니다.

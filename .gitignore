@@ -28,3 +28,12 @@ evidence/local/
 # Disposable canonical verification evidence
 canonical/ChurchOS_API_DB_Evidence*/
 canonical/ChurchOS_Runtime_Evidence*/
+
+# Flutter generated local files
+.dart_tool/
+.flutter-plugins-dependencies
+android/local.properties
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh

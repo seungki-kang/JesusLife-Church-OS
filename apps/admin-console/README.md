@@ -1,5 +1,5 @@
-# Admin Console
+# 관리자 웹 예약 영역 — 비활성
 
-Future tenant and platform administration surface.
-
-Status: RESERVED FOR CONTROLLED ADMISSION
+ChurchOS는 앱 전용으로 운영한다. 이 과거 예약 영역에는 관리자 웹을 구현하지 않는다.
+교회 관리자 기능은 `apps/church-os` Flutter 앱의 역할별 화면으로 제공한다.
+플랫폼 기반 운영 도구가 필요해도 교회의 기본 업무를 그 도구에 의존시키지 않는다.
