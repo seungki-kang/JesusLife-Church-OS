@@ -1,0 +1,7 @@
+interface:
+  display_name: "ChurchOS 설계 검토 · grill-with-docs"
+  short_description: "ChurchOS 설계를 질문으로 검토하고 용어와 결정 문서를 함께 갱신합니다."
+  default_prompt: "Use $grill-with-docs to review ChurchOS design, ask only unresolved decisions in Korean, and update the glossary and decision records."
+
+policy:
+  allow_implicit_invocation: false

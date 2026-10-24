@@ -35,3 +35,7 @@
 루트의 기존 `docs/`, `api/`, `db/` 등은 과거 자료와 기존 DB 계보로 보존합니다. 현재 제품 방향은 후속 운영 v1.4·상세 v1.5가 우선하고, v2.6은 구현 상태와 과거 검증 근거로 보존합니다. 과거 API·DB가 현재 구현과 호환된다는 뜻은 아닙니다. 기존 DB와 정본 DB는 계보가 다르므로 마이그레이션을 합치거나 덮어쓰지 않습니다. 자세한 경계는 [통합 기록](docs/reviews/2026-10-24-canonical-v2.6-integration.md)을 따릅니다.
 
 기존 CHGO 분리 이력: [Repository split record](docs/governance/Repository_Split_Record_2026-10-17.md).
+
+## Codex 작업 지침과 스킬
+
+[AGENTS.md](AGENTS.md)와 [단계별 스킬 정책](docs/development/SKILL_USAGE.md)을 따릅니다. `.agents/skills/grill-with-docs`에 ChurchOS 맞춤 설계 인터뷰 스킬을 추가했습니다. 용어는 [GLOSSARY.md](GLOSSARY.md), 결정은 [설계 결정 기록](docs/decisions/DESIGN_DECISIONS.md)에 누적합니다.
