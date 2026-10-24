@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 if (-not (Get-Command flutter -ErrorAction SilentlyContinue)) {
   throw 'Flutter 명령을 찾지 못했습니다. Flutter가 설정된 VS Code 터미널에서 실행하세요.'

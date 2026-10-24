@@ -27,6 +27,8 @@ void main() {
     await tester.tap(find.byKey(const Key('church-admin')));
     await tester.pumpAndSettle();
     expect(find.byType(AdminPreview), findsOneWidget);
+    await tester.drag(find.byType(ListView).last, const Offset(0, -600));
+    await tester.pumpAndSettle();
     expect(find.textContaining('개인 기도수첩·생명일기'), findsOneWidget);
   });
 
