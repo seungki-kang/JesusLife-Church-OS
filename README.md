@@ -50,3 +50,5 @@
 [공통 인증 제공자·제품별 로그인 현황](docs/operations/ecosystem-v1/AUTH_PROVIDER_AND_PRODUCT_INVENTORY.md)에 로컬 저장소 조사 근거와 인증 연결 과제를 정리했습니다. 실제 공통 제공자는 미확인이며 기존 로컬 기록 연결·제품별 토큰/권한 계약을 먼저 확인합니다. 코드 변경·실제 연동 검증은 수행하지 않았습니다.
 
 [설계 검토 변경 요약·GitHub 저장 전 확인본](docs/reviews/2026-10-24-design-review-save-summary.md)에 확정/OPEN·교회 개설 기준·수정 파일·검증/저장 범위를 모았습니다. JLBible·JLAcademy 저장소와 운영 공통 인증 서버 유무는 미확인으로 유지합니다.
+
+[교회 개설부터 탈퇴까지 통합 운영 점검](docs/operations/ecosystem-v1/END_TO_END_OPERATIONS_REVIEW.md)에 정상 흐름과 16개 예외·경합 검증 명세, 기존 미결의 우선순위를 연결했습니다. 문서 검토이며 실제 실행은 NOT_RUN입니다.
