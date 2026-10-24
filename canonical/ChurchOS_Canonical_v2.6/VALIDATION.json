@@ -1,0 +1,56 @@
+{
+  "artifact": "ChurchOS_Canonical_v2.6",
+  "design_status": "ACTIVE_DESIGN_BASELINE",
+  "basis": "2026-10-24 user direction",
+  "source_zip_sha256": "caf4218fe1f6e8ec0c7599e15a2314921007787938b6d2d66ad2425e51830200",
+  "static_validation": "PASS",
+  "regression": {
+    "passed": 24,
+    "failed": 0,
+    "scope": "Python structural/schema/evidence/response-contract tests"
+  },
+  "original_V001_V012": "BYTE_IDENTICAL",
+  "postgresql16_clean_apply": "V001_V014_USER_PASS; V015_NOT_RUN",
+  "db_security_tests": "PRIOR_BASELINE_USER_PASS; V015_REEXECUTION_NOT_RUN",
+  "backup_restore": "PRIOR_BASELINE_USER_PASS; V015_REEXECUTION_NOT_RUN",
+  "service_runtime": "HTTP_TEST_PASS; LIFECYCLE_DATABASE_NOT_RUN",
+  "external_provider_contracts": "CONSUMER_REQUIREMENTS_ONLY",
+  "app_device_tests": "NOT_RUN",
+  "pilot": "NOT_RUN",
+  "github_main_modified": false,
+  "release_state": "NOT_RELEASED",
+  "limitations": [
+    "Structural validation is not a full OpenAPI semantic validator or PostgreSQL execution.",
+    "Provider contracts require agreement and implementation in six independent products.",
+    "Existing GitHub migration lineage must be investigated before adoption."
+  ],
+  "workflow_execution": "NOT_RUN_ON_GITHUB",
+  "db_lineage": "DISTINCT_FROM_LEGACY; DEPLOYED_HISTORY_UNKNOWN",
+  "db_preflight": "SEE_USER_VERIFIED_V2_2_SUMMARY",
+  "source_v2_0_zip_sha256": "8035eb37cac6adc39db4d58279a7531e849a5e3a99c7cbd5b51ca713fa1e359e",
+  "sql_grammar": "PASS_21_FILES_POSTGRESQL_16_1_PARSER",
+  "docker_launcher": "NOT_RUN",
+  "source_v2_1_zip_sha256": "df58a699e7030366c10e4bb214be53a7e7155b7e4c7fd19d25fb3af49f95430f",
+  "compose_yaml_structure": "PASS",
+  "powershell_launcher": "NOT_RUN",
+  "server_http_tests": {
+    "passed": 80,
+    "failed": 0,
+    "scope": "HTTP/lifecycle policy/transaction test doubles/evidence assessor"
+  },
+  "server_database_integration": "V2_5_USER_PASS_41; V2_6_LIFECYCLE_NOT_RUN",
+  "external_oidc": "NOT_RUN",
+  "server_build": "PASS",
+  "server_npm_ci": "PASS",
+  "server_http_test_total": 80,
+  "npm_audit": {
+    "total": 0,
+    "scope": "ALL_DEPENDENCIES",
+    "checked_on": "2026-10-24"
+  },
+  "fastify_override": "5.12.7",
+  "nestjs_major": 11,
+  "integration_planned_steps": 63,
+  "integration_launcher": "COMPILED; DOCKER_NOT_RUN",
+  "integration_preflight": "PASS_MISSING_PREREQUISITES_RETURNS_2"
+}

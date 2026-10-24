@@ -1,0 +1,17 @@
+version: 2.0.0
+scope: ChurchOS_ONLY
+app: apps/church-app
+backend: services/church-core
+source_of_truth:
+  openapi: api/openapi/church-os-v1.yaml
+  events: events/schemas
+  database: db/migrations
+  brand: white-label/brand-config.schema.json
+external_products:
+- NEORANG_NARANG
+- LIFE_DIARY
+- JLPRAYER
+- JLBIBLE
+- JLACADEMY
+- CHGO
+cross_product_database_access: false

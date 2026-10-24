@@ -1,0 +1,95 @@
+artifact: Church-OS-CI-Quality-Gates
+version: 2.1.0
+runtime_status: NOT_RUN
+gates:
+- id: G01
+  name: package-integrity
+  blocking: true
+  checks:
+  - required_files
+  - manifest_hashes
+  - source_zip_sha256
+  - migration_hashes
+- id: G02
+  name: contract-static
+  blocking: true
+  checks:
+  - openapi_3_1
+  - unique_operation_ids
+  - resolved_refs
+  - global_auth
+  - idempotent_writes
+- id: G03
+  name: boundary-privacy
+  blocking: true
+  checks:
+  - no_professional_raw_api
+  - no_forbidden_event_keys
+  - no_spiritual_score
+  - pastor_suppression
+- id: G04
+  name: migration-static
+  blocking: true
+  checks:
+  - ordered_versions
+  - immutable_hashes
+  - transaction_boundaries
+  - composite_tenant_fk
+  - role_separation
+- id: G05
+  name: postgres-clean-apply
+  blocking: true
+  environment: PostgreSQL 16
+  checks:
+  - V001_to_V015
+  - schema_census
+  - enable_force_rls
+  - grants
+  - trigger_execute
+- id: G06
+  name: postgres-security
+  blocking: true
+  checks:
+  - tenant_isolation
+  - cross_tenant_fk
+  - outbox_guard
+  - audit_append_only
+  - touch_trigger
+  - seed_idempotency
+  - academy_provider_constraints
+- id: G07
+  name: backup-restore
+  blocking: true
+  checks:
+  - backup_role
+  - dump
+  - recreate
+  - restore
+  - rerun_posture
+  - rerun_security
+- id: G08
+  name: service-tests
+  blocking: true
+  state: FUTURE_IMPLEMENTATION
+  checks:
+  - unit
+  - API_contract
+  - authorization
+  - webhook_signature
+  - today_policy
+  - pastor_suppression
+- id: G09
+  name: release-evidence
+  blocking: true
+  checks:
+  - exit_codes
+  - logs_without_secrets
+  - test_counts
+  - artifact_versions
+  - commit_sha
+status_rules:
+- STATIC_PASS must never be reported as RUNTIME_PASS.
+- A skipped blocking gate makes the release gate INCOMPLETE.
+- An always-run evidence collector must preserve failures and cannot infer PASS from
+  partial output.
+- ACTIVE_DESIGN_BASELINE does not imply RUNTIME_PASS or RELEASE_APPROVED.

@@ -1,0 +1,17 @@
+ID,우선순위,영역,요구사항,수용기준,소유시스템,상태
+COS-FR-001,P0,교인UX,교인은 로그인 후 본인 Today를 본다,"일정·성경·생명일기·기도·소속업무 카드가 권한에 따라 표시",Church OS,CANDIDATE
+COS-FR-002,P0,목회자UX,목회자는 공동체 Overview를 본다,"집계·업무·통합상태를 표시하고 개인 원문은 기본 0건",Church OS,CANDIDATE
+COS-FR-003,P0,테넌트,모든 운영 레코드는 tenant 경계를 지킨다,"교차 tenant 읽기·쓰기·참조 음성검사 통과",Church OS,CANDIDATE
+COS-FR-004,P0,화이트라벨,교회별 브랜드를 설정으로 표현한다,"코드 포크 없이 3개 샘플 브랜드 적용",Church OS,CANDIDATE
+COS-FR-005,P0,로그인,내부 공통 인증·계정 기반 인증을 소비한다,"OIDC issuer·audience·nonce·tenant binding 검증",내부 공통 인증·계정 기반,CANDIDATE
+COS-FR-006,P0,기도,기도 전문 기능은 JLPrayer로 위임한다,"Church OS DB에 비공개 기도 원문 0건",JLPrayer,CANDIDATE
+COS-FR-007,P1,성경,JLBible 이어가기를 연결한다,"오늘 읽기 상태와 1회용 handoff 동작",JLBible,CANDIDATE
+COS-FR-008,P1,생명일기,사용자 요청 시 일회용 handoff만 제공한다,"Church OS에 작성 상태·회차·opaque ref·원문 저장 0건",생명일기,CANDIDATE
+COS-FR-009,P1,너랑나랑,세션 상태만 연결한다,"관계 기록 원문 없이 초대·진행 상태 표시",너랑나랑,CANDIDATE
+COS-FR-010,P1,CHGO,공동체 집계만 연결한다,"최소 10명·2차 숨김·coverage 적용; 개인 인사이트·점수·원문 0건",CHGO,CANDIDATE
+COS-FR-011,P0,사역,개인 성장정보로 자동 배치하지 않는다,"배치 근거는 자발성·은사·역량·시간·필요·승인",Church OS,CANDIDATE
+COS-FR-012,P0,집계보호,소집단 개인 역추적을 막는다,"k 기준 미달 집계 SUPPRESSED와 coverage 표시",Church OS,CANDIDATE
+COS-FR-013,P0,통합복구,외부 장애가 교회 운영 저장을 취소하지 않는다,"outbox·retry·idempotency 회귀검사 통과",Church OS,CANDIDATE
+COS-FR-014,P0,감사,민감 원문 없는 감사 이력을 남긴다,"actor·purpose·decision·resource·timestamp 기록",Church OS,CANDIDATE
+COS-FR-015,P0,안전,안전 대응이 성장 flow보다 우선한다,"신고·보호·담당자 전달 경로를 모듈 비활성화로 제거 불가",Church OS,CANDIDATE
+

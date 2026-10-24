@@ -1,0 +1,52 @@
+name: ChurchOS canonical v2.6
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  canonical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: canonical/ChurchOS_Canonical_v2.6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python tools/validate.py
+      - run: python tools/sql_syntax.py
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - run: npm ci
+        working-directory: canonical/ChurchOS_Canonical_v2.6/services/church-core
+      - run: npm test
+        working-directory: canonical/ChurchOS_Canonical_v2.6/services/church-core
+      - name: Disposable API and PostgreSQL verification
+        run: docker compose -p canonical-v26-ci -f tools/api-db/compose.yaml up --build --abort-on-container-exit --exit-code-from verify
+      - name: Require complete evidence
+        run: |
+          python - <<'PYCODE'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('../ChurchOS_API_DB_Evidence_v2.6/api-db-result.json').read_text())
+          assert r['artifact']=='ChurchOS_Canonical_v2.6'
+          assert r['runtime']=='PASS'
+          assert len(r['checks'])==63
+          assert all(c['status']=='PASS' for c in r['checks'])
+          PYCODE
+      - name: Cleanup disposable containers
+        if: always()
+        run: docker compose -p canonical-v26-ci -f tools/api-db/compose.yaml down --volumes --remove-orphans
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: canonical-v26-api-db-evidence
+          path: canonical/ChurchOS_API_DB_Evidence_v2.6/
+          if-no-files-found: warn

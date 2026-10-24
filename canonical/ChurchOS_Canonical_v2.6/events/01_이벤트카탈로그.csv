@@ -1,0 +1,13 @@
+event_type,direction,producer,consumer,payload_schema,contains_raw_text,retry,notes
+churchos.membership.changed,OUT,Church OS,authorized consumers,membership-changed.schema.json,NO,YES,opaque membership id only
+churchos.community.changed,OUT,Church OS,authorized consumers,operational-event-data.schema.json#/$defs/communityChanged,NO,YES,no member list by default
+churchos.event.changed,OUT,Church OS,authorized consumers,church-event-changed.schema.json,NO,YES,operational schedule only
+churchos.attendance.recorded,OUT,Church OS,authorized consumers,operational-event-data.schema.json#/$defs/attendanceRecorded,NO,YES,never growth evidence by itself
+churchos.care-task.status-changed,OUT,Church OS,authorized consumers,operational-event-data.schema.json#/$defs/careTaskStatusChanged,NO,YES,no operational note
+churchos.ministry-assignment.changed,OUT,Church OS,authorized consumers,operational-event-data.schema.json#/$defs/ministryAssignmentChanged,NO,YES,no CHGO signal as basis
+churchos.brand-config.changed,OUT,Church OS,shell and cache,operational-event-data.schema.json#/$defs/brandConfigChanged,NO,YES,bounded tokens only
+churchos.external-state.updated,IN,Professional App,Church OS,external-state-updated.schema.json,NO,YES,state and opaque ref only
+churchos.integration.health-changed,INOUT,Integration Worker,Church OS,operational-event-data.schema.json#/$defs/integrationHealthChanged,NO,YES,no provider secret
+churchos.today.invalidate,INTERNAL,Domain modules,Experience module,operational-event-data.schema.json#/$defs/todayInvalidate,NO,YES,cache key only
+churchos.pastor-overview.refresh,INTERNAL,Scheduler,Experience module,operational-event-data.schema.json#/$defs/pastorOverviewRefresh,NO,YES,aggregate refresh request
+

@@ -1,0 +1,27 @@
+services:
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: disposable-verification-only
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  verify:
+    build:
+      context: ../..
+      dockerfile: tools/postgres/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      PGHOST: database
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: disposable-verification-only
+      PGDATABASE: postgres
+    volumes:
+      - ../../../ChurchOS_Runtime_Evidence:/evidence

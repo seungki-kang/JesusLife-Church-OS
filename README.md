@@ -1,23 +1,19 @@
-# JesusLife Church OS
+# ChurchOS
 
-Church OS is the white-label church app of the JesusLife One platform. Each church that joins gets its own branded app and uses it as the space its community needs: membership, groups, care, formation, mission, prayer requests and church operations.
+앱을 열면 ChurchOS(최종 브랜드명 미정)가 나옵니다. ChurchOS는 교회 운영과 마케팅의 중심 접점이며 앱으로 개발합니다. 너랑나랑·생명일기·JLPrayer·JLBible·JLAcademy·CHGO는 독립 제품으로 설계·개발·배포하고 API로 연결합니다. 지저스라이프 원은 내부 생태계 명칭이며 사용자 화면에 노출하지 않습니다.
 
-This repository holds Church OS only. It was renamed from `CHGO-Platform` on 2026-10-17. The CHGO engine and Life Diary now live in their own repositories and connect to Church OS by API. See `docs/governance/Repository_Split_Record_2026-10-17.md` for what moved where and what is still mixed.
+## 현재 개발 정본
 
-## The platform
+**[ChurchOS 정본 v2.6](canonical/ChurchOS_Canonical_v2.6/README.md)** 을 개발 기준으로 사용합니다. 먼저 [핵심 사용자 흐름](canonical/ChurchOS_Canonical_v2.6/ux/02_핵심사용자흐름.md)과 [실행 안내](canonical/ChurchOS_Canonical_v2.6/START_LIFECYCLE.md)를 읽으세요.
 
-| Product | Repository | Role |
-| --- | --- | --- |
-| JesusLife One | (planned) | Unified ID and consent across all products |
-| **Church OS** | **`JesusLife-Church-OS`** | White-label church app |
-| CHGO | `CHGO` | JesusLife textbook ontology, academy, question bank, community health measurement engine |
-| Life Diary | `CHGO-Life-Diary-Flutter` | Personal diary; raw text never leaves it without the user's permission |
-| 성경통독 네트워크, 중보기도 네트워크, 너랑나랑 | Separate repositories | Connected by API |
+- 실제 구현 소스: `canonical/ChurchOS_Canonical_v2.6/services/church-core/`
+- API 계약: `canonical/ChurchOS_Canonical_v2.6/api/openapi/church-os-v1.yaml`
+- 신규 전용 DB 계보: `canonical/ChurchOS_Canonical_v2.6/db/migrations/` (V001–V015)
+- 사용자 제공 실행 결과: 2026-10-24 v2.6 / PostgreSQL 16.15 / 63개 검사 PASS. 원본 JSON은 사용자 컴퓨터에 있으며 저장소에 업로드된 증거는 아닙니다.
+- 앱 화면·실제 OIDC·외부 제품 연동·운영 배포는 완료되지 않았습니다.
 
-Church OS never reads another product's database. Pastors see community aggregates only, never an individual's diary or growth record.
+## 기존 자료 보존
 
-## State
+루트의 기존 `docs/`, `api/`, `db/` 등은 과거 자료와 기존 DB 계보로 보존합니다. 제품 방향은 v2.6이 우선합니다. 과거 API·DB가 현재 구현과 호환된다는 뜻은 아닙니다. 기존 DB와 정본 DB는 계보가 다르므로 마이그레이션을 합치거나 덮어쓰지 않습니다. 자세한 경계는 [통합 기록](docs/reviews/2026-10-24-canonical-v2.6-integration.md)을 따릅니다.
 
-Pre-development. Static checks pass (B-04 OpenAPI, C-02 privacy policy, E5 static regression). The PostgreSQL migrations V001–V012 passed 12 of 12 tests in a local replay of the E5 workflow on PostgreSQL 16; the GitHub Actions run itself has not been recorded as evidence yet. Runtime API tests, approvals and regional privacy packs remain OPEN or NOT_RUN.
-
-Read `START_HERE.md` first.
+기존 CHGO 분리 이력: [Repository split record](docs/governance/Repository_Split_Record_2026-10-17.md).

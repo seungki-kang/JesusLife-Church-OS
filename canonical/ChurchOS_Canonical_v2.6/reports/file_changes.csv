@@ -1,0 +1,116 @@
+path,action,reason
+MANIFEST.sha256,REVISED,정본 방향·기술 자료
+README.md,REVISED,정본 방향·기술 자료
+RELEASE.txt,REMOVED,활성 정본 정리; 원본 ZIP 보존
+VALIDATION.json,REVISED,정본 방향·기술 자료
+api/openapi/README.md,UNCHANGED,정본 방향·기술 자료
+api/openapi/church-os-v1.yaml,REVISED,정본 방향·기술 자료
+architecture/01_백엔드서비스구조.md,REVISED,정본 방향·기술 자료
+architecture/02_구현ADR대기목록.md,REVISED,정본 방향·기술 자료
+ci/01_CI실행규격.md,REVISED,정본 방향·기술 자료
+ci/quality-gates.yaml,REVISED,정본 방향·기술 자료
+contracts/01_통합경계계약.md,REVISED,정본 방향·기술 자료
+db/migration_hashes.csv,REVISED,정본 방향·기술 자료
+db/migrations/V001__foundation.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V002__tenant_membership_identity.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V003__access_community.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V004__operations_brand.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V005__integration_audit.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V006__integrity_triggers.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V007__row_level_security.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V008__least_privilege_grants.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V009__indexes_and_seed.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V010__validation_catalog.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V011__secure_product_handoff.sql,UNCHANGED,정본 방향·기술 자료
+db/migrations/V012__runtime_security_and_privacy_fix.sql,UNCHANGED,정본 방향·기술 자료
+db/model/01_논리모델.md,REVISED,정본 방향·기술 자료
+db/model/02_테이블정의.csv,REVISED,정본 방향·기술 자료
+db/model/03_논리DDL.sql,REMOVED,활성 정본 정리; 원본 ZIP 보존
+db/runbooks/01_실행절차.md,REVISED,정본 방향·기술 자료
+db/security-tests/00_posture_assertions.sql,UNCHANGED,정본 방향·기술 자료
+db/security-tests/01_tenant_fk_rls.sql,UNCHANGED,정본 방향·기술 자료
+db/security-tests/02_integrity_privacy.sql,UNCHANGED,정본 방향·기술 자료
+db/security-tests/03_trigger_seed_idempotency.sql,UNCHANGED,정본 방향·기술 자료
+db/security-tests/04_secure_handoff.sql,UNCHANGED,정본 방향·기술 자료
+decisions/ADR-001_기술스택.md,REVISED,정본 방향·기술 자료
+decisions/ADR-002_저장소전환.md,REVISED,정본 방향·기술 자료
+events/01_이벤트카탈로그.csv,UNCHANGED,정본 방향·기술 자료
+events/02_webhook_contract.md,UNCHANGED,정본 방향·기술 자료
+events/schemas/church-event-changed.schema.json,REVISED,정본 방향·기술 자료
+events/schemas/event-envelope.schema.json,REVISED,정본 방향·기술 자료
+events/schemas/external-state-updated.schema.json,REVISED,정본 방향·기술 자료
+events/schemas/membership-changed.schema.json,REVISED,정본 방향·기술 자료
+events/schemas/operational-event-data.schema.json,REVISED,정본 방향·기술 자료
+experience/01_today_policy.yaml,REVISED,정본 방향·기술 자료
+experience/02_pastor_overview_policy.yaml,UNCHANGED,정본 방향·기술 자료
+governance/01_원문정합성검토.md,REVISED,정본 방향·기술 자료
+governance/02_설계동결기준.yaml,REVISED,정본 방향·기술 자료
+handoff/01_개발자인수기준.md,REVISED,정본 방향·기술 자료
+handoff/02_착수백로그.csv,REVISED,정본 방향·기술 자료
+handoff/03_개발착수명세.md,REVISED,정본 방향·기술 자료
+inventory/file_disposition.csv,REMOVED,활성 정본 정리; 원본 ZIP 보존
+operations/01_배포운영규격.md,UNCHANGED,정본 방향·기술 자료
+operations/02_백업복구계획.md,UNCHANGED,정본 방향·기술 자료
+operations/03_관측성과사고대응.md,UNCHANGED,정본 방향·기술 자료
+plans/01_목표구조.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+plans/02_DB_재기준화.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+plans/03_API_테스트_CI_전환.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+plans/04_안전한작업순서.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/01_최종결정.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/02_정밀감사요약.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/03_v1.8_수정내역.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/04_v1.9_수정내역.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.0.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.1.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.2.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.3.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.4.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.5.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.6.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.7.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.8.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+reports/validation/v1.9.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+repository/01_목표구조.md,REVISED,정본 방향·기술 자료
+repository/02_workspace_manifest.yaml,REVISED,정본 방향·기술 자료
+requirements/01_요구사항.csv,REVISED,정본 방향·기술 자료
+requirements/02_결정기록.csv,UNCHANGED,정본 방향·기술 자료
+rollout/01_파일럿계획.md,REVISED,정본 방향·기술 자료
+rollout/02_출시준비체크리스트.csv,UNCHANGED,정본 방향·기술 자료
+security/01_권한판정흐름.md,UNCHANGED,정본 방향·기술 자료
+security/02_권한매트릭스.csv,UNCHANGED,정본 방향·기술 자료
+sources/SOURCE_REGISTER.md,REMOVED,활성 정본 정리; 원본 ZIP 보존
+sources/canonical_source_hashes.csv,REMOVED,활성 정본 정리; 원본 ZIP 보존
+sources/source_hashes.csv,REMOVED,활성 정본 정리; 원본 ZIP 보존
+specs/01_제품정의와경계.md,REVISED,정본 방향·기술 자료
+specs/02_사용자경험과역할.md,REVISED,정본 방향·기술 자료
+specs/03_기능모듈과단계.md,REVISED,정본 방향·기술 자료
+tests/contract/01_검증매트릭스.csv,UNCHANGED,정본 방향·기술 자료
+tools/build_inventory.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+tools/normalize_openapi.py,UNCHANGED,정본 방향·기술 자료
+ux/01_화면명세.csv,REVISED,정본 방향·기술 자료
+ux/02_핵심사용자흐름.md,REVISED,정본 방향·기술 자료
+validate_v1_3.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+validate_v1_4.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+validate_v1_5.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+validate_v1_7.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+validate_v1_8.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+validate_v1_9.py,REMOVED,활성 정본 정리; 원본 ZIP 보존
+white-label/01_화이트라벨정책.md,REVISED,정본 방향·기술 자료
+white-label/brand-config.schema.json,REVISED,정본 방향·기술 자료
+white-label/examples/01_small_church.json,REVISED,정본 방향·기술 자료
+white-label/examples/02_multi_campus.json,REVISED,정본 방향·기술 자료
+white-label/examples/03_headless.json,REMOVED,활성 정본 정리; 원본 ZIP 보존
+.github/pull_request_template.md,ADDED,정본 방향·계약·검증
+.github/workflows/design-ci.yml,ADDED,정본 방향·계약·검증
+CHANGELOG.md,ADDED,정본 방향·계약·검증
+CONTRIBUTING.md,ADDED,정본 방향·계약·검증
+contracts/integrations.yaml,ADDED,정본 방향·계약·검증
+db/migrations/V013__independent_product_academy.sql,ADDED,정본 방향·계약·검증
+db/security-tests/05_academy_constraints.sql,ADDED,정본 방향·계약·검증
+governance/CANONICAL.md,ADDED,정본 방향·계약·검증
+handoff/ROADMAP.md,ADDED,정본 방향·계약·검증
+reports/file_changes.csv,ADDED,정본 방향·계약·검증
+requirements-dev.txt,ADDED,정본 방향·계약·검증
+tests/test_design_gate.py,ADDED,정본 방향·계약·검증
+tools/validate.py,ADDED,정본 방향·계약·검증
+white-label/examples/03_mexico_native.json,ADDED,정본 방향·계약·검증

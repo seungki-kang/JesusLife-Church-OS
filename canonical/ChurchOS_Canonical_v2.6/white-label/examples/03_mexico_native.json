@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0",
+  "display": {
+    "churchName": "Iglesia Comunidad Ejemplo",
+    "appLabel": "Comunidad",
+    "logoAssetRef": "asset:brand/ice/logo",
+    "iconAssetRef": null
+  },
+  "colors": {
+    "primary": "#0B5E55",
+    "onPrimary": "#FFFFFF",
+    "secondary": "#7A3E00",
+    "onSecondary": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "onSurface": "#202020"
+  },
+  "navigation": [
+    "TODAY",
+    "CHURCH",
+    "COMMUNITY",
+    "ME"
+  ],
+  "modules": {
+    "church": true,
+    "community": true,
+    "ministry": true,
+    "integrations": true
+  },
+  "locale": {
+    "defaultLocale": "es-MX",
+    "timezone": "America/Mexico_City",
+    "displayAliases": {
+      "COMMUNITY": "Grupos",
+      "MINISTRY": "Servicio"
+    }
+  },
+  "distribution": {
+    "mode": "DEDICATED_NATIVE",
+    "customDomain": null
+  }
+}

@@ -1,0 +1,29 @@
+action,MEMBER,GROUP_LEADER,MINISTRY_LEADER,PASTOR,TENANT_ADMIN,AUDITOR,SERVICE,extra_conditions
+today.read,SELF,SELF,SELF,SELF,SELF,NONE,NONE,active membership
+membership.read,SELF,GROUP_SCOPE,MINISTRY_SCOPE,AGGREGATE,TENANT_OPERATIONAL,METADATA,SCOPED,no private app content
+membership.manage,NONE,NONE,NONE,LIMITED,ALLOW,NONE,SCOPED,tenant binding and purpose
+community.read,ASSIGNED,ASSIGNED,ASSIGNED,TENANT,TENANT,METADATA,SCOPED,resource relation
+community.manage,NONE,ASSIGNED,ASSIGNED,LIMITED,ALLOW,NONE,SCOPED,valid role period
+event.read,TENANT,TENANT,TENANT,TENANT,TENANT,METADATA,SCOPED,published or privileged
+event.manage,NONE,ASSIGNED,ASSIGNED,LIMITED,ALLOW,NONE,SCOPED,module enabled
+attendance.write,SELF,ASSIGNED,ASSIGNED,LIMITED,LIMITED,NONE,SCOPED,idempotency required
+care_task.read,SELF_SUBJECT,ASSIGNED,NONE,ASSIGNED,METADATA_ONLY,METADATA,SCOPED,purpose and assignment
+care_task.manage,NONE,ASSIGNED,NONE,ASSIGNED,LIMITED,NONE,SCOPED,no protected narrative
+ministry_assignment.read,SELF,ASSIGNED,ASSIGNED,TENANT,TENANT,METADATA,SCOPED,no growth signal
+ministry_assignment.manage,NONE,NONE,ASSIGNED,LIMITED,LIMITED,NONE,SCOPED,voluntary basis and approval
+ministry_assignment.decide_self,SELF,NONE,NONE,NONE,NONE,NONE,NONE,only own PROPOSED assignment; ACCEPT or DECLINE
+notice.read,TENANT,TENANT,TENANT,TENANT,TENANT,METADATA,SCOPED,published and audience authorized
+notice.manage,NONE,NONE,NONE,LIMITED,ALLOW,NONE,SCOPED,church-authored operational notice only
+campus.read,TENANT,TENANT,TENANT,TENANT,TENANT,METADATA,SCOPED,active membership
+campus.manage,NONE,NONE,NONE,LIMITED,ALLOW,NONE,SCOPED,tenant administration purpose
+pastor_overview.read,NONE,NONE,NONE,AGGREGATE,TENANT_OPERATIONAL,METADATA,NONE,k suppression
+brand_config.manage,NONE,NONE,NONE,NONE,ALLOW,METADATA,NONE,bounded tokens and If-Match
+integration_handoff.create,SELF,SELF,SELF,SELF,SELF,NONE,SCOPED,consent purpose and one-time token
+integration_return_uri.manage,NONE,NONE,NONE,NONE,ALLOW,METADATA,NONE,registered HTTPS URI and administrator purpose
+audit.read,NONE,NONE,NONE,LIMITED,METADATA,ALLOW,NONE,no sensitive payload
+
+membership.create,NONE,NONE,NONE,NONE,ALLOW,NONE,NONE,implementation v2.5; active tenant binding; CHURCH_OPERATION; idempotency
+notice.create,NONE,NONE,NONE,NONE,ALLOW,NONE,NONE,implementation v2.5; DRAFT only; idempotency
+event.create,NONE,NONE,NONE,NONE,ALLOW,NONE,NONE,implementation v2.5; DRAFT only; tenant composite FK; idempotency
+notice.update_publish_cancel,NONE,NONE,NONE,NONE,ALLOW,NONE,NONE,implementation v2.6; If-Match and idempotency; terminal denial
+event.update_publish_cancel,NONE,NONE,NONE,NONE,ALLOW,NONE,NONE,implementation v2.6; If-Match and idempotency; terminal denial

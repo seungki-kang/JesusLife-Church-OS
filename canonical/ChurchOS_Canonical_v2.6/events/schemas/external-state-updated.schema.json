@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/church-os/external-state-updated-1.0.schema.json",
+  "title": "External Professional App State Updated",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "provider",
+    "capability",
+    "state_code",
+    "state_updated_at",
+    "opaque_ref"
+  ],
+  "properties": {
+    "provider": {
+      "enum": [
+        "JLPRAYER",
+        "JLBIBLE",
+        "NEORANG_NARANG",
+        "JLACADEMY"
+      ]
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "state_code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "state_updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "opaque_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "safe_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "next_action": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 80
+    }
+  }
+}

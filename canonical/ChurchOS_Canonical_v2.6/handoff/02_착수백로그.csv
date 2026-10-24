@@ -1,0 +1,22 @@
+order,id,work,deliverable,acceptance,dependency,status
+1,COS-DEV-001,baseline 보호,tag and branch record,현재 main 복구 가능,owner approval,READY
+2,COS-DEV-002,archive manifest,move-only manifest,197개 분류와 정본 링크 일치,COS-DEV-001,READY
+3,COS-DEV-003,workspace skeleton,root workspaces and Flutter shell,목표구조와 일치,COS-DEV-002,READY
+4,COS-DEV-004,version pin,Node npm Flutter PostgreSQL pins,local and CI 동일,COS-DEV-003,READY
+5,COS-DEV-005,contract packages,OpenAPI JSON Schema validators,정적 gate PASS,COS-DEV-003,READY
+6,COS-DEV-006,DB migration runner,checksum history locking,V001-V012 clean apply,COS-DEV-004,READY
+7,COS-DEV-007,DB security suite,PostgreSQL Testcontainers,4 SQL tests PASS,COS-DEV-006,READY
+8,COS-DEV-008,auth context,OIDC tenant actor wrapper,header 단독 권한 0건,COS-DEV-004,BLOCKED_IDENTITY_CONTRACT
+9,COS-DEV-009,authorization engine,default-deny policy port,16 actions test,COS-DEV-008,READY_AFTER_DEP
+10,COS-DEV-010,tenant membership API,first domain module,OpenAPI contract PASS,COS-DEV-009,READY_AFTER_DEP
+11,COS-DEV-011,community event API,second domain module,tenant isolation tests,COS-DEV-010,READY_AFTER_DEP
+12,COS-DEV-012,care ministry API,workflow modules,no protected raw text,COS-DEV-011,READY_AFTER_DEP
+13,COS-DEV-013,integration worker,outbox webhook handoff,idempotency replay tests,COS-DEV-007,READY_AFTER_DEP
+14,COS-DEV-014,Today read model,member action feed,max 5 and no scores,COS-DEV-010,READY_AFTER_DEP
+15,COS-DEV-015,pastor Overview,aggregate read model,MISSING SUPPRESSED coverage,COS-DEV-012,READY_AFTER_DEP
+16,COS-DEV-016,white-label engine,schema preview publish rollback,3 examples pass,COS-DEV-005,READY_AFTER_DEP
+17,COS-DEV-017,admin shell,Flutter role screens,route and field guards,COS-DEV-009,READY_AFTER_DEP
+18,COS-DEV-018,member shell,Flutter Today Church Community Me,accessibility smoke,COS-DEV-014,READY_AFTER_DEP
+19,COS-DEV-019,CI evidence,9 gate aggregation,skip or failure never PASS,COS-DEV-007,READY_AFTER_DEP
+20,COS-DEV-020,pilot release gate,release manifest and rollback,all blocking gates PASS,COS-DEV-019,BLOCKED_RUNTIME
+

@@ -1,0 +1,11 @@
+import {Pool} from 'pg';
+import {buildApp} from './app.js';
+import {PgStore} from './postgres.js';
+import {remoteIdentity} from './identity.js';
+const required=['DATABASE_URL','OIDC_ISSUER','OIDC_AUDIENCE','OIDC_JWKS_URL'] as const;
+for(const key of required)if(!process.env[key])throw new Error(`Missing required configuration: ${key}`);
+const pool=new Pool({connectionString:process.env.DATABASE_URL,max:10,connectionTimeoutMillis:5000});
+const app=await buildApp(remoteIdentity(process.env.OIDC_ISSUER!,process.env.OIDC_AUDIENCE!,process.env.OIDC_JWKS_URL!),new PgStore(pool),{record:e=>console.info(JSON.stringify({level:'AUDIT',...e}))});
+const port=Number(process.env.PORT??3000);if(!Number.isInteger(port)||port<1||port>65535)throw new Error('Invalid port');
+const close=async()=>{await app.close();await pool.end();};process.once('SIGTERM',()=>void close());process.once('SIGINT',()=>void close());
+await app.listen(port,'127.0.0.1');

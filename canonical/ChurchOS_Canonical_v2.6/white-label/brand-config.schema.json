@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/church-os/brand-config-1.0.schema.json",
+  "title": "Church OS Bounded White Label Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "display",
+    "colors",
+    "navigation",
+    "modules",
+    "locale",
+    "distribution"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "display": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "churchName",
+        "appLabel"
+      ],
+      "properties": {
+        "churchName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "appLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "logoAssetRef": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^asset:[a-zA-Z0-9/_-]{1,180}$"
+        },
+        "iconAssetRef": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^asset:[a-zA-Z0-9/_-]{1,180}$"
+        }
+      }
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary",
+        "onPrimary",
+        "secondary",
+        "onSecondary",
+        "surface",
+        "onSurface"
+      ],
+      "properties": {
+        "primary": {
+          "$ref": "#/$defs/color"
+        },
+        "onPrimary": {
+          "$ref": "#/$defs/color"
+        },
+        "secondary": {
+          "$ref": "#/$defs/color"
+        },
+        "onSecondary": {
+          "$ref": "#/$defs/color"
+        },
+        "surface": {
+          "$ref": "#/$defs/color"
+        },
+        "onSurface": {
+          "$ref": "#/$defs/color"
+        }
+      }
+    },
+    "navigation": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "TODAY",
+          "CHURCH",
+          "COMMUNITY",
+          "MINISTRY",
+          "ME"
+        ]
+      }
+    },
+    "modules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "church",
+        "community",
+        "ministry",
+        "integrations"
+      ],
+      "properties": {
+        "church": {
+          "type": "boolean"
+        },
+        "community": {
+          "type": "boolean"
+        },
+        "ministry": {
+          "type": "boolean"
+        },
+        "integrations": {
+          "type": "boolean"
+        }
+      }
+    },
+    "locale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "defaultLocale",
+        "timezone"
+      ],
+      "properties": {
+        "defaultLocale": {
+          "enum": [
+            "ko-KR",
+            "ja-JP",
+            "en-US",
+            "es-MX"
+          ]
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "displayAliases": {
+          "type": "object",
+          "maxProperties": 20,
+          "propertyNames": {
+            "pattern": "^[A-Z][A-Z0-9_]{1,63}$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          }
+        }
+      }
+    },
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "INSTANT",
+            "DEDICATED_NATIVE"
+          ]
+        },
+        "customDomain": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "hostname"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    }
+  }
+}

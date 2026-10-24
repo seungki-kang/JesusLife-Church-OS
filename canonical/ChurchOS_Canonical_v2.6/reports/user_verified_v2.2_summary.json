@@ -1,0 +1,18 @@
+{
+  "source": "User-pasted db-result.json and launcher-result.json in this conversation",
+  "artifact": "ChurchOS_Canonical_v2.2",
+  "postgres_version_num": 160015,
+  "runtime": "PASS",
+  "migrations": "V001-V013",
+  "source_and_restore_security_tests": "00-05 PASS",
+  "fingerprint_match": true,
+  "protected_table_counts": "23|23",
+  "launcher_stages_exit_codes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "reexecution_by_assistant": false,
+  "scope": "Synthetic-data PostgreSQL baseline only; not API-DB integration"
+}

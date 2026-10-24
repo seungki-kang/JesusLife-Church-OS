@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/church-os/operational-event-data-1.0.schema.json",
+  "title": "Church OS operational event payloads",
+  "description": "Closed payload union for the eight operational events that do not have a dedicated schema.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/communityChanged"
+    },
+    {
+      "$ref": "#/$defs/attendanceRecorded"
+    },
+    {
+      "$ref": "#/$defs/careTaskStatusChanged"
+    },
+    {
+      "$ref": "#/$defs/ministryAssignmentChanged"
+    },
+    {
+      "$ref": "#/$defs/brandConfigChanged"
+    },
+    {
+      "$ref": "#/$defs/integrationHealthChanged"
+    },
+    {
+      "$ref": "#/$defs/todayInvalidate"
+    },
+    {
+      "$ref": "#/$defs/pastorOverviewRefresh"
+    }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "base": {
+      "type": "object",
+      "required": [
+        "eventType"
+      ],
+      "properties": {
+        "eventType": {
+          "type": "string"
+        }
+      }
+    },
+    "communityChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "communityId",
+        "change"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.community.changed"
+        },
+        "communityId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "change": {
+          "enum": [
+            "CREATED",
+            "UPDATED",
+            "ARCHIVED"
+          ]
+        }
+      }
+    },
+    "attendanceRecorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "attendanceId",
+        "eventId",
+        "method"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.attendance.recorded"
+        },
+        "attendanceId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "eventId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "method": {
+          "enum": [
+            "SELF",
+            "LEADER",
+            "QR",
+            "IMPORT"
+          ]
+        }
+      }
+    },
+    "careTaskStatusChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "careTaskId",
+        "status"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.care-task.status-changed"
+        },
+        "careTaskId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "status": {
+          "enum": [
+            "OPEN",
+            "ASSIGNED",
+            "IN_PROGRESS",
+            "DONE",
+            "CANCELLED"
+          ]
+        }
+      }
+    },
+    "ministryAssignmentChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "assignmentId",
+        "status"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.ministry-assignment.changed"
+        },
+        "assignmentId": {
+          "$ref": "#/$defs/uuid"
+        },
+        "status": {
+          "enum": [
+            "PROPOSED",
+            "ACCEPTED",
+            "ACTIVE",
+            "ENDED",
+            "DECLINED"
+          ]
+        }
+      }
+    },
+    "brandConfigChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "version"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.brand-config.changed"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "integrationHealthChanged": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "provider",
+        "status"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.integration.health-changed"
+        },
+        "provider": {
+          "enum": [
+            "JLPRAYER",
+            "JLBIBLE",
+            "LIFE_DIARY",
+            "NEORANG_NARANG",
+            "CHGO",
+            "JLACADEMY"
+          ]
+        },
+        "status": {
+          "enum": [
+            "CONNECTED",
+            "DEGRADED",
+            "DISCONNECTED",
+            "NOT_CONFIGURED"
+          ]
+        }
+      }
+    },
+    "todayInvalidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "actorRef",
+        "reasonCode"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.today.invalidate"
+        },
+        "actorRef": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "reasonCode": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+        }
+      }
+    },
+    "pastorOverviewRefresh": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eventType",
+        "period"
+      ],
+      "properties": {
+        "eventType": {
+          "const": "churchos.pastor-overview.refresh"
+        },
+        "period": {
+          "type": "string",
+          "pattern": "^P([1-9][0-9]*D|[1-9][0-9]*W|[1-9][0-9]*M)$"
+        }
+      }
+    }
+  }
+}

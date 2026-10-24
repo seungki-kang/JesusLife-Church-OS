@@ -1,0 +1,105 @@
+{
+  "sql_grammar": "PASS",
+  "parser_postgresql_version": [
+    16,
+    1
+  ],
+  "files": [
+    {
+      "file": "db/migrations/V001__foundation.sql",
+      "status": "PASS",
+      "statements": 13
+    },
+    {
+      "file": "db/migrations/V002__tenant_membership_identity.sql",
+      "status": "PASS",
+      "statements": 6
+    },
+    {
+      "file": "db/migrations/V003__access_community.sql",
+      "status": "PASS",
+      "statements": 7
+    },
+    {
+      "file": "db/migrations/V004__operations_brand.sql",
+      "status": "PASS",
+      "statements": 8
+    },
+    {
+      "file": "db/migrations/V005__integration_audit.sql",
+      "status": "PASS",
+      "statements": 7
+    },
+    {
+      "file": "db/migrations/V006__integrity_triggers.sql",
+      "status": "PASS",
+      "statements": 8
+    },
+    {
+      "file": "db/migrations/V007__row_level_security.sql",
+      "status": "PASS",
+      "statements": 6
+    },
+    {
+      "file": "db/migrations/V008__least_privilege_grants.sql",
+      "status": "PASS",
+      "statements": 20
+    },
+    {
+      "file": "db/migrations/V009__indexes_and_seed.sql",
+      "status": "PASS",
+      "statements": 10
+    },
+    {
+      "file": "db/migrations/V010__validation_catalog.sql",
+      "status": "PASS",
+      "statements": 5
+    },
+    {
+      "file": "db/migrations/V011__secure_product_handoff.sql",
+      "status": "PASS",
+      "statements": 9
+    },
+    {
+      "file": "db/migrations/V012__runtime_security_and_privacy_fix.sql",
+      "status": "PASS",
+      "statements": 45
+    },
+    {
+      "file": "db/migrations/V013__independent_product_academy.sql",
+      "status": "PASS",
+      "statements": 10
+    },
+    {
+      "file": "db/security-tests/00_posture_assertions.sql",
+      "status": "PASS",
+      "statements": 2
+    },
+    {
+      "file": "db/security-tests/01_tenant_fk_rls.sql",
+      "status": "PASS",
+      "statements": 15
+    },
+    {
+      "file": "db/security-tests/02_integrity_privacy.sql",
+      "status": "PASS",
+      "statements": 11
+    },
+    {
+      "file": "db/security-tests/03_trigger_seed_idempotency.sql",
+      "status": "PASS",
+      "statements": 7
+    },
+    {
+      "file": "db/security-tests/04_secure_handoff.sql",
+      "status": "PASS",
+      "statements": 14
+    },
+    {
+      "file": "db/security-tests/05_academy_constraints.sql",
+      "status": "PASS",
+      "statements": 2
+    }
+  ],
+  "runtime": "NOT_RUN"
+}

@@ -1,0 +1,10 @@
+{
+  "artifact": "ChurchOS_Canonical_v2.6",
+  "runtime": "INCOMPLETE",
+  "started_at": "2026-10-24T01:12:26.303Z",
+  "transport": "HTTP over loopback TCP; real PostgreSQL protocol",
+  "oidc": "LOCAL_RSA_TEST_KEYS; EXTERNAL_PROVIDER_NOT_RUN",
+  "checks": [],
+  "migration_hashes": {},
+  "reason": "COS_DISPOSABLE_CLUSTER=1 and API_DB_EVIDENCE are required"
+}

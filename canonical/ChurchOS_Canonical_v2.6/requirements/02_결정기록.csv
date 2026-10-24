@@ -1,0 +1,10 @@
+ID,결정,근거,영향,상태
+DEC-001,"저장소와 Git 이력을 유지하고 Church OS 3.0 기준선을 재구축","기존 자료 가치와 실행 구조 결함이 동시에 존재","archive 후 새 baseline",ACCEPTED_PLAN
+DEC-002,"Church OS는 교회 운영과 Mission의 정본","CHGO Constitution과 Core Philosophy의 세 시스템 경계","성장 추론과 원문 저장 제외",CANDIDATE
+DEC-003,"교인 첫 화면은 개인화 Today","교인에게 본인 관련 정보가 먼저 필요","통합 앱 상태는 카드와 handoff로 표시",CANDIDATE
+DEC-004,"목회자 첫 화면은 공동체 집계 Overview","Pastor Aggregate Only","원문·개인 영적 판정 금지",CANDIDATE
+DEC-005,"기도 기능은 JLPrayer에 위임","전문 플랫폼별 책임과 데이터 중복 방지","Church OS는 연결·요약·운영상태만 소유",CANDIDATE
+DEC-006,"화이트라벨은 설정 기반 공통 코드베이스","확장성과 유지보수성","교회별 코드 포크 금지",CANDIDATE
+DEC-007,"제품 3.0과 API major를 분리","기존 API versioning 원칙","공개 경로는 /api/v1부터 시작",CANDIDATE
+DEC-008,"P0 운영핵심과 P1 전문앱 연동을 분리","외부 장애 격리와 단계적 출시","outbox 기반 비동기 연결",CANDIDATE
+

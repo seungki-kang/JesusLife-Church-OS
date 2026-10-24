@@ -24,3 +24,7 @@ coverage/
 
 # Generated local evidence
 evidence/local/
+
+# Disposable canonical verification evidence
+canonical/ChurchOS_API_DB_Evidence*/
+canonical/ChurchOS_Runtime_Evidence*/

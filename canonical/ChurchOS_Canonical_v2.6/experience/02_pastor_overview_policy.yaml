@@ -1,0 +1,40 @@
+policy_id: COS-PASTOR-OVERVIEW-001
+version: 1.0.0-candidate.1
+purpose: Present operational and protected aggregate community awareness.
+default_minimum_group_size: 10
+tenant_may_lower_minimum: false
+metric_states: [AVAILABLE, MISSING, SUPPRESSED]
+required_metadata: [period_start, period_end, sample_size, coverage, generated_at, policy_version, complementary_suppression]
+operational_metrics:
+  - pending_newcomer_followups
+  - overdue_care_tasks
+  - upcoming_event_staff_gaps
+  - unfilled_ministry_assignments
+  - inactive_group_operations
+  - integration_health
+optional_external_aggregates:
+  - provider: CHGO
+    allowed: confirmed_aggregate_trend
+    requirements: [purpose, policy, minimum_group_size, no_reverse_link]
+forbidden_outputs:
+  - raw_diary_text
+  - raw_prayer_text
+  - counseling_text
+  - person_growth_score
+  - person_spiritual_label
+  - member_level_chgo_evidence
+  - small_group_reverse_link
+rules:
+  - id: OVERVIEW-01
+    statement: Missing data is MISSING and not numeric zero.
+  - id: OVERVIEW-02
+    statement: Small samples are SUPPRESSED and expose no value.
+  - id: OVERVIEW-03
+    statement: Participation and completion are not growth or maturity.
+  - id: OVERVIEW-04
+    statement: Every external aggregate carries source and policy versions.
+  - id: OVERVIEW-05
+    statement: Export applies the same suppression rules as the screen.
+  - id: OVERVIEW-06
+    statement: Complementary suppression hides additional cells when totals or differences could reveal a suppressed small group.
+

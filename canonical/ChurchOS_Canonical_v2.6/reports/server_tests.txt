@@ -1,0 +1,99 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> churchos-core@0.4.0 test
+> npm run build && node --test dist/test/*.test.js
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> churchos-core@0.4.0 build
+> tsc -p tsconfig.json
+
+▶ HTTP authorization and tenant boundary
+  ✔ live without authentication (11.365415ms)
+  ✔ ready reflects dependency failure (1.325446ms)
+  ✔ missing token denied (1.183591ms)
+  ✔ forged token denied (0.999902ms)
+  ✔ wrong audience denied (9.548056ms)
+  ✔ wrong issuer denied (3.230578ms)
+  ✔ expired token denied (1.865313ms)
+  ✔ valid admin reads own tenant (1.793223ms)
+  ✔ foreign tenant header denied (2.189413ms)
+  ✔ token role claims cannot grant DB role (1.541462ms)
+  ✔ revoked binding denied (1.396473ms)
+  ✔ unknown subject denied (1.565929ms)
+  ✔ tenant path mismatch denied (1.311905ms)
+  ✔ unregistered purpose denied (1.82463ms)
+  ✔ invalid UUID denied (1.358646ms)
+  ✔ pagination limit rejected (1.257843ms)
+  ✔ cross-resource cursor rejected (2.242873ms)
+  ✔ query role injection rejected (1.220727ms)
+  ✔ invalid date range rejected (1.053224ms)
+  ✔ writes require authentication (1.124932ms)
+  ✔ errors have trace and no JWT (0.62083ms)
+  ✔ member cannot create membership (2.857644ms)
+  ✔ member cannot create notice (1.849638ms)
+  ✔ member cannot create event (1.3883ms)
+  ✔ admin create uses 201 (1.63257ms)
+  ✔ foreign tenant body field rejected (1.684509ms)
+  ✔ short request key rejected (1.188207ms)
+  ✔ detail returns strong ETag (1.22304ms)
+  ✔ missing mutation precondition returns 428 (1.551898ms)
+  ✔ weak precondition returns 400 (1.301369ms)
+  ✔ member cannot edit (1.643777ms)
+  ✔ patch returns updated ETag (1.402662ms)
+  ✔ stale precondition returns 412 (1.376262ms)
+  ✔ publish uses 200 rather than create 201 (1.895778ms)
+  ✔ cancel rejects unexpected request body (1.562264ms)
+  ✔ malformed unauthenticated URL does not return protected data: /api/v1/church/%zz (0.613488ms)
+  ✔ malformed unauthenticated URL does not return protected data: /api/v1/church/tenants/%FF (0.303469ms)
+  ✔ malformed unauthenticated URL does not return protected data: /public/%00 (0.651716ms)
+  ✔ audit contains no raw token (0.143607ms)
+✔ HTTP authorization and tenant boundary (81.984052ms)
+✔ accept three closed create schemas (14.298393ms)
+✔ reject tenant injection and protected narrative keys (0.294726ms)
+✔ invalid calendar date rejected (0.214154ms)
+✔ event end before start rejected (0.252502ms)
+✔ unrecognized timezone rejected (0.194404ms)
+✔ notice expiry before publication rejected (0.140603ms)
+✔ blank text and excess length rejected (0.167905ms)
+✔ semantic body key order has stable fingerprint (0.447537ms)
+✔ changed body fingerprint differs (0.196888ms)
+✔ actor receipt identity is issuer bound (0.269218ms)
+✔ draft response has no extra internal receipt fields (0.470061ms)
+✔ integration evidence requires every planned stage (1.173005ms)
+✔ missing HTTP check never passes (0.182487ms)
+✔ failed assertion never passes (0.173883ms)
+✔ wrong PostgreSQL major rejected (0.173442ms)
+✔ migration checksum mismatch rejected (0.184449ms)
+✔ duplicate check rejected (0.149496ms)
+✔ lifecycle locks target, conditionally updates and commits audit/receipt (3.811076ms)
+✔ stale version cannot write (1.421521ms)
+✔ same request retry replays current receipt version without update (0.593078ms)
+✔ retry after another revision conflicts rather than duplicating content (0.725467ms)
+✔ audit failure rolls mutation back before receipt insertion (1.314258ms)
+✔ strong ETag supports bigint without Number precision loss (1.085032ms)
+✔ missing, weak, wildcard and overflowing preconditions rejected (0.431092ms)
+✔ empty and unknown patch fields rejected (0.201575ms)
+✔ published notice cannot move back to draft (0.841983ms)
+✔ cancelled or expired resources are terminal (0.287055ms)
+✔ draft notice can be published and expired publication is refused (0.815754ms)
+✔ event nullable end time clears existing end (15.746884ms)
+✔ merged event chronology validated (0.45623ms)
+✔ member cannot read draft, private audience, future or cancelled notice (0.291551ms)
+✔ admin sees own draft while member sees published public notice (0.241585ms)
+✔ community event stays hidden from member before community ACL exists (0.108414ms)
+✔ transaction context is parameterized and local, then committed and released (3.18575ms)
+✔ authorization rejection rolls transaction back and releases pool connection (0.613428ms)
+✔ owner or bypass role cannot reach a tenant session (0.269618ms)
+✔ business insert, audit and receipt commit in order under transaction lock (3.472483ms)
+✔ audit failure prevents receipt and triggers rollback (1.145103ms)
+✔ matching receipt returns original response without insert or audit (0.480096ms)
+✔ different request payload with same key returns conflict and rolls back (1.100174ms)
+ℹ tests 80
+ℹ suites 0
+ℹ pass 80
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 697.648235

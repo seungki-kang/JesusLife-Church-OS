@@ -1,0 +1,3 @@
+
+# Preserve canonical package checksums, including CRLF CSV and SQL bytes.
+canonical/ChurchOS_Canonical_v2.6/** -text

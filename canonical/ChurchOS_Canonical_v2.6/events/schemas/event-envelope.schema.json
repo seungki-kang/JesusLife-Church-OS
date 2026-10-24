@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/church-os/event-envelope-1.0.schema.json",
+  "title": "Church OS Safe Event Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "specversion",
+    "id",
+    "type",
+    "source",
+    "time",
+    "tenantref",
+    "purposecode",
+    "schemaversion",
+    "correlationid",
+    "dataclass",
+    "data"
+  ],
+  "properties": {
+    "specversion": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^churchos\\.[a-z0-9_.-]+$"
+    },
+    "source": {
+      "type": "string",
+      "pattern": "^/church-os/[a-z0-9/-]+$"
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tenantref": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "subjectref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 255
+    },
+    "purposecode": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+    },
+    "consentbasisref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 255
+    },
+    "schemaversion": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.[0-9]+$"
+    },
+    "correlationid": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "dataclass": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "PRIVATE",
+        "SENSITIVE"
+      ]
+    },
+    "data": {
+      "$ref": "#/$defs/safeObject"
+    }
+  },
+  "$defs": {
+    "safeObject": {
+      "type": "object",
+      "propertyNames": {
+        "not": {
+          "anyOf": [
+            {
+              "enum": [
+                "narrative",
+                "life_diary_raw",
+                "diary_text",
+                "prayer_text",
+                "prayer_request",
+                "prayer",
+                "declaration",
+                "confession",
+                "reflection",
+                "testimony",
+                "testimony_text",
+                "counseling_note",
+                "operational_note",
+                "free_text",
+                "raw_content",
+                "body"
+              ]
+            },
+            {
+              "pattern": "^q[0-9]+(_.*)?$"
+            }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/safeValue"
+      }
+    },
+    "safeValue": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeValue"
+          }
+        },
+        {
+          "$ref": "#/$defs/safeObject"
+        }
+      ]
+    }
+  }
+}

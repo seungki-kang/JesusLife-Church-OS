@@ -1,0 +1,7 @@
+import {actorRef} from '../src/commands.js';
+import {test} from 'node:test';import assert from 'node:assert/strict';import {PgStore} from '../src/postgres.js';
+const scope={tenant:'tenant-a',principal:{issuer:'issuer',subject:'subject'},purpose:'CHURCH_OPERATION',trace:'trace'};
+function fixture(safe=true){const calls:any[]=[];let released=false;const client={query:async(sql:string,args?:unknown[])=>{calls.push([sql,args]);return {rows:[]};},release:()=>{released=true;}};const pool={query:async()=>({rows:[{safe}]}),connect:async()=>client};return {store:new PgStore(pool as any),calls,released:()=>released};}
+test('transaction context is parameterized and local, then committed and released',async()=>{const f=fixture();assert.equal(await f.store.scoped(scope,async()=>42),42);assert.equal(f.calls[0][0],'BEGIN');assert.ok(f.calls[1][0].includes("set_config('church.tenant_id',$1,true)"));assert.deepEqual(f.calls[1][1],['tenant-a',actorRef(scope.principal)]);assert.equal(f.calls.at(-1)[0],'COMMIT');assert.ok(f.released());});
+test('authorization rejection rolls transaction back and releases pool connection',async()=>{const f=fixture();await assert.rejects(f.store.scoped(scope,async()=>{throw Error('deny');}));assert.equal(f.calls.at(-1)[0],'ROLLBACK');assert.ok(f.released());});
+test('owner or bypass role cannot reach a tenant session',async()=>{const f=fixture(false);await assert.rejects(f.store.scoped(scope,async()=>42));assert.deepEqual(f.calls,[]);});

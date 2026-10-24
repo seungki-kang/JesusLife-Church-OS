@@ -1,0 +1,29 @@
+{
+  "server_version": "0.4.0",
+  "node_test_runtime": "24.19.0",
+  "implemented_read_operations": [
+    "getTenant",
+    "listMemberships",
+    "listNotices",
+    "listEvents"
+  ],
+  "write_operations": "CREATE_AND_LIFECYCLE; DELETE_NOT_IMPLEMENTED",
+  "health_scope": "DATABASE_ROLE_ONLY",
+  "production_release": "NOT_READY",
+  "api_database_integration": "CREATE_V2_5_USER_PASS; LIFECYCLE_V2_6_NOT_RUN",
+  "implemented_create_operations": [
+    "createMembership",
+    "createNotice",
+    "createEvent"
+  ],
+  "implemented_lifecycle_operations": [
+    "getNotice",
+    "getEvent",
+    "updateNotice",
+    "updateEvent",
+    "publishNotice",
+    "publishEvent",
+    "cancelNotice",
+    "cancelEvent"
+  ]
+}

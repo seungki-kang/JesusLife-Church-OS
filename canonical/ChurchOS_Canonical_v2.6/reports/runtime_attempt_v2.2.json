@@ -1,0 +1,12 @@
+{
+  "postgres_binary_version": "16.2",
+  "initdb_exit_code": 1,
+  "initdb_result": "cannot be run as root",
+  "os_user_mapping": "Only UID 0 is mapped; unprivileged server execution unavailable",
+  "database_initialized": false,
+  "migrations_executed": false,
+  "docker_available": false,
+  "database_runtime": "NOT_RUN",
+  "docker_launcher_runtime": "NOT_RUN",
+  "postgres_binary_sha256": "ae05b2a1b0685f2c69b8b9eb3765b1429a5c173c64b248f7f157de2af9db768d"
+}

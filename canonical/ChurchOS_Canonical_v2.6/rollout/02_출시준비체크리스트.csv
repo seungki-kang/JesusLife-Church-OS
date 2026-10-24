@@ -1,0 +1,17 @@
+id,area,check,evidence,status
+REL-001,governance,stakeholder approves design freeze,signed decision,PENDING
+REL-002,identity,OIDC issuer audience nonce and tenant binding tested,contract test,NOT_RUN
+REL-003,authorization,cross tenant and role negative tests pass,test report,NOT_RUN
+REL-004,privacy,no protected raw text in logs events analytics,scan report,NOT_RUN
+REL-005,database,migrations apply from empty database,execution log,NOT_RUN
+REL-006,database,restore and RLS integrity verified,restore evidence,NOT_RUN
+REL-007,integration,webhook signature replay idempotency tested,contract report,NOT_RUN
+REL-008,resilience,external service degraded mode tested,scenario report,NOT_RUN
+REL-009,white-label,three brand profiles validate and remain accessible,visual and schema report,NOT_RUN
+REL-010,ux,member Today and pastor Overview usability tested,pilot findings,NOT_RUN
+REL-011,safety,abuse crisis and external responsibility routes verified,safety review,NOT_RUN
+REL-012,jlprayer,prayer raw text remains outside Church OS,data trace,NOT_RUN
+REL-013,backup,RPO and RTO restore drill passes,DR report,NOT_RUN
+REL-014,observability,alerts and redaction verified,observability report,NOT_RUN
+REL-015,exit,tenant offboarding export revoke and deletion verified,exit report,NOT_RUN
+REL-016,release,SBOM vulnerability and image digest recorded,release evidence,NOT_RUN

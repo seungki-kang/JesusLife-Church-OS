@@ -1,0 +1,21 @@
+name: api-postgres-integration
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run real HTTP and PostgreSQL integration
+        run: docker compose -p cos-api-ci -f tools/api-db/compose.yaml up --build --abort-on-container-exit --exit-code-from verify
+      - name: Preserve integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-db-evidence
+          path: ../ChurchOS_API_DB_Evidence_v2.6/*.json
+          if-no-files-found: error
+      - name: Remove isolated test resources
+        if: always()
+        run: docker compose -p cos-api-ci -f tools/api-db/compose.yaml down --volumes --remove-orphans

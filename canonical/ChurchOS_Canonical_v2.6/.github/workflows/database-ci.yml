@@ -1,0 +1,43 @@
+name: database-verification
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  postgres16:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: disposable-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: disposable-ci-only
+      PGDATABASE: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client-16
+      - run: python tools/validate.py
+      - run: python tools/sql_syntax.py
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - run: python tools/db_verify.py --disposable-cluster --output /tmp/cos-db-evidence/result.json
+      - name: Keep success or failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postgres16-evidence
+          path: /tmp/cos-db-evidence/result.json
+          if-no-files-found: error

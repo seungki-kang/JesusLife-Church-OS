@@ -1,0 +1,52 @@
+policy_id: COS-TODAY-001
+version: 1.0.0-candidate.1
+purpose: Compose a member-owned next-action feed without spiritual scoring.
+maximum_cards: 5
+allowed_sources:
+- CHURCH_EVENT
+- CHURCH_NOTICE
+- COMMUNITY_TASK
+- MINISTRY_TASK
+- JLBIBLE_STATE
+- LIFE_DIARY_HANDOFF
+- JLPRAYER_STATE
+- NEORANG_NARANG_STATE
+- JLACADEMY_STATE
+forbidden_inputs:
+- spiritual_score
+- maturity_rank
+- raw_diary_text
+- raw_prayer_text
+- counseling_text
+- inferred_old_person_label
+priority_order:
+- safety_or_required_response
+- due_or_start_time
+- user_pinned
+- explicit_assignment
+- continue_recent_activity
+- stable_source_order
+rules:
+- id: TODAY-01
+  statement: Missing external state produces no card and never produces a zero score.
+- id: TODAY-02
+  statement: A card exposes only title, safe subtitle, next action, and source state.
+- id: TODAY-03
+  statement: Life Diary content and state are never cached; the user explicitly opens
+    the product through a one-time handoff.
+- id: TODAY-04
+  statement: The same source and action are deduplicated.
+- id: TODAY-05
+  statement: Expired, completed, unauthorized, or disabled-module cards are removed.
+- id: TODAY-06
+  statement: Priority is operational ordering and must not be shown as a person score.
+cache:
+  ttl_seconds: 60
+  key_dimensions:
+  - tenant_id
+  - membership_id
+  - policy_version
+  forbidden_cache_fields:
+  - raw_content
+  - provider_token
+  - consent_document

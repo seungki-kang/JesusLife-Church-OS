@@ -1,0 +1,22 @@
+test_id,layer,scenario,expected,automation_target,status
+API-001,OpenAPI,모든 operationId 고유,중복 0,static validator,DESIGNED
+API-002,OpenAPI,모든 write에 Idempotency-Key,누락 0,static validator,DESIGNED
+API-003,OpenAPI,인증 없는 operation,0개,static validator,DESIGNED
+API-004,Boundary,Life Diary 원문 schema 검색,0개,forbidden term validator,DESIGNED
+API-005,Boundary,JLPrayer 비공개 원문 schema 검색,0개,forbidden term validator,DESIGNED
+API-006,Pastor,집계 누락 상태,0이 아닌 MISSING,JSON schema test,DESIGNED
+API-007,Pastor,소표본 집계,k 미달 시 SUPPRESSED,service contract test,DESIGNED
+API-008,Handoff,만료·재사용 토큰,거부,integration test,DESIGNED
+DB-001,Tenant,교차 tenant membership FK,삽입 거부,PostgreSQL test,DESIGNED
+DB-002,Tenant,교차 tenant community parent,삽입 거부,PostgreSQL test,DESIGNED
+DB-003,Tenant,교차 tenant attendance,삽입 거부,PostgreSQL test,DESIGNED
+DB-004,RLS,app role 타 tenant 조회,0행 또는 거부,PostgreSQL test,DESIGNED
+DB-005,RLS,owner role tenant 우회,FORCE RLS로 거부,PostgreSQL test,DESIGNED
+DB-006,Role,system role template 재시드,중복 0,PostgreSQL test,DESIGNED
+DB-007,Trigger,mutable row update,updated_at 증가와 row_version+1,PostgreSQL test,DESIGNED
+DB-008,Outbox,narrative·prayer text payload,삽입 거부,PostgreSQL test,DESIGNED
+DB-009,Restore,dump drop restore,행수와 FK 일치,runtime script,DESIGNED
+SEC-001,Auth,header tenant와 token tenant 불일치,403,API integration test,DESIGNED
+SEC-002,Auth,machine token의 사용자 가장,403,API integration test,DESIGNED
+SEC-003,Audit,민감 본문 로깅,0건,log scanner,DESIGNED
+

@@ -1,0 +1,10 @@
+{
+  "source": "User-pasted PowerShell summary in current conversation",
+  "artifact": "ChurchOS_Canonical_v2.5",
+  "runtime": "PASS",
+  "postgres_version_num": 160015,
+  "checks": 41,
+  "non_pass_checks": 0,
+  "assistant_reexecuted_database": false,
+  "scope": "Prior read/create integration through V014; new lifecycle/V015 not covered"
+}

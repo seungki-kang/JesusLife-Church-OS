@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "display": {
+    "churchName": "샘플 작은교회",
+    "appLabel": "우리교회",
+    "logoAssetRef": null,
+    "iconAssetRef": null
+  },
+  "colors": {
+    "primary": "#244A73",
+    "onPrimary": "#FFFFFF",
+    "secondary": "#6B4F2A",
+    "onSecondary": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "onSurface": "#1B1B1B"
+  },
+  "navigation": [
+    "TODAY",
+    "CHURCH",
+    "COMMUNITY",
+    "ME"
+  ],
+  "modules": {
+    "church": true,
+    "community": true,
+    "ministry": false,
+    "integrations": true
+  },
+  "locale": {
+    "defaultLocale": "ko-KR",
+    "timezone": "Asia/Seoul",
+    "displayAliases": {
+      "COMMUNITY": "목장"
+    }
+  },
+  "distribution": {
+    "mode": "INSTANT",
+    "customDomain": null
+  }
+}

@@ -1,0 +1,17 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {validateCommand,fingerprint,actorRef,createResponse} from '../src/commands.js';
+const id='10000000-0000-0000-0000-000000000001';
+const member={personRef:id,status:'ACTIVE'};
+const event={kind:'WORSHIP',title:'Sunday',startsAt:'2026-11-01T00:00:00Z',timezone:'Asia/Seoul'};
+const notice={title:'Welcome',body:'Church operational notice',audience:'ALL_MEMBERS',publishAt:'2026-11-01T00:00:00Z'};
+test('accept three closed create schemas',()=>{for(const [kind,body] of [['memberships',member],['events',event],['notices',notice]] as const)assert.deepEqual(validateCommand(kind,body),body);});
+test('reject tenant injection and protected narrative keys',()=>{assert.throws(()=>validateCommand('memberships',{...member,tenantId:id}));assert.throws(()=>validateCommand('notices',{...notice,diary_text:'private'}));});
+test('invalid calendar date rejected',()=>assert.throws(()=>validateCommand('memberships',{...member,joinedOn:'2026-02-30'})));
+test('event end before start rejected',()=>assert.throws(()=>validateCommand('events',{...event,endsAt:'2025-01-01T00:00:00Z'})));
+test('unrecognized timezone rejected',()=>assert.throws(()=>validateCommand('events',{...event,timezone:'not-a-zone'})));
+test('notice expiry before publication rejected',()=>assert.throws(()=>validateCommand('notices',{...notice,expiresAt:'2025-01-01T00:00:00Z'})));
+test('blank text and excess length rejected',()=>{assert.throws(()=>validateCommand('notices',{...notice,title:' '}));assert.throws(()=>validateCommand('notices',{...notice,body:'x'.repeat(4001)}));});
+test('semantic body key order has stable fingerprint',()=>assert.equal(fingerprint(member),fingerprint({status:'ACTIVE',personRef:id})));
+test('changed body fingerprint differs',()=>assert.notEqual(fingerprint(member),fingerprint({...member,status:'PENDING'})));
+test('actor receipt identity is issuer bound',()=>assert.notEqual(actorRef({issuer:'a',subject:'same'}),actorRef({issuer:'b',subject:'same'})));
+test('draft response has no extra internal receipt fields',()=>assert.deepEqual(createResponse('notices',notice,id,id,new Date()),{...notice,id,tenantId:id,status:'DRAFT'}));

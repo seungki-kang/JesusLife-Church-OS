@@ -1,0 +1,36 @@
+artifact_id: COS-GOV-002
+version: '2.0'
+lifecycle: ACTIVE_DESIGN_BASELINE
+freeze_scope: church_os_3_0_preimplementation
+required_invariants:
+- id: INV-CAN-01
+  rule: church_os_must_not_redefine_jesuslife_canonical
+- id: INV-SCR-01
+  rule: no_spiritual_score_rank_or_level
+- id: INV-PRV-01
+  rule: membership_never_grants_personal_vault_access
+- id: INV-PST-01
+  rule: pastor_default_surface_is_aggregate_only
+- id: INV-CCH-01
+  rule: coach_sharing_stays_inside_life_diary_end_to_end_encryption_boundary
+- id: INV-SAF-01
+  rule: safety_protection_overrides_growth_flow
+- id: INV-SAF-02
+  rule: internal_ownership_does_not_transfer_external_fault
+- id: INV-PRY-01
+  rule: jlprayer_owns_prayer_notebook_and_prayer_raw_text
+- id: INV-WL-01
+  rule: white_label_uses_configuration_not_code_forks
+- id: INV-OBS-01
+  rule: protected_raw_text_never_enters_logs_metrics_traces_or_events
+freeze_gates:
+  product_direction: USER_AUTHORIZED_2026-10-24
+  static_validation: SEE_VALIDATION_JSON
+  repository_application: NOT_RUN
+  runtime_validation: NOT_RUN
+unfreeze_requires:
+- architecture_decision_record
+- impact_analysis
+- contract_and_migration_version
+- regression_tests
+- authorized_approval

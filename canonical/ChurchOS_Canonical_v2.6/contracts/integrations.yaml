@@ -1,0 +1,38 @@
+version: '2.0'
+products:
+  NEORANG_NARANG:
+    independent: true
+    shared_database: false
+    contract_status: CONSUMER_REQUIREMENT_ONLY
+    runtime: NOT_RUN
+    personal_state_allowed: true
+  LIFE_DIARY:
+    independent: true
+    shared_database: false
+    contract_status: CONSUMER_REQUIREMENT_ONLY
+    runtime: NOT_RUN
+    personal_state_allowed: false
+  JLPRAYER:
+    independent: true
+    shared_database: false
+    contract_status: CONSUMER_REQUIREMENT_ONLY
+    runtime: NOT_RUN
+    personal_state_allowed: true
+  JLBIBLE:
+    independent: true
+    shared_database: false
+    contract_status: CONSUMER_REQUIREMENT_ONLY
+    runtime: NOT_RUN
+    personal_state_allowed: true
+  JLACADEMY:
+    independent: true
+    shared_database: false
+    contract_status: CONSUMER_REQUIREMENT_ONLY
+    runtime: NOT_RUN
+    personal_state_allowed: true
+  CHGO:
+    independent: true
+    shared_database: false
+    contract_status: CONSUMER_REQUIREMENT_ONLY
+    runtime: NOT_RUN
+    personal_state_allowed: false

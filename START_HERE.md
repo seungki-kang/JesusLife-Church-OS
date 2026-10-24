@@ -1,17 +1,9 @@
-# Start Here
+# 개발 시작
 
-1. Read `README.md` for what Church OS is and how it relates to the other JesusLife One products.
-2. Read `STRUCTURE_GUIDE.md` before adding or moving files.
-3. Product: `docs/product/` (requirements 2.0, product and experience architecture 3.0) and `docs/ux/`.
-4. Architecture: `docs/architecture/` (white-label and headless integration 3.0, Church OS to CHGO engine integration contract).
-5. Database: `db/migrations/church_os/` (V001–V010) and `db/validation/` (V011–V012).
-6. Run the static checks after any change:
+현재 정본은 **canonical/ChurchOS_Canonical_v2.6/** 입니다.
 
-```bash
-pip install PyYAML
-python tools/validation/validate_e5_regression.py   # runs B-04 and C-02 too
-```
+1. 해당 폴더의 README.md와 governance/CANONICAL.md를 읽습니다.
+2. START_LIFECYCLE.md에 따라 API·DB 검증을 실행합니다.
+3. 서비스 개발은 services/church-core에서 진행합니다.
 
-The PostgreSQL runtime check runs in GitHub Actions: workflow `E5 PostgreSQL Runtime and Rollback Evidence` (manual dispatch). See `docs/operations/E5_GitHub_Actions_PostgreSQL_Runtime_Guide_1.0.md`.
-
-Content that belongs to CHGO or Life Diary does not go in this repository. Use `CHGO` or `CHGO-Life-Diary-Flutter`.
+이 문서의 경로는 위 정본 폴더 기준입니다. 루트의 기존 db/migrations/church_os는 별도 과거 계보이며 정본 서비스에 적용하지 않습니다. 기존 운영 DB의 이관은 아직 검증되지 않았습니다.

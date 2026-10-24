@@ -1,0 +1,11 @@
+{
+  "source": "User-pasted launcher-result.json in current conversation",
+  "artifact": "ChurchOS_Canonical_v2.4",
+  "launcher_runtime": "PASS",
+  "command_exit_codes": {
+    "npm test": 0,
+    "node dist/integration/verify.js": 0
+  },
+  "detailed_checks_received": false,
+  "scope": "Prior read-only HTTP/PostgreSQL integration; V014 and new writes not covered"
+}

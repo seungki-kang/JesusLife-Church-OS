@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/church-os/church-event-changed-1.0.schema.json",
+  "title": "Church Event Changed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "kind",
+    "status",
+    "starts_at",
+    "revision"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "community_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "kind": {
+      "enum": [
+        "WORSHIP",
+        "GATHERING",
+        "CLASS",
+        "SERVICE",
+        "OTHER"
+      ]
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "PUBLISHED",
+        "CANCELLED",
+        "COMPLETED"
+      ]
+    },
+    "starts_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ends_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}
