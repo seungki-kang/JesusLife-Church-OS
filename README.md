@@ -26,6 +26,10 @@
 
 [앱 전용 운영 기준 v1.4](docs/operations/ecosystem-v1/APP_ONLY_OPERATIONS.md)에 따라 별도 웹 없이 관리자까지 앱에서 업무를 수행하도록 설계합니다. 실제 앱 구현과 검증은 진행 전입니다.
 
+## 상세 설계 단계
+
+[상세 개발 설계 v1.5](docs/operations/ecosystem-v1/DETAILED_DESIGN_V1.5.md), [26개 기능표](docs/operations/ecosystem-v1/FEATURE_MATRIX_V1.5.csv), [14개 연동 계약 백로그](docs/operations/ecosystem-v1/CONTRACT_BACKLOG_V1.5.md)를 추가했습니다. 사용자 제공 Flutter 위젯 테스트는 3개 PASS이며, 실제 모바일 실행·로그인·전문 제품 연결과 신규 기능은 미완료입니다. 개발은 설계 정밀화 우선으로 진행합니다.
+
 ## 기존 자료 보존
 
 루트의 기존 `docs/`, `api/`, `db/` 등은 과거 자료와 기존 DB 계보로 보존합니다. 제품 방향은 v2.6이 우선합니다. 과거 API·DB가 현재 구현과 호환된다는 뜻은 아닙니다. 기존 DB와 정본 DB는 계보가 다르므로 마이그레이션을 합치거나 덮어쓰지 않습니다. 자세한 경계는 [통합 기록](docs/reviews/2026-10-24-canonical-v2.6-integration.md)을 따릅니다.
