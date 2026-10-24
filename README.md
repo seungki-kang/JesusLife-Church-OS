@@ -14,7 +14,7 @@
 
 ## 후속 전체 운영 기획
 
-[일곱 제품 운영 시나리오 v1.0](docs/operations/ecosystem-v1/OPERATING_SCENARIOS.md)에 교회 개설부터 개인 활동·교육·철회·탈퇴·장애까지 16개 시나리오와 유지·제거·분리 처분을 정리했습니다. 신규 제안은 제공자 계약·구현·실행 검증 전이며, v2.6 검증 스냅샷은 변경하지 않습니다.
+[일곱 제품 운영 시나리오 v1.1](docs/operations/ecosystem-v1/OPERATING_SCENARIOS.md)에 교회 개설부터 개인 활동·교육·철회·탈퇴·장애까지 18개 시나리오와 유지·제거·분리 처분을 정리했습니다. [도입 유형·Academy 참여 교회·전 제품 CHGO 관계](docs/operations/ecosystem-v1/PRODUCT_RELATIONSHIPS.md)를 함께 따릅니다. 신규 제안은 제공자 계약·구현·실행 검증 전이며, v2.6 검증 스냅샷은 변경하지 않습니다.
 
 ## 기존 자료 보존
 
