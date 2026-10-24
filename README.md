@@ -39,3 +39,14 @@
 ## Codex 작업 지침과 스킬
 
 [AGENTS.md](AGENTS.md)와 [단계별 스킬 정책](docs/development/SKILL_USAGE.md)을 따릅니다. `.agents/skills/grill-with-docs`에 ChurchOS 맞춤 설계 인터뷰 스킬을 추가했습니다. 용어는 [GLOSSARY.md](GLOSSARY.md), 결정은 [설계 결정 기록](docs/decisions/DESIGN_DECISIONS.md)에 누적합니다.
+
+
+[교회 개설 심사 설계](docs/operations/ecosystem-v1/CHURCH_ESTABLISHMENT_REVIEW.md)는 교인 가입 승인과 별도로 교회 실재성·목회자 자격·대표 권한·서비스 이용 허용 기준을 검토합니다. 플랫폼 운영팀의 사전 심사와 AI·CHGO 이단 자동 판정 금지를 명시했으며 신학 문구는 사용자 검토 초안 합의이며 운영 채택·담당자 자격/선임 등은 후속 과제입니다. 구현·실행 검증 NOT_RUN.
+
+[공통 인증·SSO 구조 검토](docs/operations/ecosystem-v1/COMMON_AUTH_SSO_REVIEW.md)에 여섯 제품 공통 계정 확정 사항, 기존 후보 계약·v2.6 검증 어댑터·시연 앱의 범위와 차이를 정리했습니다. 실제 6개 제품 SSO 연동은 검증 전입니다. [현재 정책·기한·책임표](docs/operations/ecosystem-v1/ACCOUNT_MEMBERSHIP_SERVICE_SCOPE_CONTRACT.md)에 COS-SSO-001~048의 설계 합의를 통합했습니다. 검증된 미해소 공통 보안 위험이 확인되는 재가입은 완료를 보류하고 지정 보안 담당자가 확인합니다. 실제 제공자/API/운영 검증은 구현 전 과제입니다.
+
+[공통 인증 정책 통합 검토](docs/reviews/2026-10-24-auth-policy-consolidation.md)에 중복/상태 모순 정리 결과·검사 범위·남은 결정과 구현 전 과제를 기록했습니다.
+
+[공통 인증 제공자·제품별 로그인 현황](docs/operations/ecosystem-v1/AUTH_PROVIDER_AND_PRODUCT_INVENTORY.md)에 로컬 저장소 조사 근거와 인증 연결 과제를 정리했습니다. 실제 공통 제공자는 미확인이며 기존 로컬 기록 연결·제품별 토큰/권한 계약을 먼저 확인합니다. 코드 변경·실제 연동 검증은 수행하지 않았습니다.
+
+[설계 검토 변경 요약·GitHub 저장 전 확인본](docs/reviews/2026-10-24-design-review-save-summary.md)에 확정/OPEN·교회 개설 기준·수정 파일·검증/저장 범위를 모았습니다. JLBible·JLAcademy 저장소와 운영 공통 인증 서버 유무는 미확인으로 유지합니다.
