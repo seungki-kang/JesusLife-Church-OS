@@ -7,6 +7,7 @@
 | 제품·계정·교회 권한 | [운영 검토](docs/operations/ecosystem-v1/END_TO_END_OPERATIONS_REVIEW.md), [상세 설계](docs/operations/ecosystem-v1/DETAILED_DESIGN_V1.5.md), [계정·소속 계약](docs/operations/ecosystem-v1/ACCOUNT_MEMBERSHIP_SERVICE_SCOPE_CONTRACT.md) |
 | 승인된 결정과 복원된 결정 | [COS 결정 원장](docs/decisions/DESIGN_DECISIONS.md), [REC 결정 원장](recovery-design/RECOVERY_DECISIONS.md) |
 | 교회 앱 도입·메뉴 선택 | [담임목사님 중심의 도입과 선택형 교회 앱](recovery-design/WHITE_LABEL_SETTINGS_DISTRIBUTION_DRAFT.md#담임목사님-중심의-도입과-선택형-교회-앱) |
+| 교회별 디자인·쉬운 설정·방문 안내 | [화이트라벨 기획·첫 버전 화면 설계 인계](recovery-design/WHITE_LABEL_DESIGN_HANDOFF_2026-11-11.md) |
 | 기본 MVP 개발 인계 | [기능별 개발 인계](recovery-design/BASIC_MVP_DEVELOPMENT_HANDOFF.md), [구현 차단표](recovery-design/IMPLEMENTATION_BLOCKER_REGISTER.md), [검증 게이트](recovery-design/DESIGN_HANDOFF_GATES.md) |
 | 공동체와 소개 철회 | [공동체 계약 초안](recovery-design/COMMUNITY_LIFECYCLE_CONTRACT_DRAFT.md), [철회 인계 판정](recovery-design/LEADER_INTRO_INTEGRATED_REVIEW_4_HANDOFF_VERDICT.md), [확정 시각·조회 종료 초안](recovery-design/LEADER_INTRO_FINAL_TIME_PROOF_QUERY_BOUNDARY_DRAFT.md) |
 | 구현이 실제로 있는 위치 | [canonical v2.6](canonical/ChurchOS_Canonical_v2.6/README.md), [앱](apps/church-os/README.md) |
