@@ -1,0 +1,34 @@
+{
+  "markdown_files": 241,
+  "internal_links": 2095,
+  "anchor_links": 585,
+  "external_links_skipped": 13,
+  "csv_files": 61,
+  "json_files": 53,
+  "docx_files": 27,
+  "decision_groups": {
+    "COS-CHURCH": 41,
+    "COS-JOIN": 59,
+    "COS-SSO": 48,
+    "REC": 98
+  },
+  "errors": [],
+  "status": "PASS",
+  "runtime": "NOT_RUN",
+  "limitations": [
+    "Local Markdown links/heading anchors only; external URLs are counted, not fetched.",
+    "DOCX validation checks ZIP integrity and document XML, not prose or visual layout.",
+    "Static structure does not certify authorization, theology, legal compliance or runtime."
+  ],
+  "scope": "Documentation and development blueprint only; no production implementation changes",
+  "checks": {
+    "documentation_validator": "PASS",
+    "validator_regression": {
+      "status": "PASS",
+      "tests": 20
+    },
+    "canonical_v2_6_manifest": "PASS",
+    "application_runtime": "NOT_RUN",
+    "github_push": "NOT_RUN"
+  }
+}

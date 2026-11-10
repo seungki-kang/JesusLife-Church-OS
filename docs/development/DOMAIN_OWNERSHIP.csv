@@ -1,0 +1,25 @@
+id,record_family,owner_module,source_product,write_entry,read_boundary,design_status
+OWN01,교회 ID·개설 승인 상태·운영 기본 사실,church,ChurchOS,교회 개설·검증된 사실 변경 유스케이스,브랜드와 소개는 참조·독립 원장 복제 금지,DESIGN
+OWN02,교회 가입 요청·심사 결과·유효 소속,membership,ChurchOS,가입·심사·소속 종료 유스케이스,공동체 참여·직함과 별개,DESIGN
+OWN03,교회 역할·업무 위임·현재 유효 범위,access,ChurchOS,지정·수락·축소·해제 유스케이스,토큰 직함·UI 토글에서 권한 생성 금지,DESIGN
+OWN04,교회 표시 별칭·로고 참조·대표색·홈 배치,experience,ChurchOS,설정 초안·검사·게시 유스케이스,교회 사실·소개 본문·API 주소·권한은 소유하지 않음,DESIGN
+OWN05,목회철학·사명·비전 선택 및 초안·게시본,church_intro,ChurchOS,항목 편집·게시·게시 종료 유스케이스,브랜드 설정과 홈 카드는 게시 참조만 읽음,DESIGN
+OWN06,공지 초안·게시본·대상·공개 종료,notice,ChurchOS,공지 편집·게시·종료 유스케이스,범용 게시 CRUD로 권한 우회 금지,DESIGN
+OWN07,예배 안내·교회 일정·행사와 취소 사실,event,ChurchOS,예배 안내 또는 행사별 계약된 변경 명령,홈·방문 카드·프로그램은 원본 참조·행사 취소와 게시 철회 분리,DESIGN
+OWN08,공동체 참여·배정·이동·리더 직함,community,ChurchOS,공동체 가입·이동·리더·종료 유스케이스,직함은 access의 업무 위임을 자동 생성하지 않음,DESIGN
+OWN09,소개 대상자의 동의·사진/소개 철회 처리,community_intro,ChurchOS,REC-062 이후 해당 범위의 동의·철회 유스케이스,교회 소개와 대상·동의·결과 수명이 달라 범용 합치기 금지,DESIGN
+OWN10,출석 사실·정정 이력,attendance,ChurchOS,행사 범위 출석 입력·정정 유스케이스,신앙 성장·수료·JLPrayer 참여 판정 금지,DESIGN
+OWN11,봉사 제안·수락·배정 기간,ministry,ChurchOS,봉사 제안·수락·종료 유스케이스,활동 배정과 관리자 권한 분리,DESIGN
+OWN12,후속 연락·방문 등 최소 운영 업무,care,ChurchOS,목적별 생성·배정·완료 유스케이스,개인 상담·기도·일기 원문 없음,DESIGN
+OWN13,설교 소스·전사 참조·승인 요약·나눔지,sermon,ChurchOS,편집·분석 요청·사람 승인·게시 유스케이스,CHGO 결과는 승인된 게시본이 아님,DESIGN
+OWN14,확정된 ChurchOS 업무의 최소 감사 증거,audit,ChurchOS,현재 업무 트랜잭션에서 최소 감사 append,HTTP 접근 로그와 역할·실행 결과 원장으로 대체하지 않음,DESIGN
+OWN15,ChurchOS 요청 키·영수증·업무 결과 투영,command_support,ChurchOS,계약된 트랜잭션 보조·업무별 결과 조회,재생24시간·조회168시간·특별 철회 결과를 하나의 TTL로 합치지 않음,DESIGN
+OWN16,ChurchOS 파일 소유·업로드 상태·사용 참조,assets,ChurchOS,목적과 교회가 확인된 파일 수명 명령,공지 첨부 허가를 로고·설교 자산 허가로 재사용 금지,DESIGN
+OWN17,ChurchOS outbox·알림 전달 상태,delivery,ChurchOS,소유 업무 확정 후 동일 이벤트 식별로 전달,전달 실패는 원 업무 실패나 자동 재게시가 아님,DESIGN
+OWN18,공통 계정·인증 세션,identity_provider,공통 인증 제공자,제공자 계약·ChurchOS 검증 어댑터,ChurchOS가 비밀번호·공통 계정 복수 원장 생성 금지,EXTERNAL_CONTRACT
+OWN19,개인 기도·기도방·공동기도 원본,JLPrayer,JLPrayer,제공자 API,ChurchOS DB·감사·통계 원문 복제 금지,EXTERNAL_CONTRACT
+OWN20,성경·찬송 권리 및 본문·개인 통독 진도,JLBible,JLBible,제공자 API,뷰어 열람은 통독 완료가 아님,EXTERNAL_CONTRACT
+OWN21,과정·수강·수료,JLAcademy,JLAcademy,제공자 API,교회 행사 출석을 수료로 복제 금지,EXTERNAL_CONTRACT
+OWN22,문답·상대방 동의·개인 실천 기록,너랑나랑,너랑나랑,제공자 API,ChurchOS 운영자 원문 접근 없음,EXTERNAL_CONTRACT
+OWN23,개인 일기·코칭·작성 상태,생명일기,생명일기,제공자 API,ChurchOS는 원문·작성 여부·회차·날짜·코칭 상태 수신 금지,EXTERNAL_CONTRACT
+OWN24,승인된 개념·관계·규칙·근거 버전,CHGO,CHGO,허용 입력·출력의 엔진 API,개인 원문 일괄 수집·자동 신학/성숙 판정 금지,EXTERNAL_CONTRACT

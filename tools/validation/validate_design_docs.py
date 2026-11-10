@@ -143,6 +143,55 @@ def validate(root: Path, files: list[Path]) -> dict:
             expected = "| " + " | ".join([row["id"] + " " + row["screen"], *(row[k] for k in keys)]) + " |"
             if table.count(expected) != 1:
                 error(rendered.relative_to(root), "CSV/table mismatch: " + row["id"])
+    for name, required in (
+        ("DOMAIN_OWNERSHIP.csv", {"id", "record_family", "owner_module", "source_product", "write_entry", "read_boundary", "design_status"}),
+        ("DEVELOPMENT_SLICES.csv", {"id", "slice", "depends_on", "entry_gates", "completion_evidence", "not_allowed", "execution_status"}),
+    ):
+        rel = Path("docs/development") / name
+        if not (root / rel).is_file():
+            continue
+        with (root / rel).open(encoding="utf-8-sig", newline="") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+            if set(reader.fieldnames or []) != required:
+                error(rel, "development CSV schema mismatch")
+                continue
+        if not rows or any(any(row.get(k) is None or not row[k].strip()
+                                   for k in required - {"depends_on"}) for row in rows):
+            error(rel, "empty development row/required cell")
+            continue
+        ids = [row["id"] for row in rows]
+        if len(ids) != len(set(ids)):
+            error(rel, "duplicate development ID")
+        if name == "DOMAIN_OWNERSHIP.csv":
+            families = [row["record_family"] for row in rows]
+            if len(families) != len(set(families)):
+                error(rel, "duplicate record ownership")
+        else:
+            graph = {row["id"]: [x.strip() for x in row["depends_on"].split(";") if x.strip()]
+                     for row in rows}
+            unknown = {dep for deps in graph.values() for dep in deps if dep not in graph}
+            if unknown:
+                error(rel, "unknown dependency: " + ", ".join(sorted(unknown)))
+            visiting, visited = set(), set()
+
+            def visit(node):
+                if node in visiting:
+                    return False
+                if node in visited:
+                    return True
+                visiting.add(node)
+                for dep in graph[node]:
+                    if dep in graph and not visit(dep):
+                        return False
+                visiting.remove(node)
+                visited.add(node)
+                return True
+
+            if any(not visit(node) for node in graph):
+                error(rel, "development dependency cycle")
+            if any(row["execution_status"] not in {"NOT_RUN", "PASS", "FAIL", "BLOCKED"} for row in rows):
+                error(rel, "invalid execution status")
     result["status"] = "FAIL" if result["errors"] else "PASS"
     result["runtime"] = "NOT_RUN"
     return result

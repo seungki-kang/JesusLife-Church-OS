@@ -1,4 +1,6 @@
 # 교회 기본 MVP 개발 인계표 — r36
+구현 의존 순서·소유권·공통화 경계는 [코드 개발 전 통합 기준](../docs/development/DEVELOPMENT_BLUEPRINT.md)을 함께 따른다. 이 문서의 화면/행위 인계는 그대로 유지한다.
+
 
 2026-10-29 / SOURCE+DRAFT / PARTIAL_RECOVERY / 코드·실기기·통합 실행 NOT_RUN
 

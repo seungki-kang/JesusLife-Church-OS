@@ -6,7 +6,7 @@
 
 1. 해당 폴더의 README.md와 governance/CANONICAL.md를 읽습니다.
 2. START_LIFECYCLE.md에 따라 API·DB 검증을 실행합니다.
-3. 서비스 개발은 services/church-core에서 진행합니다.
+3. 이 경로는 기존 구현의 검증용입니다. 후속 기능을 추가하기 전 [활성 소스 이행 기준](docs/development/DEVELOPMENT_BLUEPRINT.md)을 따릅니다. 루트 services/church-core는 아직 생성되지 않은 이행 대상이며 현재 실행 경로가 아닙니다.
 
 이 문서의 경로는 위 정본 폴더 기준입니다. 루트의 기존 db/migrations/church_os는 별도 과거 계보이며 정본 서비스에 적용하지 않습니다. 기존 운영 DB의 이관은 아직 검증되지 않았습니다.
 

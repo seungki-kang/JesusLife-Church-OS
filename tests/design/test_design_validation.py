@@ -86,5 +86,33 @@ class DocumentationValidation(unittest.TestCase):
         self.assertTrue(any("REC sequence" in e["error"] for e in r["errors"]))
 
 
+    def slice_result(self, body):
+        return self.run_files({"docs/development/DEVELOPMENT_SLICES.csv":
+            "id,slice,depends_on,entry_gates,completion_evidence,not_allowed,execution_status\n" + body})
+
+    def test_missing_development_dependency(self):
+        r = self.slice_result("S01,step,S00,gate,evidence,prohibition,NOT_RUN\n")
+        self.assertTrue(any("unknown dependency" in e["error"] for e in r["errors"]))
+
+    def test_development_cycle_rejected(self):
+        r = self.slice_result("S00,a,S01,g,e,n,NOT_RUN\nS01,b,S00,g,e,n,NOT_RUN\n")
+        self.assertTrue(any("dependency cycle" in e["error"] for e in r["errors"]))
+
+    def test_parallel_development_dag_allowed(self):
+        r = self.slice_result("S00,a,,g,e,n,NOT_RUN\nS01,b,S00,g,e,n,NOT_RUN\n"
+                              "S02,c,S00,g,e,n,NOT_RUN\nS03,d,S01;S02,g,e,n,NOT_RUN\n")
+        self.assertEqual(r["status"], "PASS")
+
+    def test_duplicate_record_owner_rejected(self):
+        r = self.run_files({"docs/development/DOMAIN_OWNERSHIP.csv":
+            "id,record_family,owner_module,source_product,write_entry,read_boundary,design_status\n"
+            "OWN01,same,a,p,w,r,DESIGN\nOWN02,same,b,p,w,r,DESIGN\n"})
+        self.assertTrue(any("duplicate record ownership" in e["error"] for e in r["errors"]))
+
+    def test_duplicate_development_id_rejected(self):
+        r = self.slice_result("S00,a,,g,e,n,NOT_RUN\nS00,b,,g,e,n,NOT_RUN\n")
+        self.assertTrue(any("duplicate development ID" in e["error"] for e in r["errors"]))
+
+
 if __name__ == "__main__":
     unittest.main()
