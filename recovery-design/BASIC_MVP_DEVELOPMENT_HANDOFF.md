@@ -1,4 +1,6 @@
 # 교회 기본 MVP 개발 인계표 — r36
+구현 의존 순서·소유권·공통화 경계는 [코드 개발 전 통합 기준](../docs/development/DEVELOPMENT_BLUEPRINT.md)을 함께 따른다. 이 문서의 화면/행위 인계는 그대로 유지한다.
+
 
 2026-10-29 / SOURCE+DRAFT / PARTIAL_RECOVERY / 코드·실기기·통합 실행 NOT_RUN
 
@@ -76,7 +78,7 @@ MVP의 중심은 인증/교회 문맥→가입/권한→홈/공지/일정→공�
 
 각 행에 실제 계약 버전·API 경로/오류·입출력 스키마·권한 근거·상태 전이·마이그레이션 계보·테스트 위치·실행 증거를 연결해야 한다. 현재 제공하지 않은 경로/테이블/패키지·명령을 존재한다고 가정하지 않는다. 기존 NestJS/Fastify 구조를 문서 인계만으로 다른 프레임워크로 교체하지 않는다. 기존 Git/canonical/마이그레이션 원본은 보존한다.
 
-r37에서 [공동체 상세 계약](COMMUNITY_LIFECYCLE_CONTRACT_DRAFT.md), [현재 구조 대조](COMMUNITY_BASELINE_ALIGNMENT.md), [12개 작업 인계](COMMUNITY_HANDOFF.csv), [32개 실행 전 시나리오](COMMUNITY_ACCEPTANCE.csv)를 MVP16에 연결했다. 새로운 참여/이동/리더·명단 정책은 DRAFT이며 확정/구현 완료가 아니다. r36 원래 작성 당시 상태는 R36 기록에 보존한다. 다음에는 신규 공동체 정책 중 참여 방식부터 한 항목씩 확정한다.
+r37에서 공동체 상세 계약과 현재 구조 대조를 MVP16에 연결했다. 현재 [작업 인계](COMMUNITY_HANDOFF.csv)는 14행, [실행 전 시나리오](COMMUNITY_ACCEPTANCE.csv)는 162행이다. 당시의 참여 방식 질문은 REC-033 이후의 합의로 진전됐으며 다시 초기 질문부터 시작하지 않는다. 확정 범위는 [REC 결정 원장](RECOVERY_DECISIONS.md), 남은 기술·운영 조건은 [철회 인계 판정](LEADER_INTRO_INTEGRATED_REVIEW_4_HANDOFF_VERDICT.md)을 따른다. 아래 r별 절은 각 작성 당시의 이력이며 실제 실행은 NOT_RUN이다.
 
 MVP33의 첫 범위는 [교회 소개 항목의 설정과 게시 계약 초안](WHITE_LABEL_SETTINGS_DISTRIBUTION_DRAFT.md#교회-소개-항목의-설정과-게시-계약-초안)을 참조한다. [후속 게시 권한·검색·캐시 상세 계약](CHURCH_INTRO_PUBLICATION_CONTRACT_DRAFT.md)에 작업별 권한·실패·복구를 연결했다. [1차 출시 인계](CHURCH_INTRO_RELEASE_HANDOFF_DRAFT.md)는 권한·온라인 범위·기록 수명과 화면/API 후보를 구분한다. W29~W31 및 W33~W62는 실행 전 시나리오이며 게시 권한·버전·캐시·보유 계약이 확정되어야 구현에 착수한다.
 

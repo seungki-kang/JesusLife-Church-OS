@@ -1,4 +1,6 @@
 # ChurchOS 개발 설계 통합 안내
+후속 코드의 위치·모듈 소유권·중복 방지·개발 순서는 [코드 개발 전 통합 기준](docs/development/DEVELOPMENT_BLUEPRINT.md)을 따른다. 정책 원장과 미결 상태는 유지한다.
+
 
 이 문서는 개발자가 현재 적용할 기준과 남은 결정을 찾는 출발점이다. 운영 설계 브랜치의 Git 이력을 보존하고, r175 복원본에서 인계에 필요한 설계와 참조 문서를 선별했다. r175는 일부 소실 자료가 복원되지 않은 보존본이다.
 
@@ -8,6 +10,7 @@
 | 승인된 결정과 복원된 결정 | [COS 결정 원장](docs/decisions/DESIGN_DECISIONS.md), [REC 결정 원장](recovery-design/RECOVERY_DECISIONS.md) |
 | 교회 앱 도입·메뉴 선택 | [담임목사님 중심의 도입과 선택형 교회 앱](recovery-design/WHITE_LABEL_SETTINGS_DISTRIBUTION_DRAFT.md#담임목사님-중심의-도입과-선택형-교회-앱) |
 | 교회별 디자인·쉬운 설정·방문 안내 | [화이트라벨 기획·첫 버전 화면 설계 인계](recovery-design/WHITE_LABEL_DESIGN_HANDOFF_2026-11-11.md) |
+| 저장 설계의 재검증·현재 한계 | [2026-11-11 재검증 보고서](docs/reviews/2026-11-11-design-revalidation.md) |
 | 기본 MVP 개발 인계 | [기능별 개발 인계](recovery-design/BASIC_MVP_DEVELOPMENT_HANDOFF.md), [구현 차단표](recovery-design/IMPLEMENTATION_BLOCKER_REGISTER.md), [검증 게이트](recovery-design/DESIGN_HANDOFF_GATES.md) |
 | 공동체와 소개 철회 | [공동체 계약 초안](recovery-design/COMMUNITY_LIFECYCLE_CONTRACT_DRAFT.md), [철회 인계 판정](recovery-design/LEADER_INTRO_INTEGRATED_REVIEW_4_HANDOFF_VERDICT.md), [확정 시각·조회 종료 초안](recovery-design/LEADER_INTRO_FINAL_TIME_PROOF_QUERY_BOUNDARY_DRAFT.md) |
 | 구현이 실제로 있는 위치 | [canonical v2.6](canonical/ChurchOS_Canonical_v2.6/README.md), [앱](apps/church-os/README.md) |

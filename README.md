@@ -6,6 +6,8 @@
 
 담임목사님이 도입을 결정하고 교회에 필요한 메뉴·콘텐츠·업무 기능·외부 연동을 선택합니다. 목회철학·사명·비전은 각각 앱에 넣거나 생략할 수 있으며, 셋 다 넣지 않아도 됩니다. [도입과 선택형 교회 앱 설계](recovery-design/WHITE_LABEL_SETTINGS_DISTRIBUTION_DRAFT.md#담임목사님-중심의-도입과-선택형-교회-앱)에서 제품 방향과 세부 설계 상태를 확인할 수 있습니다.
 
+개발 위치·데이터 소유권·중복 방지·검증 순서는 [코드 개발 전 통합 기준](docs/development/DEVELOPMENT_BLUEPRINT.md)을 따릅니다. 기술 지침이며 미결 정책이나 실행 검증을 대신하지 않습니다.
+
 ## 현재 구현 기준
 
 **[ChurchOS v2.6](canonical/ChurchOS_Canonical_v2.6/README.md)** 은 검증된 백엔드 구현 스냅샷입니다. 후속 제품 운영 방향은 아래 운영 v1.4·상세 v1.5를 따르며, 구현 여부는 기능표로 구분합니다. 먼저 [핵심 사용자 흐름](canonical/ChurchOS_Canonical_v2.6/ux/02_핵심사용자흐름.md)과 [실행 안내](canonical/ChurchOS_Canonical_v2.6/START_LIFECYCLE.md)를 읽으세요.
@@ -18,7 +20,7 @@
 
 ## 앱 구현 시작
 
-[Flutter 앱 0.1.0](apps/church-os/README.md)에 첫 화면과 앱 내 관리자 시연 흐름을 추가했습니다. 실제 API는 미연결입니다. 사용자 제공 위젯 테스트 3개는 PASS이며, 이 환경의 Flutter 실행과 실제 모바일 검증은 NOT_RUN입니다. GitHub Flutter CI는 새로 추가했으며 결과 확인 전입니다. 준비 스크립트는 Android/iOS만 생성합니다.
+[Flutter 앱 0.1.0](apps/church-os/README.md)에 첫 화면과 앱 내 관리자 시연 흐름을 추가했습니다. 실제 API는 미연결입니다. 사용자 제공 위젯 테스트 3개는 PASS이며, 이 환경의 Flutter 실행과 실제 모바일 검증은 NOT_RUN입니다. GitHub Flutter CI가 정의되어 있으나 개별 커밋의 통과 여부는 해당 실행 기록에서 확인해야 합니다. CI 통과는 실제 기기·로그인·전문 제품 연동 성공을 뜻하지 않습니다. 준비 스크립트는 Android/iOS만 생성합니다.
 
 ## 후속 전체 운영 기획
 
@@ -26,7 +28,7 @@
 
 [성경·찬송·설교·CHGO 나눔지 설계](docs/operations/ecosystem-v1/WORD_AND_SERMONS.md)를 추가했습니다. 현재 후속 설계이며 v2.6에 구현된 기능을 뜻하지 않습니다.
 
-[최신 운영 기준·화면·구현 순서 v1.3](docs/operations/ecosystem-v1/IMPLEMENTATION_HANDOFF.md)를 기준으로 후속 개발합니다. 기도는 앱 내 JLPrayer API 화면, 직접 영상 업로드는 별도 구축 서비스로 분리했습니다.
+[이전 구현 인계 v1.3](docs/operations/ecosystem-v1/IMPLEMENTATION_HANDOFF.md)는 당시의 구현 순서를 기록합니다. 현재 개발 인계는 [통합 안내](START_RECOVERY_CURRENT.md)에서 최신 결정과 함께 확인합니다. 기도는 앱 내 JLPrayer API 화면, 직접 영상 업로드는 별도 구축 서비스로 분리했습니다.
 
 [앱 전용 운영 기준 v1.4](docs/operations/ecosystem-v1/APP_ONLY_OPERATIONS.md)에 따라 별도 웹 없이 관리자까지 앱에서 업무를 수행하도록 설계합니다. 실제 앱 구현과 검증은 진행 전입니다.
 

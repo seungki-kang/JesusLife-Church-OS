@@ -2,11 +2,11 @@
 
 설계·권한·인계 기준은 [ChurchOS 개발 설계 통합 안내](START_RECOVERY_CURRENT.md)를 먼저 확인합니다.
 
-현재 정본은 **canonical/ChurchOS_Canonical_v2.6/** 입니다.
+검증된 구현 스냅샷은 **canonical/ChurchOS_Canonical_v2.6/** 입니다. 현재 제품 방향·승인된 정책·후속 초안은 통합 안내와 결정 원장을 함께 따릅니다. 설계 정밀화 중에는 아래 실행 절차를 자동으로 시작하지 않습니다.
 
 1. 해당 폴더의 README.md와 governance/CANONICAL.md를 읽습니다.
 2. START_LIFECYCLE.md에 따라 API·DB 검증을 실행합니다.
-3. 서비스 개발은 services/church-core에서 진행합니다.
+3. 이 경로는 기존 구현의 검증용입니다. 후속 기능을 추가하기 전 [활성 소스 이행 기준](docs/development/DEVELOPMENT_BLUEPRINT.md)을 따릅니다. 루트 services/church-core는 아직 생성되지 않은 이행 대상이며 현재 실행 경로가 아닙니다.
 
 이 문서의 경로는 위 정본 폴더 기준입니다. 루트의 기존 db/migrations/church_os는 별도 과거 계보이며 정본 서비스에 적용하지 않습니다. 기존 운영 DB의 이관은 아직 검증되지 않았습니다.
 
