@@ -1,0 +1,12 @@
+capability_id,operation,server_preconditions,boundary,basis,contract_status,execution_status
+OP-C01,업무 행사/대상 범위 조회,현재 소속·행사/공동체·정확한 조회 위임,"최소 명단, 연락처/원문 별도",SOURCE+DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C02,출석 생성/본인 조회,행사·대상 자격·본인/기록 권한·중복,"미기록=결석 금지, QR/SELF 허용 별도",SOURCE+DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C03,출석 정정·무효화,현재 정정 위임·기간·버전·4개 사유,"원결과/최소 정정 연결, 자동 삭제/병합 금지",REC-010/011/019,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C04,행사 후 정정 지정/수락,관리자 지정·대상 유효성·현재 제안/기한,제안 수락168h와 실제 권한168h 구분,REC-010/019,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C05,봉사 제안/수락·거절,최소 근거·본인·대상·현재 제안,개인 영성 기록/자동 운영 권한 없음,SOURCE+DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C06,봉사 배치 변경/종료,행위별 권한·현재 배치·기간·버전,참여와 운영 권한/인계 별도,DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C07,후속 업무 생성·배정,목적·대상·코드·담당 범위,operational_note NULL·자유 설명/첨부 없음,SOURCE+DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C08,후속 상태 변경/인계 요청,현재 배정·역할·상태·버전,배정 변경 주체 별도·권한 재위임 없음,REC-003+DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C09,연락처 읽기/연락 실행,명시 연락 위임·대상·본인 운영 선택,철회 뒤 새 열람/발송 차단·원문 로그 금지,COS-JOIN-036/037/038/039,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C10,운영 요약/제품 참조,목적별 현재 집계/연동 권한,개인 영성 점수/작성 상태·수료 자동 변환 없음,SOURCE+DRAFT,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN
+OP-C11,업무 확정/결과 불명·복원,업무별 현재 권한·멱등·증거·삭제 상태,새 키 자동 실행·조회기간 일괄삭제 금지,REC-025/027/032,DRAFT_MAPPING_EXISTING_POLICY,NOT_RUN

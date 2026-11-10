@@ -1,0 +1,13 @@
+capability_id,owner,operation,authority,allowed,forbidden,execution_status
+PC01,JLPrayer,본인 기도수첩,개인 소유권/제품 권한,원문은 허용 본인 임시 화면만,교회DB/운영자/로그 복제 금지,NOT_RUN
+PC02,JLPrayer,공동기도 조회/제출,교회/기도방/게시 정책,허용 게시본/본인 요청,개인 수첩 자동 공개 금지,NOT_RUN
+PC03,JLPrayer,기도방 참여/해제,현재 제품 참여 권한,허용 참여 상태,교회 출석과 등치 금지,NOT_RUN
+PC04,JLBible,성경 본문/검색,판본/기능별 권리,허용 본문/참조,열람으로 통독 완료 금지,NOT_RUN
+PC05,JLBible,찬송 뷰어/재생,가사/악보/음원별 권리,허용 콘텐츠/자산,무권리 다운로드 금지,NOT_RUN
+PC06,JLBible,통독 이동/복귀,제품 이용/본인 상태,허용 ref/handoff,URL 토큰/자동 진도 금지,NOT_RUN
+PC07,ChurchOS+STT,설교 음성/전사,교회 권리/편집 권한,허용 특정 소스 버전,재생링크로 무단 추출 금지,NOT_RUN
+PC08,CHGO+생성,설교 근거/초안,목적별 처리/현재 소스,근거/초안 버전,개인 원문/자동게시 금지,NOT_RUN
+PC09,ChurchOS,설교/나눔지 승인 게시,현재 승인/공개범위,승인 출력/이력,오래된 결과 자동공개 금지,NOT_RUN
+PC10,JLAcademy,도입/수강/수료 연결,교회 선택/개인 수강,허용 과정ref/본인 최소 상태,출석/앱 복귀를 수료로 등치 금지,NOT_RUN
+PC11,너랑나랑,실천 이동,제품/세션 권한,허용 초대/세션 최소 상태,문답/서명 원문 금지,NOT_RUN
+PC12,생명일기,실천 이동,본인 요청/제품 권한,단회 handoff,작성 여부/날짜/회차/코칭 수신 금지,NOT_RUN
