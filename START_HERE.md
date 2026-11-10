@@ -2,7 +2,7 @@
 
 설계·권한·인계 기준은 [ChurchOS 개발 설계 통합 안내](START_RECOVERY_CURRENT.md)를 먼저 확인합니다.
 
-현재 정본은 **canonical/ChurchOS_Canonical_v2.6/** 입니다.
+검증된 구현 스냅샷은 **canonical/ChurchOS_Canonical_v2.6/** 입니다. 현재 제품 방향·승인된 정책·후속 초안은 통합 안내와 결정 원장을 함께 따릅니다. 설계 정밀화 중에는 아래 실행 절차를 자동으로 시작하지 않습니다.
 
 1. 해당 폴더의 README.md와 governance/CANONICAL.md를 읽습니다.
 2. START_LIFECYCLE.md에 따라 API·DB 검증을 실행합니다.

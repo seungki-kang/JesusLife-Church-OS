@@ -18,7 +18,7 @@
 
 ## 앱 구현 시작
 
-[Flutter 앱 0.1.0](apps/church-os/README.md)에 첫 화면과 앱 내 관리자 시연 흐름을 추가했습니다. 실제 API는 미연결입니다. 사용자 제공 위젯 테스트 3개는 PASS이며, 이 환경의 Flutter 실행과 실제 모바일 검증은 NOT_RUN입니다. GitHub Flutter CI는 새로 추가했으며 결과 확인 전입니다. 준비 스크립트는 Android/iOS만 생성합니다.
+[Flutter 앱 0.1.0](apps/church-os/README.md)에 첫 화면과 앱 내 관리자 시연 흐름을 추가했습니다. 실제 API는 미연결입니다. 사용자 제공 위젯 테스트 3개는 PASS이며, 이 환경의 Flutter 실행과 실제 모바일 검증은 NOT_RUN입니다. GitHub Flutter CI가 정의되어 있으나 개별 커밋의 통과 여부는 해당 실행 기록에서 확인해야 합니다. CI 통과는 실제 기기·로그인·전문 제품 연동 성공을 뜻하지 않습니다. 준비 스크립트는 Android/iOS만 생성합니다.
 
 ## 후속 전체 운영 기획
 
@@ -26,7 +26,7 @@
 
 [성경·찬송·설교·CHGO 나눔지 설계](docs/operations/ecosystem-v1/WORD_AND_SERMONS.md)를 추가했습니다. 현재 후속 설계이며 v2.6에 구현된 기능을 뜻하지 않습니다.
 
-[최신 운영 기준·화면·구현 순서 v1.3](docs/operations/ecosystem-v1/IMPLEMENTATION_HANDOFF.md)를 기준으로 후속 개발합니다. 기도는 앱 내 JLPrayer API 화면, 직접 영상 업로드는 별도 구축 서비스로 분리했습니다.
+[이전 구현 인계 v1.3](docs/operations/ecosystem-v1/IMPLEMENTATION_HANDOFF.md)는 당시의 구현 순서를 기록합니다. 현재 개발 인계는 [통합 안내](START_RECOVERY_CURRENT.md)에서 최신 결정과 함께 확인합니다. 기도는 앱 내 JLPrayer API 화면, 직접 영상 업로드는 별도 구축 서비스로 분리했습니다.
 
 [앱 전용 운영 기준 v1.4](docs/operations/ecosystem-v1/APP_ONLY_OPERATIONS.md)에 따라 별도 웹 없이 관리자까지 앱에서 업무를 수행하도록 설계합니다. 실제 앱 구현과 검증은 진행 전입니다.
 

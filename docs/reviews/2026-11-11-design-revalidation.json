@@ -1,0 +1,182 @@
+{
+  "artifact": "ChurchOS design revalidation",
+  "date": "2026-11-11",
+  "baseline": "6251fa2927b5ff1f8ce7e7b0ec6b8fc8118e3966",
+  "static": {
+    "markdown_files": 240,
+    "internal_links": 2082,
+    "anchor_links": 585,
+    "external_links_skipped": 13,
+    "csv_files": 59,
+    "json_files": 52,
+    "docx_files": 27,
+    "decision_groups": {
+      "COS-CHURCH": 41,
+      "COS-JOIN": 59,
+      "COS-SSO": 48,
+      "REC": 98
+    },
+    "errors": [],
+    "status": "PASS",
+    "runtime": "NOT_RUN",
+    "limitations": [
+      "Local Markdown links/heading anchors only; external URLs are counted, not fetched.",
+      "DOCX validation checks ZIP integrity and document XML, not prose or visual layout.",
+      "Static structure does not certify authorization, theology, legal compliance or runtime."
+    ]
+  },
+  "canonical_unchanged": true,
+  "yaml_syntax": {
+    "status": "PASS",
+    "files": 22,
+    "scope": "parse only; not GitHub workflow execution"
+  },
+  "tests": {
+    "canonical_python": 24,
+    "node": 80,
+    "design_validator": 15
+  },
+  "environment": {
+    "python": "3.12.14",
+    "node": "24.22.1",
+    "dependency_note": "Temporary PYTHONPATH directory; canonical validator dependencies plus markdown-it-py 4.0.0"
+  },
+  "checks": [
+    {
+      "id": "canonical-static",
+      "command": [
+        "python",
+        "canonical/ChurchOS_Canonical_v2.6/tools/validate.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "c107a4d7c138a48b3acb97cdb801c8dccea6e43fe031f5bf29ad36eadec8a912"
+    },
+    {
+      "id": "sql-syntax",
+      "command": [
+        "python",
+        "canonical/ChurchOS_Canonical_v2.6/tools/sql_syntax.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "9317e02f4c22ad0a9fa4194c5277bbdd8d15b088b713da933633f6447fe07436"
+    },
+    {
+      "id": "python-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "canonical/ChurchOS_Canonical_v2.6/tests",
+        "-p",
+        "test_*.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "1349b3a18af830712854a643f703080c9c8741e1ddb9da6004cef8ec3eec1c4d"
+    },
+    {
+      "id": "e5-static",
+      "command": [
+        "python",
+        "tools/validation/validate_e5_regression.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "7a48bc696c3720cbad327a2e644f6073ff8ae3f838b662ca11ba49d6c878f11a"
+    },
+    {
+      "id": "b04-static",
+      "command": [
+        "python",
+        "tools/validation/validate_b04_openapi.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "45e38d49a206621a444c5dc7d223e174a9bf8cf53bc8000d6ad34d5d14aa3105"
+    },
+    {
+      "id": "c02-static",
+      "command": [
+        "python",
+        "tools/validation/validate_c02_policy.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "731b6a0a8fa21e89932a5c2f8a26d31a28d01de520abac2dec09a4ba8b7c569d"
+    },
+    {
+      "id": "design-checker-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/design",
+        "-p",
+        "test_*.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "edecde55c6deed9a44f005853dbf1b80bb79f5daf63b49aa23fa401cf6e41cc0"
+    },
+    {
+      "id": "design-static",
+      "command": [
+        "python",
+        "tools/validation/validate_design_docs.py"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "output_sha256": "d864b92dfe3624b29be3a15b770c3ba854dbb035881f21fa5332225edd9b6e88"
+    },
+    {
+      "id": "node-install",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "working_directory": "temporary copy of canonical church-core",
+      "output_sha256": "bf61ce82684e2ea0a2d145c974229749a00ca8cb5412e844e023aa8899eb6d65"
+    },
+    {
+      "id": "node-build-tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "working_directory": "temporary copy of canonical church-core",
+      "output_sha256": "979b61dcc49eca6ad18739f9afa71d0846af742304ec65cf4307adb3ab2ea0a7"
+    }
+  ],
+  "runtime": {
+    "flutter": "NOT_RUN",
+    "postgresql": "NOT_RUN",
+    "external_oidc_sso": "NOT_RUN",
+    "external_products": "NOT_RUN",
+    "backup_restore": "NOT_RUN",
+    "pilot": "NOT_RUN",
+    "github_new_workflow": "NOT_RUN"
+  },
+  "policy_gates": {
+    "e5": "OPEN",
+    "c02": "OPEN"
+  },
+  "limitations": [
+    "Local report records executed commands and output hashes; temporary raw logs are not durable external runtime evidence.",
+    "npm install skipped lifecycle scripts and audit; no current vulnerability-clean claim.",
+    "DOCX ZIP/XML checks do not certify prose or layout; external links were not fetched.",
+    "Static success does not resolve policy choices or implementation blockers."
+  ]
+}
