@@ -10,3 +10,8 @@ WL-C08,도메인/앱 링크 변경,소유/운영권·허용 목적,임의 URL을
 WL-C09,앱/API 버전 호환 안내,현재 설치버전·지원계약·서버 권한,새 기능 추정호출/업데이트실패로 업무상태 조작 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
 WL-C10,설정 롤백/배포 복구,현재 최소 복구 권한·계보·삭제/권리 근거,옛 revision 재적용/역할·원문/삭제 부활 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
 WL-C11,전용 앱 종료/이관,별도 계정/자산/데이터/지원 계약,개인 계정·다른 교회·제품 정본 포괄 이관/삭제 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C12,교회 소개 항목 선택·초안 작성,현재 교회 및 설정 편집 권한,미선택 항목 등록 불필요·초안 저장은 게시 아님,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C13,교회 소개 게시·내리기,현재 교회·게시 권한·초안/게시 버전 일치,게시 대상 제거와 운영 기록 삭제 분리·다시 추가 시 새 게시 필요,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C14,게시된 교회 소개 읽기,현재 교회·현재 게시본·허용 대상,직접 링크도 같은 검사·초안과 권한 밖 정보 제외,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C15,소개 게시 결과 확인,현재 교회·조회 권한·해당 시도 확인,응답 유실을 새 게시로 재실행하지 않음,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C16,종료 소개 검색·캐시 정리,확정된 교회와 게시 버전·현재 게시 상태,사용자 조회 차단과 사본 정리 증거 분리·새 버전 영향 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN

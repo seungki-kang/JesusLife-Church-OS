@@ -4,6 +4,8 @@
 
 앱을 열면 ChurchOS(최종 브랜드명 미정)가 나옵니다. ChurchOS는 교회 운영과 마케팅의 중심 접점이며 앱으로 개발합니다. 너랑나랑·생명일기·JLPrayer·JLBible·JLAcademy·CHGO는 독립 제품으로 설계·개발·배포하고 API로 연결합니다. 지저스라이프 원은 내부 생태계 명칭이며 사용자 화면에 노출하지 않습니다.
 
+담임목사님이 도입을 결정하고 교회에 필요한 메뉴·콘텐츠·업무 기능·외부 연동을 선택합니다. 목회철학·사명·비전은 각각 앱에 넣거나 생략할 수 있으며, 셋 다 넣지 않아도 됩니다. [도입과 선택형 교회 앱 설계](recovery-design/WHITE_LABEL_SETTINGS_DISTRIBUTION_DRAFT.md#담임목사님-중심의-도입과-선택형-교회-앱)에서 제품 방향과 세부 설계 상태를 확인할 수 있습니다.
+
 ## 현재 구현 기준
 
 **[ChurchOS v2.6](canonical/ChurchOS_Canonical_v2.6/README.md)** 은 검증된 백엔드 구현 스냅샷입니다. 후속 제품 운영 방향은 아래 운영 v1.4·상세 v1.5를 따르며, 구현 여부는 기능표로 구분합니다. 먼저 [핵심 사용자 흐름](canonical/ChurchOS_Canonical_v2.6/ux/02_핵심사용자흐름.md)과 [실행 안내](canonical/ChurchOS_Canonical_v2.6/START_LIFECYCLE.md)를 읽으세요.
