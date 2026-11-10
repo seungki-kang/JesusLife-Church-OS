@@ -1,5 +1,7 @@
 # 개발 시작
 
+설계·권한·인계 기준은 [ChurchOS 개발 설계 통합 안내](START_RECOVERY_CURRENT.md)를 먼저 확인합니다.
+
 현재 정본은 **canonical/ChurchOS_Canonical_v2.6/** 입니다.
 
 1. 해당 폴더의 README.md와 governance/CANONICAL.md를 읽습니다.

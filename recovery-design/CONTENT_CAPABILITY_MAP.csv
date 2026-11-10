@@ -1,0 +1,13 @@
+capability_id,operation,actor_precondition,boundary,baseline_and_delta,basis,execution_status
+CT-C01,홈 카드 조합,현재 본인/교회·카드별 권한,게시/시각/대상·개수/미리보기까지 필터,실제 조합 계약 신규,SOURCE+REC-002,NOT_RUN
+CT-C02,공지 일반 목록/상세,유효 소속·공지 대상,ALL_MEMBERS/LEADERS/STAFF와 게시 시각,"기존 API 있음, 공개 외부 아님",SOURCE,NOT_RUN
+CT-C03,일정 목록/상세·달력,유효 소속·일정 범위,공동체 ACL 미구현·날짜모드 명시,"기존 시작시각 필터, 교차조회 후보",SOURCE,NOT_RUN
+CT-C04,관리 목록/초안함,현재 관리/편집 범위,"일반 열람과 분리, 미권한 제목/이력 비공개",신규 계약 필요,DRAFT,NOT_RUN
+CT-C05,초안 생성/편집,현재 편집 범위,정확한 입력·버전·교회·행위 분류,"현재 TENANT_ADMIN, 위임 신규",REC-002,NOT_RUN
+CT-C06,게시본 유지 중 수정본 저장,현재 편집 범위,일반 공개본 불변·수정본 비공개,"새 구조 DRAFT, 현재 PATCH 즉시 변경",DRAFT,NOT_RUN
+CT-C07,게시/수정본 반영,현재 게시 범위,최신 버전·대상·시각·PATCH status 우회 금지,"기존 publish/버전·멱등 유지, 분리 신규",REC-002,NOT_RUN
+CT-C08,공지 철회,행위별 허용 범위,노출 중단·취소 종결/삭제 분리,"현 cancel 종결, 일시 숨김 미지원",SOURCE+DRAFT,NOT_RUN
+CT-C09,실제 행사 취소,행위별 취소 범위,개최 취소 사실·연결 업무·최신 버전,"현 cancel 있음, 취소 안내/영향 신규",SOURCE+DRAFT,NOT_RUN
+CT-C10,일정 게시만 철회,명시 게시 철회 권한,행사 개최 사실을 취소로 변경하지 않음,"기존 별도 경로 없음, 후보",DRAFT,NOT_RUN
+CT-C11,결과 불명 확인/충돌,현재 최소 조회/관리 자격,새 의도/키 자동 생성 금지,신규 최소조회는 r29 초안,REC-025/026/027,NOT_RUN
+CT-C12,알림/복원 공개 게이트,별도 최소 발행/복구 권한,현재 대상·시각·철회·권한·삭제 대조,새 알림/복구 계약 미검증,DRAFT,NOT_RUN

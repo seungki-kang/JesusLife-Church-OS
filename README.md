@@ -1,5 +1,7 @@
 # ChurchOS
 
+현재 개발 설계와 미결 사항은 [ChurchOS 개발 설계 통합 안내](START_RECOVERY_CURRENT.md)에서 시작합니다.
+
 앱을 열면 ChurchOS(최종 브랜드명 미정)가 나옵니다. ChurchOS는 교회 운영과 마케팅의 중심 접점이며 앱으로 개발합니다. 너랑나랑·생명일기·JLPrayer·JLBible·JLAcademy·CHGO는 독립 제품으로 설계·개발·배포하고 API로 연결합니다. 지저스라이프 원은 내부 생태계 명칭이며 사용자 화면에 노출하지 않습니다.
 
 ## 현재 구현 기준

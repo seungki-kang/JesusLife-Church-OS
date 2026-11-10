@@ -1,0 +1,25 @@
+id,scenario,expected,basis,execution_status
+RC01,조회168시간 만료,직접/목록 공개 중단; 서버 전체삭제 아님,SOURCE+DRAFT,NOT_RUN
+RC02,영수증24시간 만료,행 삭제/키 재실행 안전성을 별도 확인,SOURCE+DRAFT,NOT_RUN
+RC03,교인 탈퇴,공지/공동출석 등 포괄 연쇄삭제 금지,SOURCE+DRAFT,NOT_RUN
+RC04,연락 동의 철회,이후 열람/새 발송 차단·해당 사본168시간 삭제,SOURCE+DRAFT,NOT_RUN
+RC05,일반 감사 수명 미정,정정 이력1년으로 자동 대체 금지,SOURCE+DRAFT,NOT_RUN
+RC06,개설 승인 통지,푸시 발송만으로 정상 통지 시각 추정 금지,SOURCE+DRAFT,NOT_RUN
+RC07,보완 무응답 종료,외부 심사 지연을 신청자 무응답으로 처리 금지,SOURCE+DRAFT,NOT_RUN
+RC08,개설 서류 백업 복제,원래 삭제/백업 기한 초기화 금지,SOURCE+DRAFT,NOT_RUN
+RC09,원문 백업30일,최소 종료이력 자체 백업에 확대 금지,SOURCE+DRAFT,NOT_RUN
+RC10,공통 탈퇴 제품 전달 지연,공통 확정 기산점 유지,SOURCE+DRAFT,NOT_RUN
+RC11,서비스 종료 처리 접수,운영본 삭제/전체 종결로 표시 금지,SOURCE+DRAFT,NOT_RUN
+RC12,한 사본만 삭제,전체 사본 완료 표시 금지,SOURCE+DRAFT,NOT_RUN
+RC13,운영본 삭제 뒤 백업 잔존,일반 열람/개인 복구로 사용 금지,SOURCE+DRAFT,NOT_RUN
+RC14,유효 예외 신청만 접수,자동 보유 연장/권한 확대 금지,SOURCE+DRAFT,NOT_RUN
+RC15,예외 승인자,목적별 독립 승인자 검증,SOURCE+DRAFT,NOT_RUN
+RC16,정정 예외 보유 종료,일반기간 후 해당 예외에7일 삭제/30일 백업 적용,SOURCE+DRAFT,NOT_RUN
+RC17,장기 미해결,가짜 종결/무기한 유지로 회피 금지,SOURCE+DRAFT,NOT_RUN
+RC18,백업 복원,최신 삭제/정지/소속/실행 결과 재적용 전 공개 금지,SOURCE+DRAFT,NOT_RUN
+RC19,재적용 참조 삭제,옛 사본 재등장/재실행 위험 확인,SOURCE+DRAFT,NOT_RUN
+RC20,삭제 중 재이용,새 세대 분리·기존 기산/삭제 유지,SOURCE+DRAFT,NOT_RUN
+RC21,기도 연결 해제,개인 제품 탈퇴/원문 삭제와 구분,SOURCE+DRAFT,NOT_RUN
+RC22,설교 소스 철회,늦은 결과 자동 게시 금지·파생본 권리 확인,SOURCE+DRAFT,NOT_RUN
+RC23,Academy 수료,생명일기 원문/작성상태 수집·삭제로 확장 금지,SOURCE+DRAFT,NOT_RUN
+RC24,보관 증거 작성,원문/연락처/토큰을 증거 기록에 복제 금지,SOURCE+DRAFT,NOT_RUN

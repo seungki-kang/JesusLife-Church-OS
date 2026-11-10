@@ -1,5 +1,7 @@
 # ChurchOS 개발 지침
 
+후속 운영 설계는 [개발 설계 통합 안내](START_RECOVERY_CURRENT.md)에서 찾습니다. COS·REC의 승인 범위와 초안·미실행 상태를 구분합니다.
+
 ## 정본과 현재 상태
 
 - README.md에서 최신 운영·상세 설계와 구현 경로를 확인한다. docs/operations/ecosystem-v1은 현재 설계 출발점이며 후속 결정이 있으면 갱신한다.

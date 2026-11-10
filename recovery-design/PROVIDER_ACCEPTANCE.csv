@@ -1,0 +1,37 @@
+id,scenario,expected,basis,execution_status
+P01,잘못된 audience 토큰,제품 API 거절,SOURCE+DRAFT,NOT_RUN
+P02,교회 관리자 개인 수첩 접근,개인 권한 없이 거절,SOURCE+DRAFT,NOT_RUN
+P03,본인 수첩 쓰기 응답 유실,결과 불명/확인 우선; 자동 중복 작성 금지,SOURCE+DRAFT,NOT_RUN
+P04,수첩→공동기도,대상/범위 확인; 자동 공개 금지,SOURCE+DRAFT,NOT_RUN
+P05,교회 전환 뒤 옛 기도 응답,다른 교회 화면 표시 금지,SOURCE+DRAFT,NOT_RUN
+P06,로그아웃 뒤 늦은 개인 응답,새 계정 상태에 붙이지 않음,SOURCE+DRAFT,NOT_RUN
+P07,기도방 탈퇴,개인 수첩 삭제로 처리하지 않음,SOURCE+DRAFT,NOT_RUN
+P08,JLPrayer 장애,교회 공지/일정 유지,SOURCE+DRAFT,NOT_RUN
+P09,콘텐츠 판본 권리 없음,무권리 대체 수집 금지,SOURCE+DRAFT,NOT_RUN
+P10,찬송 가사만 권리 있음,악보/음원 허용 추론 금지,SOURCE+DRAFT,NOT_RUN
+P11,본문 읽기,통독 완료 생성 금지,SOURCE+DRAFT,NOT_RUN
+P12,오프라인 콘텐츠 권리 불명,캐시로 무조건 열람 금지,SOURCE+DRAFT,NOT_RUN
+P13,handoff 재사용,단회 검증 거절,SOURCE+DRAFT,NOT_RUN
+P14,handoff 만료,최대10분 계약/새 동작,SOURCE+DRAFT,NOT_RUN
+P15,등록되지 않은 복귀 URI,이동 거절,SOURCE+DRAFT,NOT_RUN
+P16,다른 계정으로 앱 복귀,원계정 기록 자동 귀속 금지,SOURCE+DRAFT,NOT_RUN
+P17,외부 앱 미설치,안내/안전 복귀; 기본 뷰어 별도,SOURCE+DRAFT,NOT_RUN
+P18,생명일기 복귀,작성 여부/날짜/회차 수집 금지,SOURCE+DRAFT,NOT_RUN
+P19,YouTube 링크만 있음,내용 추측/무단 추출/생성 금지,SOURCE+DRAFT,NOT_RUN
+P20,검토 안 된 전사,확정 설교 발언으로 게시 금지,SOURCE+DRAFT,NOT_RUN
+P21,설교 소스 수정 뒤 결과,소스 버전 불일치 재검토,SOURCE+DRAFT,NOT_RUN
+P22,설교 처리 권리 철회 뒤 결과,새 공개 전 현재 권리 확인,SOURCE+DRAFT,NOT_RUN
+P23,AI 초안 완료,사람 승인 전 교인 비노출,SOURCE+DRAFT,NOT_RUN
+P24,CHGO 장애,현재 허용 승인본/수동 작성 유지,SOURCE+DRAFT,NOT_RUN
+P25,개인 일기 포함 생성 입력,처리 거절/제외,SOURCE+DRAFT,NOT_RUN
+P26,Academy 미도입,기본 교회 기능 유지,SOURCE+DRAFT,NOT_RUN
+P27,교회 Academy 도입,전 교인 자동 수강/공유 금지,SOURCE+DRAFT,NOT_RUN
+P28,출석/너랑나랑 복귀,수료 자동 판정 금지,SOURCE+DRAFT,NOT_RUN
+P29,수강 종료,개인 실천 삭제/과거 공유 자동 복구 금지,SOURCE+DRAFT,NOT_RUN
+P30,중복/역순 이벤트,최신 권한/상태 재검증,SOURCE+DRAFT,NOT_RUN
+P31,메뉴 감추기,제품 탈퇴/자료 삭제와 구분,SOURCE+DRAFT,NOT_RUN
+P32,개인 연결 해제,미사용handoff/연결용 캐시 처리; 제품 종료 아님,SOURCE+DRAFT,NOT_RUN
+P33,공통 정지/탈퇴,적용 범위별 기존60초 차단 검증,SOURCE+DRAFT,NOT_RUN
+P34,제공자 회복,자동 공유 재개/재작성 금지,SOURCE+DRAFT,NOT_RUN
+P35,원문 포함 로그/푸시,민감 원문/토큰 비노출,SOURCE+DRAFT,NOT_RUN
+P36,제공자 계약 초안 존재,실제 연동 PASS로 표시 금지,SOURCE+DRAFT,NOT_RUN

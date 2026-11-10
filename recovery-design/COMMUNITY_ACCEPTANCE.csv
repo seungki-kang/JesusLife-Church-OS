@@ -1,0 +1,163 @@
+id,scenario,expected,basis,execution_status
+CA01,대기/거절/정지/탈퇴/타교회만 소속자의 신규참여,REC-033 자격 거절·대상교회 가입승인 유효소속 검증,REC-033_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA02,방문자/외부봉사자 및 동일이름 대상,자동교인/공동체 등록·이름/전화번호 병합 금지; 별도행사경로 미결,REC-033_AGREED_SCOPED+SOURCE+DRAFT,NOT_RUN
+CA03,복수 공동체 가입,REC-046 같은교회 복수참여 허용; 공동체별 자격/승인/역할·권한 독립; unique는 같은공동체 중복방지,REC-033/034/035/046_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA04,본인 신청 승인 전/배정 제안 본인수락 전,REC-034 승인 전·REC-035 수락 전 참여권한 없음; 알림열람/담당대리수락 금지; REC-036 생성+168h 수락차단·재전송연장없음,REC-034/035/036_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA05,리더 직함/교회 가입심사 권한만 가진 신청 승인자,REC-034 참여심사 거절; 해당교회 관리자/해당공동체 명시 심사 유효담당만 승인,REC-034_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA06,동시 신청/배정제안,중복/상충정책 확인·참여 중복 생성 없음,SOURCE+DRAFT,NOT_RUN
+CA07,신청취소와 승인경합,최신권한/상태 검증·한 유효결과,SOURCE+DRAFT,NOT_RUN
+CA08,공동체 거절 사유,교회가입2종/자유신앙메모 자동이식 금지,SOURCE+DRAFT,NOT_RUN
+CA09,B이동 거절/취소,REC-047 이동 확정 전·거절·취소 시 A 참여 유지; 별도 교회자격 차단은 적용,REC-047_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA10,이동응답 유실,결과 확인·새키 자동재이동 금지,SOURCE+DRAFT,NOT_RUN
+CA11,동시 A→B/A→C,버전/자격 재검증·이중확정 방지,SOURCE+DRAFT,NOT_RUN
+CA12,이동 중 교회탈퇴,최종권한 재검증·옛소속으로 확정 금지,SOURCE+DRAFT,NOT_RUN
+CA13,이동 확정,A역사출석 B로 수정 없음·권한복사 없음,SOURCE+DRAFT,NOT_RUN
+CA14,타교회 공동체 이동,같은교회이동 경로로 우회 금지,SOURCE+DRAFT,NOT_RUN
+CA15,LEADER 문자열만 있음,전체명단/연락/게시/가입승인 권한 없음,SOURCE+DRAFT,NOT_RUN
+CA16,리더 직접 후임위임,관리자 지정/대상수락 절차 우회 불가,SOURCE+DRAFT,NOT_RUN
+CA17,리더 수락 전,일반업무 관리권한 활성화 없음,SOURCE+DRAFT,NOT_RUN
+CA18,리더 해제/소속상실,새접근/늦은응답 차단·과거이력 삭제 아님,SOURCE+DRAFT,NOT_RUN
+CA19,마지막 공동체리더 탈퇴,교회마지막관리자 보호 자동적용 금지,SOURCE+DRAFT,NOT_RUN
+CA20,일반참여자 명단,전체명단/연락 자동공개 없음,SOURCE+DRAFT,NOT_RUN
+CA21,명단 검색/페이지총수,권한외 인물/비공개존재 추정 차단,SOURCE+DRAFT,NOT_RUN
+CA22,연락동의 철회,역할있어도 새열람/발송 차단·해당사본 정책,SOURCE+DRAFT,NOT_RUN
+CA23,부모공동체 리더,자식/형제명단 자동 접근 없음,SOURCE+DRAFT,NOT_RUN
+CA24,A→B→A 부모변경,다단계순환·동시변경 검증,SOURCE+DRAFT,NOT_RUN
+CA25,본인 공동체탈퇴,교회/다른공동체/개인제품 종료 아님,SOURCE+DRAFT,NOT_RUN
+CA26,정지해제/재가입,옛역할/위임/개인공유 자동복원 없음,SOURCE+DRAFT,NOT_RUN
+CA27,공동체 보관과 참여확정 경합,최신조직상태·버전 확인·새가입차단,SOURCE+DRAFT,NOT_RUN
+CA28,부모 공동체 보관,자식/기도방/수강 자동종료 없음,SOURCE+DRAFT,NOT_RUN
+CA29,보관 공동체 재개,옛초대/권한/요청 자동복원·재실행 없음,SOURCE+DRAFT,NOT_RUN
+CA30,백업복원,최신소속/참여/위임/삭제 재적용 전 공개 금지,SOURCE+DRAFT,NOT_RUN
+CA31,운영이력 보유,모든기록1년/백업30일/조회168h 일괄적용 금지,SOURCE+DRAFT,NOT_RUN
+CA32,공동체 자료 외부전달,기도/일기/관계원문·작성상태 수집/공유 금지,SOURCE+DRAFT,NOT_RUN
+CA33,배정제안 생성+168시간 경계,기한 도달부터 수락차단; 최종확정 경합 계약 검증,REC-036_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA34,배정제안 알림 재전송/늦은열람,원래 서버 유효생성시각 유지·기한연장없음,REC-036_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA35,만료제안 재시도/새제안,옛제안 수락차단; 새제안은 현재자격 재확인·자동생성/자동수락 없음,REC-036_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA36,제안168시간 만료,실제참여/리더임기/조회·물리보유 종료로 확대금지,REC-036_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA37,리더/참여신청 심사권한만으로 배정제안 생성,REC-037 거절; 관리자 또는 해당공동체 명시배정 유효담당만 생성,REC-037_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA38,배정제안 생성권한으로 다른공동체/대리수락/명단전체열람,대상 공동체 생성행위 범위 검증; 추가 행위/필드권한 자동확대 금지,REC-033/035/037_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA39,공동체 담당자가 후임 지정/타담당 해제/직접 재위임,REC-038 거절; 해당교회 현재유효 관리자 지정/해제 경로만 허용,REC-034/037/038_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA40,관리자가 공동체 심사 담당만 지정,심사/배정 범위 구분; 배정·관리자·연락권한 자동 부여 없음,REC-034/037/038_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA41,외부/대기/거절/정지/탈퇴/타교회만 소속 담당자 지정,REC-039 지정 거절; 해당교회 가입승인 유효소속 자격 검증,REC-034/037/038/039_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA42,같은교회 유효교인의 담당권한 자동취득,자격만으로 활성권한 없음; 관리자 명시지정/공동체·심사/배정 범위 검증,REC-034/037/038/039_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA43,관리자 지정만 있고 대상 본인 업무수락 없음,REC-040 심사/배정 업무권한 비활성; 신청자목록/처리 접근 차단,REC-035/038/039/040_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA44,공동체 참여수락/알림열람/관리자대리수락,담당업무 수락으로 대체 불가; 본인이 공동체/심사·배정 범위 확인 명시수락,REC-035/038/039/040_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA45,담당 지정 유효시점+168h 경계/알림재전송,REC-041 기한 도달 수락차단; 원지정 기산점 유지·미수락권한 없음,REC-038/039/040/041_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA46,만료 담당 지정 재시도/새지정,관리자가 현재자격/범위확인 후 새지정; 옛지정 되살림/자동수락 금지·실제임기와 분리,REC-038/039/040/041_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA47,종료 미지정/1년초과 임기·연장,REC-042 사전종료와 교회달력1년 상한 확인; 최대1년 자동 기본임기 아님,REC-023/040/041/042_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA48,연장 미수락/늦은수락/공백후수락,자동연장·약정종료 자동이동·공백권한 소급 금지; 기존기간계산 대조,REC-023/040/041/042_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA49,담당자 정지/탈퇴 뒤 옛토큰/화면으로 심사·배정,REC-043 즉시 권한차단; 진행요청/늦은응답 기술경합 별도검증·확정결과 소급취소 없음,REC-038/039/040/041/042/043_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA50,정지해제/재가입/소속복구 뒤 옛담당 권한/수락 재사용,자동복원 불가; 현재관리자 재지정·본인 새수락·현재자격/범위/기한/기간 검증,REC-038/039/040/041/042/043_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA51,제안자 배정권한상실 후 옛화면/토큰으로 미수락제안 수락,REC-044 보류·현재관리자재확인 전 수락차단; 과거확정 참여 소급취소 아님,REC-033/035/036/043/044_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA52,보류/관리자확인 중 원168h 만료,원기한 계속진행·수락차단; 재확인/통지/권한회복으로 연장/되살림 없음; 새제안 별도,REC-033/035/036/043/044_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA53,보류제안 재확인에서 대상교인/공동체 변경,REC-045 기존내용 덮어쓰기 금지·취소이력 보존·새제안/새대상 본인수락·현재자격/권한검증,REC-033/035/036/037/044/045_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA54,내용불변 재확인 또는 변경취소/참여수락 경합,단순재확인 원168h 유지; 실제확정 참여 소급취소금지·취소/새생성 실패/중복 기술계약 검증,REC-033/035/036/037/044/045_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA55,B공동체 추가참여/종료,A참여 자동종료/이동·과거기록 이전 없음; 공통자격상실은 기존규칙 별도검증,REC-033/034/035/037/046_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA56,A리더/담당의 B명단조회·교회전체인원 집계,역할/명단권한 자동복사 금지; 공동체관계수와 실인원 구분·비공개참여 노출금지,REC-033/034/035/037/046_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA57,B 참여의 유효한 확정과 A 종료,함께 처리하는 이동 정책 적용; B 추가참여는 A 종료 아님; 구체 원자성/이력 확정은 기술초안 검증 필요,REC-046/047_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA58,이동 처리 중 실패·응답유실,A 선종료 금지; 한쪽만 성공노출 방지 설계·결과확인 우선; 이미확정 이동은 요청취소로 소급복구하지 않는 기술초안 대조,REC-046/047_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA59,B참여만 수락하고 A종료 확인은 없음,A종료 동의로 간주하지 않음; 추가참여와 이동 구분·자동이동 금지,REC-046/047/048_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA60,본인이 A종료+B참여 영향을 명시 확인,필요조건 충족일 뿐 현재 자격/승인/권한 검증 생략 금지; 동의대상·버전/증빙의 기술초안 검증 필요,REC-046/047/048_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA61,"본인 동의+B 유효승인, A담당자 미응답",A측 추가승인 요구하지 않음; 현재자격/상태검증 후 REC-047 함께확정·결과안내,REC-047/048/049_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA62,이동 결과 안내 실패/미열람 또는 업무인계 미완료,숨은 추가승인/이동 대기조건으로 사용 금지; 종료자 접근유지 금지; 통지실패 전달/인계 세부는 초안 검증,REC-047/048/049_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA63,A심사담당/B리더/배정담당이 B이동 승인 시도,B 명시 참여심사권 또는 현재 해당교회 관리자 자격 없으면 차단; 직함/다른범위 권한 자동승계 금지,REC-034/038/039/040/041/042/043/047/048/049/050_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA64,B심사담당 화면열람 후 권한해제/임기만료/소속상실,옛 화면/권한으로 승인 금지; 현재 유효범위 재검증·본인동의/대상자격도 유지; 확정경합 제어는 기술검증 필요,REC-034/038/039/040/041/042/043/047/048/049/050_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA65,이동 대상인 관리자/B심사담당이 자기 요청 승인,REC-051 차단; 역할전환으로 우회 불가; 본인 이동동의는 별도 유효조건으로 유지,REC-047/048/050/051_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA66,본인 외 다른 유효 승인자가 없거나 심사권 해제됨,REC-052 관리자 다른심사담당 기존절차 지정/본인수락 후 심사; 그전 자동/셀프승인 금지·A선종료 금지; 관리자/지정대상도 없음은 OPEN,REC-047/048/050/051/052_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA67,다른 심사담당 지정 제안 후 미수락/거절/168시간 만료,담당 권한 미활성·이동 자동승인 없음; 이동기한과 담당수락기한 분리·이동미확정만으로 A선종료 금지,REC-038/039/040/041/042/043/047/048/050/051/052_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA68,다른 심사담당 본인수락 후 이동 처리,담당 현재 유효범위 재검증 후 별도 심사; 담당수락 자체는 이동 승인 아님; 본인동의/대상자격/함께확정 조건 유지,REC-038/039/040/041/042/043/047/048/050/051/052_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA69,본인이 미확정 이동 요청 취소,취소 가능·기존 A참여 유지; 교회탈퇴/다른공동체 종료/담당해제로 확대 금지; 서버결과 확인,REC-047/048/053_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA70,이미 확정된 이동에 취소 재시도·응답유실,요청취소로 A복구/B소급말소 금지; 결과확인 우선·중복이동 금지; 승인/취소 경합정책 별도 OPEN,REC-047/048/053_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA71,취소 먼저 유효 최종확정,A유지/B이번이동 미활성; 뒤늦은 승인 덮어쓰기 금지,REC-047/048/050/051/052/053/054_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA72,이동 먼저 유효 최종확정,A종료+B확정 함께처리; 뒤늦은 취소로 소급복구 금지,REC-047/048/050/051/052/053/054_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA73,처리 먼저 시작했으나 실패/롤백,시작/접수/잠금만으로 승자 확정 금지; 반쪽 성공 노출 금지,COMMUNITY_MOVE_RACE_DRAFT.md_PROPOSED+TECHNICAL_DRAFT;REC-047/048/049/050/051/052/053_SCOPED_BASE,NOT_RUN
+CA74,최종응답 유실·중복재시도,현재권한으로 결과확인 우선; 새 키 자동 재이동/중복이력 금지,COMMUNITY_MOVE_RACE_DRAFT.md_PROPOSED+TECHNICAL_DRAFT;REC-047/048/049/050/051/052/053_SCOPED_BASE,NOT_RUN
+CA75,화면진입 후 심사권/교회자격 철회 경합,오래된 화면의 역할로 확정 금지; 유효조건/최종확정 지점 기술 검증 필요,COMMUNITY_MOVE_RACE_DRAFT.md_PROPOSED+TECHNICAL_DRAFT;REC-047/048/049/050/051/052/053_SCOPED_BASE,NOT_RUN
+CA76,이동 확정 후 A결과통지 실패,확정결과 반대로 실행 금지; 통지/인계는 승인대기 조건 아님·실패전달 상세 초안,COMMUNITY_MOVE_RACE_DRAFT.md_PROPOSED+TECHNICAL_DRAFT;REC-047/048/049/050/051/052/053_SCOPED_BASE,NOT_RUN
+CA77,같은 A참여에서 A→B/A→C 동시 신청,미확정 이동 둘을 동시에 유지하지 않음; 구체 경쟁제어/참여세대 식별 기술검증 필요; 추가참여와 구분,REC-046/047/048/053/054/055_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA78,A→B 목적지를 C로 변경·취소 응답유실,B요청 취소 실제결과 확인 후 C새신청/본인 새동의; 옛대상 덮어쓰기 금지·이동먼저 확정이면 옛A 재사용 금지,REC-046/047/048/053/054/055_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA79,A/B 양쪽 현재 참여 중에 A→B 이동 시도,새 이동/B중복관계 생성 없이 A종료절차 안내·B참여 유지; 안내로 A자동종료 금지,REC-046/047/048/055/056_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA80,종료/정지/미수락 B관계 또는 이동신청 후 별도B 활성화,현재 유효참여 판정 필요; 과거/미확정 자동간주 금지; 후발B 활성화의 종결/전환은 OPEN·A자동종료 근거로 쓰지 않음,REC-046/047/048/055/056_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA81,본인 종료영향 명시확인 후 A탈퇴,담당 별도승인 불필요·현재본인/관계 검증; 교회소속/B참여 유지·단순열람으로 종료 금지,REC-046/056/057_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA82,A탈퇴 시 담당미열람/업무인계·후임미완료,탈퇴대기 조건/종료자 접근유지 금지; 과거유효출석 소급말소 금지·직함/위임 연계상세 별도,REC-046/056/057_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA83,마지막 공동체 리더 본인탈퇴·후임 미정/미수락,REC-057 영향확인 후 별도승인/후임완료 대기없이 탈퇴; 관리자 공백안내·별도 지정,REC-046/057/058_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA84,리더 탈퇴 뒤 공백안내 실패/후임 미활성,종료자 옛접근 유지·일반구성원 자동승격/직접재위임 금지; 교회/다른공동체 별도권한·과거이력 보존,REC-046/057/058_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA85,탈퇴 후 본인신청 또는 배정으로 재가입,현재자격·공동체상태/해당경로 승인·새수락 검증; 옛승인/동의 재사용 금지·역사 이력 덮어쓰기 금지,REC-033/034/035/036/037/057/058/059_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA86,옛 리더/심사담당이 재가입 후 예전업무·기록 접근,참여만으로 옛직함/업무권한/과거자료 열람 자동복원 금지; 필요권한 별도 현재지정/수락·타제품 공유 자동회복 금지,REC-033/034/035/036/037/057/058/059_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA87,일반 참여자 공동체 화면/검색/명단 접근,본인상태·허용소개·동의리더소개 기본; 전체구성원 명단/연락처 자동공개 금지·타공동체 권한확대 금지,REC-046/060_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA88,리더 직함/담당 수락만 있고 소개공개 동의 없음,소개공개 동의로 대체 불가; 소개동의 있어도 연락처/민감필드 자동공개 금지·필드/철회 상세 OPEN,REC-046/060_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA89,해당공동체 유효참여자와 다른공동체/과거/대기자 리더소개 조회,유효소개동의+현재해당참여 범위 검증·일반기본공개를 타공동체/과거/대기로 확대 금지,REC-060/061_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA90,공동체 내부 소개동의로 교회전체/인터넷 게시 시도,기본동의에 확대공개 자동포함 금지·별도동의/절차 미결; 별도동의만으로 미구현 공개기능 활성화 금지,REC-060/061_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA91,사진/소개 미선택 또는 계정 프로필에 사진이 있음,공개동의 이름/직함만 기본·사진/소개 강제/자동전재 금지·소개동의 없으면 기본필드도 자동공개 금지,REC-060/061/062_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA92,소개공개 동의만으로 전화/이메일 노출 시도,별도 연락동의 필요·심사연락처 자동복사 금지; 동의 있어도 대상/필드 계약 없이 전체공개 허용하지 않음,REC-060/061/062_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA93,리더 본인 앱 소개동의 철회·관리자 미응답,관리자 승인 대기없이 해당 소개공개 중단; 직함/업무권한 자동해제 금지·현재유효조건 별도,REC-060/061/062/063_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA94,철회 응답유실·캐시/공유링크·별도 연락동의 존재,결과확인 우선·철회동의로 후속공개 금지; 별도동의 범위 분리·캐시전파/사본회수/원본삭제 완료 주장 금지,REC-060/061/062/063_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA95,직함종료 후 과거소개동의 유효로 표시됨,해당 현재리더 소개 중단·과거이력/다른공동체 소개 자동삭제 금지,REC-060/061/062/063/064_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA96,같은 사람 리더 재지정·옛동의/사진/소개 남음,본인 현재공개 재확인 전 기본항목 포함 자동재게시 금지·지정/업무수락으로 대체 금지,REC-060/061/062/063/064_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA97,관리자가 사진/짧은 소개 변경안 제시,제안만 가능·원문 직접덮어쓰기/자동적용 금지; 본인 편집/반영 방식과 게시조건 구분,REC-060/061/062/063/064/065_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA98,소개문구/제안으로 직함 변경 또는 편집후 공개 시도,직함은 유효 지정정본·문구로 권한생성 금지; 공개동의/대상/직함상태 재검증·저장후 자동게시 미결,REC-060/061/062/063/064/065_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA99,리더 소개 편집 저장/자동저장·관리자 수정 제안,공개성공으로 처리하지 않음; 본인 미리보기/명시 공개반영 필요·미게시초안 일반참여자 노출 금지,REC-060/061/062/063/064/065/066_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA100,비공개/철회/직함종료 상태에서 편집·공개반영 재시도,편집만으로 자동공개 금지·현재직함/동의/범위 검증·철회후 버튼만으로 동의복원 금지·재동의 상세 OPEN,REC-060/061/062/063/064/065/066_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA101,유효 공개소개를 편집/저장·사진 교체하되 미게시,기존 유효공개본 유지·초안 필드/사진이 일부 먼저 보이지 않음; 버전/미디어참조 기술검증 필요,REC-060/061/062/063/064/065/066/067_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA102,편집 중 공개동의 철회 또는 직함종료,기존공개본도 중단·유지정책으로 우회 금지; 초안저장/옛동의로 재공개 금지·경합/캐시 상세 미결,REC-060/061/062/063/064/065/066/067_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA103,미리보기 후 다른 기기에서 본인 소개 내용/사진 변경 뒤 옛 확인으로 공개 반영,옛 확인 게시차단·최신 내용 재확인과 명시적 공개반영 필요·최신본 자동게시/구버전 덮어쓰기 금지,REC-060/061/062/063/064/065/066/067/068_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA104,미리보기 후 공개대상 정책 또는 직함 변경·철회/직함종료 발생,최신 상태 재확인·현재 동의/직함/대상 조건 검증; 재확인만으로 공개확대/철회복원 금지·유효기존본만 유지; 감지/경합 기술검증 필요,REC-060/061/062/063/064/065/066/067/068_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA105,공개반영 요청 대기 중 해당 소개 동의 철회가 먼저 서버 유효확정,옛동의/미리보기 기반 게시 차단·재시도로 재공개 금지·최종쓰기 동의검사 경합 검증 필요,REC-063/064/066/067/068/069_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA106,게시가 먼저 유효확정되고 후속 동의 철회 뒤 오래된 게시 재시도,기존공개본 중단·옛요청 재생으로 공개복구 금지·영수증과 현재공개상태 구분; 캐시/지연상한 기술검증 필요,REC-063/064/066/067/068/069_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA107,게시 요청 후 응답유실·실제로 성공했거나 후속 철회/직함종료 발생,결과미확인 안내·기존요청 결과와 현재공개 구분조회·과거성공으로 현재공개 단정/자동재게시 금지,REC-026/027/063/064/069/070_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA108,게시 결과조회도 실패/진행중/404/만료 또는 다른계정/교회로 전환,미처리/실패 단정금지·새요청 자동실행 금지·본인/교회 현재권한 검증·수동확인/재게시 조건과 조회기간 미결,REC-026/027/063/064/069/070_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA109,소개 철회 후 본인이 최신내용/공개대상을 확인하고 새 동의만 수행,새동의만으로 자동게시 금지·명시적 공개반영과 현재직함/동의/버전 검증 필요·종료직함/삭제자료 자동복구 금지,REC-063/064/066/068/069/070/071_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA110,새 동의 뒤 철회전 대기게시/옛요청 재시도/영수증 도착,옛요청 자동재개/재공개 금지·새명시 의도와 구분; 본인 최신확인/명시게시 필요·세대/멱등/응답유실 기술검증 필요,REC-063/064/066/068/069/070/071_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA111,철회 후 다시공개 화면 열람·동의확인란 선택·결합버튼 실행,한화면 최신소개/공개대상·확인란·동의하고 공개반영 버튼 제공; 화면열기/확인란만으로 게시성공 금지·현재조건 검증,REC-068/069/070/071/072_AGREED_SCOPED+UX_TECHNICAL_DRAFT,NOT_RUN
+CA112,재동의 화면 제출 중 내용변경/동의저장후 게시실패/응답유실,최신재확인·철회차단·결과우선조회 유지·자동재게시 금지; 단일화면과 서버원자성 구분·부분실패/확인초기화 UX검증 필요,REC-068/069/070/071/072_AGREED_SCOPED+UX_TECHNICAL_DRAFT,NOT_RUN
+CA113,동의저장 성공/게시실패 확정·내용/대상/직함/동의 동일유효 상태에서 본인 재시도,재동의 반복없이 공개반영 다시시도 제공·본인명시 실행·서버 현재조건 재검증·자동게시 금지; 실행식별 기술검증 필요,REC-068/069/070/071/072/073_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA114,응답미확인/404/만료 또는 재시도전 동의철회/내용·대상·직함 변경,미확인은 우선조회·실패단정/자동재시도 금지; 변경은 최신재확인·철회는 새동의 경계·종료직함 우회금지,REC-068/069/070/071/072/073_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA115,사진/짧은소개 미선택 상태에서 기본소개 미리보기/게시 및 철회후 재동의,선택필드 부재만으로 차단금지·이름/현재직함도 동의/대상/명시게시 필요·재동의 최신확인 유지,REC-062/063/065/066/067/068/071/072/073_EXISTING_AGREEMENTS+TECHNICAL_DRAFT,NOT_RUN
+CA116,다른프로필 사진 있음·관리자 사진요구·업로드실패/사진비우기 요청,자동전재/선택필드 강제/미선택 불이익 금지; 생략/명시비우기/실패는 구분 필요·필드철회/미디어/보유 기술OPEN,REC-062/063/065/066/067/068/071/072/073_EXISTING_AGREEMENTS+TECHNICAL_DRAFT,NOT_RUN
+CA117,유효 공개소개에서 본인이 사진만 비공개 요청,관리자승인/전체재게시 기다리지 않고 사진공개 중단·나머지 유효소개 유지·파일삭제/다른제품사진 변경과 구분,REC-062/063/064/067/068/069/070/074_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA118,사진비공개 뒤 오래된 사진포함초안 게시/재시도 또는 전체철회/직함종료,기존공개 유지로 사진차단 우회금지·구요청으로 무의도 재공개 방지 기술검증 필요; 전체철회/직함종료면 나머지도 중단·캐시/원본삭제/재공개UX 미결,REC-062/063/064/067/068/069/070/074_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA119,사진비공개 후 사진선택/업로드/저장·본인 사진/대상 재확인과 사진공개반영,선택/업로드/저장만으로 공개금지·명시실행과 현재소개동의/직함/대상 검증 필요·준비중 사진비공개 유지,REC-062/064/068/070/071/074/075_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA120,옛사진 게시요청/재시도 도착·확인후 사진/대상변경·전체소개철회/직함종료,옛요청 자동복원 금지·변경시 최신재확인·사진버튼으로 전체소개/종료직함 복원 금지·삭제원본/타프로필 자동복사 금지; 미확인 조회/캐시 기술검증 필요,REC-062/064/068/070/071/074/075_AGREED_SCOPED+TECHNICAL_DRAFT,NOT_RUN
+CA121,소개 게시→초안편집→사진만비공개→옛초안게시→전체철회 순차/경합,유효기존본 유지가 사진차단/전체철회를 우회하지 않음·구버전 최신재확인/옛요청차단; 실제원자성/캐시 NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+LI01~14_TECHNICAL_DRAFT,NOT_RUN
+CA122,재동의/게시부분실패→응답미확인→과거성공조회→현재직함종료/비공개,확정실패/미확인 구분·조건유효일때만 본인재시도·과거성공과 현재공개 분리·재지정/재로그인 자동복원 금지; 기술미결 추적,REC-060~075_EXISTING_AGREEMENTS+LI01~14_TECHNICAL_DRAFT,NOT_RUN
+CA123,동일교회/작성자/행위경로/키로 변경입력·구확인/철회후게시·과거결과조회,변경입력 거절·현재동의/직함/확인버전 검증·결과조회와 현재공개 분리·내부키/원문/초안 누출금지; 신규계약 기술DRAFT,REC-026/027/060~075_EXISTING_AGREEMENTS+LA01~09_TECHNICAL_DRAFT,NOT_RUN
+CA124,확정실패후 본인재시도·24h영수증만료·조회투영만료/삭제·복원,실패최종성/재시도식별 해결전 자동실행 금지·404/만료 미실행증거 아님·삭제후 키재사용 중복차단/최신철회 재적용 계약 필요·168h적용/보유 미결,REC-026/027/060~075_EXISTING_AGREEMENTS+LA01~09_TECHNICAL_DRAFT,NOT_RUN
+CA125,같은 확정실패에 두기기 동시재시도·후속생성 응답유실,부모실패 불변·정식직계후속 한개로 수렴·현재조건 재검증·응답유실시 연결조회; 기술후보B 미선정/NOT_RUN,REC-026/027/060~075_EXISTING_AGREEMENTS+RETRY_IDENTITY_TECHNICAL_DRAFT,NOT_RUN
+CA126,실패처럼 보이나 옛작업 커밋가능/미확인·철회/버전변경·기록만료/복원,미반영/옛실행 차단 증거없이 후속생성 금지·최신조건 검증·404/만료로 미실행 단정금지·복원후 중복연결/철회 재적용 기술검증 필요,REC-026/027/060~075_EXISTING_AGREEMENTS+RETRY_IDENTITY_TECHNICAL_DRAFT,NOT_RUN
+CA127,원실패/후속결과/현재공개 각각 조회·옛성공 지연응답,원실패 보존·후속연결은 성공 아님·과거성공으로 현재철회/사진차단 덮어쓰기 금지; 연결발견 Q-A/Q-B 미선정,REC-026/027/060~075_EXISTING_AGREEMENTS+RESULT_QUERY_UX_TECHNICAL_DRAFT; LD03/04/05_PREIMPLEMENTATION_OPEN,NOT_RUN
+CA128,계정/교회전환 후 지연응답·확인ID유실·404/만료/부모후속 부분조회불가,현재화면에 타범위응답 적용금지·미확인유지/읽기우선·자동새키/새후속 금지·관계/원문누출 금지·조회기간/읽기연결 기술검증 필요,REC-026/027/060~075_EXISTING_AGREEMENTS+RESULT_QUERY_UX_TECHNICAL_DRAFT; LD04/05/07_PREIMPLEMENTATION_OPEN,NOT_RUN
+CA129,C-A/C-B 새동의/게시 쓰기·감사/영수증 오류·롤백·COMMIT응답유실,동의저장/게시성공/명확실패/커밋불명 구분·단일화면으로 원자성 가정금지·미확인 조회우선; MI02/07/08·MF01~06 기술후보 NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+MI_MF_COMMIT_TECHNICAL_DRAFT,NOT_RUN
+CA130,게시와 철회/사진차단 경합·구확인 게시·캐시차단 실패·과거복원,옛동의/사진 요청 차단·현재공개와 과거성공 분리·캐시노출 위험 구분·최신철회/권한 재적용전 복원공개 금지; MI03~06/MF07~12 기술검증 필요,REC-060~075_EXISTING_AGREEMENTS+MI_MF_COMMIT_TECHNICAL_DRAFT,NOT_RUN
+CA131,P1/C-A 새동의롤백·P2/P3 실제유효동의/확정게시실패,이번 새동의 롤백을 유효동의로 표시금지·P2/P3 현재조건 입증시만 재동의생략 본인재시도·의도/키 계약 미결; 기술후보 NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+P1_P3_COMMIT_COMPARISON_DRAFT,NOT_RUN
+CA132,동의/게시 COMMIT불명·철회경합·게시성공후 캐시전파실패,미확인 조회우선·옛동의 차단·캐시실패를 게시롤백으로 오인금지·한화면/트랜잭션으로 전파보장 단정금지; CG01~05 검증 미완료,REC-060~075_EXISTING_AGREEMENTS+P1_P3_COMMIT_COMPARISON_DRAFT,NOT_RUN
+CA133,다른actor/route의 게시·철회·직함종료/사진차단·타교회참조,동일교회/본인/지정 결속·공통보호집합/최종현재검증 필요·멱등락만으로 권한경합 보장금지·후보S 미검증,REC-060~075_EXISTING_AGREEMENTS+STORAGE_VERSION_RACE_DRAFT,NOT_RUN
+CA134,구확인/외부정지·자연만료·교착/COMMIT불명·과거복원,최신상태재검증·시계/외부최신성/옛실행 차단 미결·불명시 결과조회·자동새실행 금지·복원공개전 최신차단 적용; SV01~08 검증필요,REC-060~075_EXISTING_AGREEMENTS+STORAGE_VERSION_RACE_DRAFT,NOT_RUN
+CA135,기존공지/일정 TENANT_ADMIN·행잠금·roles 조회를 본인소개에 재사용,소개본인권한/초안공개/동의/사진/지정버전 별도필요·기존검사만으로 소개완료 판정금지·WB/WG 추가조사,REC-060~075_EXISTING_AGREEMENTS+WRITE_PATH_BASELINE_STATIC_REVIEW,NOT_RUN
+CA136,COMMIT오류 뒤 catch ROLLBACK·성공영수증/최소결과 미확인,ROLLBACK호출만으로 미반영단정/실패투영/자동재시도 금지·내구결과/구실행차단 근거 필요·기존24h재생과 신규조회 분리,REC-060~075_EXISTING_AGREEMENTS+WRITE_PATH_BASELINE_STATIC_REVIEW,NOT_RUN
+CA137,앱DB역할 직접DML·tenant RLS·사용자역할/본인소개 권한 대조,DB그룹역할과 앱업무역할 분리·RLS교회격리만으로 업무동의검사 대체금지·직접UPDATE 경로 공통보호 필요,REC-060~075_EXISTING_AGREEMENTS+DB_MUTATION_SURFACE_STATIC_REVIEW,NOT_RUN
+CA138,V012후속권한·동적touch대상·특권함수/운영역할·직함버전 공백,후속컬럼권한/트리거 누적대조·community_member 역할버전 미구현·SECURITY DEFINER/소유권/실효권한 카탈로그 확인 필요·실행NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+DB_MUTATION_SURFACE_STATIC_REVIEW,NOT_RUN
+CA139,전용명령 정상변경·직접UPDATE 거절·상속/테이블권한 잔존·다른경로 경합,업무권한/현재범위/버전 검증·전경로공통보호·테이블UPDATE잔존시 컬럼회수만으로 차단단정금지·LP/PM/MP 후보 NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+LEAST_PRIVILEGE_TRANSITION_DRAFT,NOT_RUN
+CA140,기존API/키/버전/권한 호환·전환실패/COMMIT불명·권한복구,기존HTTP/재생계약 보존·불명결과 먼저조회·최신철회/사진차단/최종결과 보존·우회권한일괄복구 금지·실행NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+LEAST_PRIVILEGE_TRANSITION_DRAFT,NOT_RUN
+CA141,본인소개/철회/사진명령·소속/직함/역할/인증연결·관리자수정제안,행위별입력/현재권한/반영 분리·미결담당 자동부여 금지·관리자제안 직접게시 금지·CMND01~12 기술초안,REC-060~075_EXISTING_AGREEMENTS+COMMAND_END_TO_END_TECHNICAL_DRAFT; DG01/04/06_FD03/04_PREIMPLEMENTATION_OPEN; W-A_OWNER_ONLY_NO_CONTENT_PROPOSED; REC-076_AGREED_SCOPED_OWNER_WITHDRAWAL_ONLY; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA142,상태/감사/영수증 저장실패·입력거절·롤백/COMMIT불명·전파실패,업무감사/거절관측 확정경계 구분·롤백된감사 보존단정금지·불명결과조회·원문/사진/토큰감사 금지·실행NOT_RUN,REC-060~075_EXISTING_AGREEMENTS+COMMAND_END_TO_END_TECHNICAL_DRAFT; DG02/03/05_FD02/05_RV01~05_OPEN_NOT_RUN; W-A_UNKNOWN_RACE_RESTORE_NOT_RUN; REC-076_TECHNICAL_ACCESS_QUERY_RACE_OPEN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA143,종료후 본인 철회 대상의 동명·명칭변경·누락·타인 참조 치환,최소 표시로 구분·모호하면 추측 실행 금지·원문/사진/타인 목록 미공개,REC-076; WD01~03; TARGET_DISPLAY_PROPOSED; REC-077_MINIMUM_DISPLAY_AGREED_SCOPED_NAME_CHANGE_OPEN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN; REC083_E_DEFERRED_W_Q_BOUNDARIES_PRESERVED,NOT_RUN
+CA144,대상 확인후 범위/동의세대 변경·계정전환·유실·기존철회/중단/삭제,옛확인으로 다른 동의 변경 금지·조회우선·중단/철회/삭제 구분·계정간 응답폐기,REC-063/064/070/076; WD03~05; TECHNICAL_DRAFT; REC-077_NO_CONTENT_NO_INFERRED_COMPLETION_TECHNICAL_OPEN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN; REC083_E_DEFERRED_W_Q_BOUNDARIES_PRESERVED; R123_WR_A_CANDIDATE_WRV01~08_NOT_RUN; REC084_POST_MEMBERSHIP_OWN_SPECIFIC_RESULT_AGREED_SCOPED; R125_BINDING_I_K_R_T_F_WB01~06_NOT_RUN; R126_M1_M2_STATIC_SOURCE_TIME_DENIAL_LIFETIME_OPEN; R127_RESULT_FIELDS_TIME_EVIDENCE_CARD_RCV01~06_NOT_RUN; R128_DISPLAY_D01~05_SCOPE_QUESTION_OPEN; R129_MISSING_MV01~10_DRAFT_R128_QUESTION_OPEN; R130_LIFETIME_LQ_LR_LK_LD_LB_LC_T01~05_OPEN; R131_LIFETIME_DP01~07_B_SCOPE_QUESTION_OPEN; REC085_SEPARATE_FINITE_FINAL_WINDOW_SCOPED; R133_REDISCOVERY_RF_A_B_C_D_RFD01~05_OPEN; R134_REDISCOVERY_RF_B_SCOPE_QUESTION_OPEN; REC086_OWN_VALID_WINDOW_REDISCOVERY_SCOPED; R136_GAP_G_A_SCOPE_QUESTION_OPEN; REC087_GAP_EXCLUSION_FINAL_REDISPLAY_SCOPED; R138_INTERNAL_IR01~06_RESOLUTION_DRAFT; R139_INTERNAL_IC01~07_RESOLUTION_DRAFT; R140_INTERNAL_IC01~07_RESOLUTION_DRAFT; R141_INTERNAL_RR01~05_RESOLUTION_DRAFT; R142_INTERNAL_RR01~05_RESOLUTION_DRAFT; R143_INTERNAL_DC01~10_RESOLUTION_DRAFT; R144_INTERNAL_DC01~10_RESOLUTION_DRAFT; R145_INTERNAL_SE01~06_RESOLUTION_DRAFT; R146_INTERNAL_SE01~06_RESOLUTION_DRAFT; R147_INTERNAL_MC01~08_RESOLUTION_DRAFT; R148_INTERNAL_MC01~08_RESOLUTION_DRAFT; R149_INTERNAL_WC01~07_RESOLUTION_DRAFT; R150_INTERNAL_WC01~07_RESOLUTION_DRAFT; R151_INTERNAL_N1/N2_RESOLUTION_DRAFT; R152_INTERNAL_N1/N2_RESOLUTION_DRAFT; R153_INTERNAL_RB01~07_RESOLUTION_DRAFT; R154_INTERNAL_RB01~07_RESOLUTION_DRAFT; R155_INTERNAL_RJ01~09_RESOLUTION_DRAFT; R156_INTERNAL_DR01~05_RESOLUTION_DRAFT; R157_INTERNAL_IM01~10/IP01~05_RESOLUTION_DRAFT; R158_INTERNAL_TL01~11_RESOLUTION_DRAFT; R159_INTERNAL_OA01~07_RESOLUTION_DRAFT; R160_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT; R161_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT; R162_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT; R163_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT; R164_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT; R165_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT; R166_INTERNAL_P1~5/V1~5_RESOLUTION_DRAFT,NOT_RUN
+CA145,동일정본 개명·별개동명·여러동의·합병/분리 식별,이름으로 자동연결/병합/동의이전 금지·근거없는 표시 추측 금지,REC-076/077; N-A_PROPOSED; NAME_CHANGE_DRAFT; REC-078_NAMING_BASIS_AGREED_SCOPED; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA146,추가확인 접수/담당/본인철회·근거부족·유실·복원,접수/확인/철회 구분·담당 자동권한/대리철회/원문노출/재게시 없음,REC-076/077; NC01~05_DRAFT; FD02/05_OPEN; REC-078_SUPPORT_POWERS_DEADLINES_RETENTION_OPEN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA147,확인담당 선임/배정/타건/회수/만료/복귀의 권한 경계,유효선임+해당건배정+필드목적 검증·원문/타제품/대리철회 차단,REC-076~078; S-A_PROPOSED; SP01~06_DRAFT; REC-079_ASSIGNED_MINIMUM_ACCESS_AGREED_SCOPED; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA148,담당교체/대행/회수와 지연조회/설명확정 경합·미배정/이해충돌,현재권한 재검증·무권한접근/자동철회/기한초기화/옛안내 덮어쓰기 방지,NC03/04; SP04~06_DRAFT; FD02/05_OPEN; REC-079_REVOKE_HANDOVER_PRINCIPLE_TECHNICAL_NOT_RUN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA149,자기선임/연장/확대·자기배정·겸임/동일인 계정 우회,다른 적격책임자 확인 없는 권한확정 차단·일반직함 자동권한 없음,REC-079; C-A_PROPOSED; SUPPORT_SEPARATION_DRAFT; REC-080_NO_SELF_CONFIRMATION_AGREED_SCOPED; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA150,직접이해관계·자기재확인·대행공백·복귀/지연응답·배정경합,자기충돌승인/임의재위임/대리철회/기한초기화 방지·현재권한 검증,REC-076~079; CO01~06_DRAFT; FD05_OPEN; REC-080_QUALIFIED_OTHER_DELEGATE_NO_BYPASS_TECHNICAL_NOT_RUN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA151,최초책임자 지정근거/독립확인·자기선임/기술권한 우회,검증된 지정/다른적격확인/범위 결속·최초접속자관리자 자동등록 없음,REC-079/080; B-A_PROPOSED; BG01~04_DRAFT; REC-081_DESIGNATION_OTHER_CONFIRMATION_AGREED_SCOPED; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA152,책임자 교체/공백/충돌·지연요청/복원과 담당/배정 분리,옛권한부활/포괄승계/기한초기화/대리철회 방지·현재근거 재검증,REC-076~080; BOOTSTRAP_GOVERNANCE_DRAFT; REC-081_REPLACEMENT_VACANCY_SAME_BASIS_TECHNICAL_NOT_RUN; R108_CONSOLIDATED_HANDOFF_NO_RUNTIME_EVIDENCE; R109_LR01~12_RETENTION_SCOPE_RESTORE_OPEN,NOT_RUN
+CA153,개인소개/사진/이름투영·업무직함·동의/명칭증빙 사건별분리,철회/직함종료/교회탈퇴/서비스탈퇴 대상·기산 혼동 및 원문복제 없음,REC-063/064/076~081; DC01~09_E01~08_PROPOSED; REC-082_PURPOSE_CLASSIFICATION_AGREED_SCOPED,NOT_RUN
+CA154,공유미디어·공동문서·파생/큐/검색/백업의 삭제단위,본인부분/타인기여/최소이력 분리·일괄삭제/포괄영구보관/재노출 방지,R109_LR01~12_RP01; D-A_PROPOSED; DELETION_TECHNICAL_DRAFT; REC-082_MIXED_CONTRIBUTION_SPLIT_POLICY_TECHNICAL_NOT_RUN,NOT_RUN
+CA155,최소증빙 필드/정책버전/동의세대/명칭근거·참조치환,결속검증·원문/사진/토큰/타인정보복제 및 새계정오연결 차단,REC-076~082; EV01~05_MINIMUM_EVIDENCE_DRAFT; R114_FINITE_OPTIONS_30_90_NOT_AGREED_RC01~05_OPEN,NOT_RUN
+CA156,원문/명칭 정리·증빙정정·조회만료·유실/복원/옛작업,잘못된종결/새동의오결속/보호근거상실/재노출 방지,R109_RP02/05; EV01~05_EVIDENCE_DEPENDENCY_DRAFT; R114_FINITE_OPTIONS_30_90_NOT_AGREED_RC01~05_OPEN,NOT_RUN
+CA157,동의효력/목적보유/정리실행/사본보호의 독립상태,철회/원문삭제/조회만료를 전체증빙종결로 처리 안 함,REC-082; EV01~05_L1~4_LIFECYCLE_DRAFT; R114_FINITE_OPTIONS_30_90_NOT_AGREED_RC01~05_OPEN,NOT_RUN
+CA158,재시도/인계/부분실패/새동의/복원/시각정정과 기산,원래기산/사본상한 초기화·새세대삭제·옛효력복원 방지,R109_RP02/05; LT01~05_CLOCK_DRAFT; R114_FINITE_OPTIONS_30_90_NOT_AGREED_RC01~05_OPEN,NOT_RUN
+CA159,사본별차단/운영본삭제/백업/부분실패·세대경계,전체완료오판/기산초기화/새세대오삭제 방지·사본별결과확인,REC-082; CP01~10_COPY_CLEANUP_DRAFT; R117_EN01~09_UNVERIFIED_VT01~12_NOT_RUN; R118_RETENTION_PACKET_P01~08_DRAFT; R119_POST_NAME_EXPIRY_UX01~06_DRAFT; R120_W_Q_E_S_CONTRACT_BOUNDARIES_DRAFT; R121_CLOSURE_C01~08_E_SCOPE_OPEN; REC085_SEPARATE_FINITE_FINAL_WINDOW_SCOPED; REC087_GAP_EXCLUSION_FINAL_REDISPLAY_SCOPED,NOT_RUN
+CA160,최후보호참조 정리·옛복원/큐/키재전송·필터누락,FG01~06검증·재노출/옛권한부활/영구참조복제순환 방지,R114_RC02/03_OPEN; FG01~06_FINAL_GUARD_DRAFT; R117_EN01~09_UNVERIFIED_VT01~12_NOT_RUN; R118_RETENTION_PACKET_P01~08_DRAFT; R119_POST_NAME_EXPIRY_UX01~06_DRAFT; R120_W_Q_E_S_CONTRACT_BOUNDARIES_DRAFT; R121_CLOSURE_C01~08_E_SCOPE_OPEN; REC085_SEPARATE_FINITE_FINAL_WINDOW_SCOPED; REC087_GAP_EXCLUSION_FINAL_REDISPLAY_SCOPED,NOT_RUN
+CA161,허용/퇴역복원·경계동시롤백·부분복원/근거소실,최신철회/삭제/회수검증 전 공개/권한부활 없음,CP01~10_FG01~06; G-H_OPTION_GS01~05_OPEN; R117_EN01~09_UNVERIFIED_VT01~12_NOT_RUN; R118_RETENTION_PACKET_P01~08_DRAFT; R119_POST_NAME_EXPIRY_UX01~06_DRAFT; R120_W_Q_E_S_CONTRACT_BOUNDARIES_DRAFT; R121_CLOSURE_C01~08_E_SCOPE_OPEN; REC085_SEPARATE_FINITE_FINAL_WINDOW_SCOPED; REC087_GAP_EXCLUSION_FINAL_REDISPLAY_SCOPED,NOT_RUN
+CA162,옛큐/새토큰/새키/구버전·백업재등록/이관과 참조수명,퇴역세대부활·개인참조무한연장·API호환무시 방지,R116_G-A/G-B/G-H_OPTIONS; GS02~05_NOT_RUN; R117_EN01~09_UNVERIFIED_VT01~12_NOT_RUN; R118_RETENTION_PACKET_P01~08_DRAFT; R119_POST_NAME_EXPIRY_UX01~06_DRAFT; R120_W_Q_E_S_CONTRACT_BOUNDARIES_DRAFT; R121_CLOSURE_C01~08_E_SCOPE_OPEN; REC085_SEPARATE_FINITE_FINAL_WINDOW_SCOPED; REC087_GAP_EXCLUSION_FINAL_REDISPLAY_SCOPED,NOT_RUN

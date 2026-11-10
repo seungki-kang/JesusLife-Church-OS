@@ -1,0 +1,29 @@
+id,scenario,expected,basis,execution_status
+W01,공용 앱에서 교회 전환,앱내 교회브랜드만 현재 대상 적용·다른 교회 정보 비공개,SOURCE+DRAFT,NOT_RUN
+W02,전용 앱 구성/빌드,"공통 코드 유지, 교회별 식별/서명/인증/푸시 혼합 없음",SOURCE+DRAFT,NOT_RUN
+W03,appLabel만 변경,설치 이름·아이콘·스토어 정보가 바뀐 것으로 표시하지 않음,SOURCE+DRAFT,NOT_RUN
+W04,로고가 다른 교회/NOTICE 자산을 참조,브랜드 소유/목적 검증 전 사용하지 않음,SOURCE+DRAFT,NOT_RUN
+W05,브랜드 필드에 임의 실행 URL/스크립트,권한/서버/인증 설정 주입 통로로 사용하지 않음,SOURCE+DRAFT,NOT_RUN
+W06,지저스라이프 원이 표시/오류/로그인에 노출,"사용자 비노출 원칙 점검, schema통과만으로 완료 아님",SOURCE+DRAFT,NOT_RUN
+W07,색상HEX 형식만 유효,읽기/대비/큰글자/보조기기 검증 별도,SOURCE+DRAFT,NOT_RUN
+W08,스키마 navigation 키와 현재5개UX 연결,명시 의미매핑/새스키마 없이 권한 의미 바꾸지 않음,SOURCE+DRAFT,NOT_RUN
+W09,모든 메뉴/모듈을 숨김,필수 계정/로그아웃/복구/탈퇴 경로를 가두지 않는 정책 필요,SOURCE+DRAFT,NOT_RUN
+W10,Academy 메뉴 켬/끔,개인 수강/공유/가입/데이터 삭제 자동 변경 없음,SOURCE+DRAFT,NOT_RUN
+W11,교회 설정/계정 전환 중 늦은 응답,이전 계정/교회 로고·설정 적용하지 않음,SOURCE+DRAFT,NOT_RUN
+W12,동시 설정 반영,"기존 revision 대조, 자동 덮어쓰기 없음",SOURCE+DRAFT,NOT_RUN
+W13,설정 반영 응답 유실,"결과 확인, 새 revision/중복반영 자동 실행 없음",SOURCE+DRAFT,NOT_RUN
+W14,반영 도중 이미지/메뉴 로딩 실패,"다른 교회/불일치 조합 금지, 안전한 호환본 또는 최소화면",SOURCE+DRAFT,NOT_RUN
+W15,스키마에 es-MX가 있음,Flutter ko시연을 다국어/도미니카 지원 완료로 표시하지 않음,SOURCE+DRAFT,NOT_RUN
+W16,tenant/brand 시간대 불일치,"운영 정본·일관성 계약 필요, 기존 시각 조용히 이동 금지",SOURCE+DRAFT,NOT_RUN
+W17,로고 캐시만 있고 인증 상태 확인 실패,보호 콘텐츠·권한을 캐시로 허용하지 않음,SOURCE+DRAFT,NOT_RUN
+W18,권리 철회 자산 포함 과거설정 롤백,옛 자산/권한을 자동 복원하지 않음,SOURCE+DRAFT,NOT_RUN
+W19,이전 앱이 새 schema/API를 읽음,미지원 기능 추정 실행/권한 기본허용 없음,SOURCE+DRAFT,NOT_RUN
+W20,앱 업데이트 안내 후 설치 실패,업데이트 완료/교회탈퇴/업무실패로 바꾸지 않음,SOURCE+DRAFT,NOT_RUN
+W21,구버전 보안 차단,"보안 약화 없는 제한/지원경로 검증, 계정 필수 절차 고려",SOURCE+DRAFT,NOT_RUN
+W22,스토어 제출 성공,심사승인/출시/단말설치를 같은 완료로 표시하지 않음,SOURCE+DRAFT,NOT_RUN
+W23,서버 롤백과 현재 DB 계보 불일치,"옛 migration/백업 덮어쓰기 금지, 안전복구 계약 필요",SOURCE+DRAFT,NOT_RUN
+W24,백업 복원 후 서비스 재개,최신 삭제/소속/권한/실행확정 적용 전 공개/발송 보류,SOURCE+DRAFT,NOT_RUN
+W25,전용 앱/도메인 교회 이관,운영권/자산/계정·인증/데이터 목적 재검증,SOURCE+DRAFT,NOT_RUN
+W26,교회 앱 서비스 종료,개인 SSO/다른교회/전문제품 데이터 포괄삭제 금지,SOURCE+DRAFT,NOT_RUN
+W27,CI analyze/widget PASS,서명·실기기·스토어·운영 배포 PASS로 승계하지 않음,SOURCE+DRAFT,NOT_RUN
+W28,배포/진단 로그 생성,서명키/토큰·교회/개인 원문을 일반로그·ZIP에 넣지 않음,SOURCE+DRAFT,NOT_RUN

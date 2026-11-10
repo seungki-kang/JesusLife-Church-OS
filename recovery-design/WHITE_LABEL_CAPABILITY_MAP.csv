@@ -1,0 +1,12 @@
+capability_id,operation,server_preconditions,boundary,contract_status,execution_status
+WL-C01,교회 설정 조회,현재 교회/소속·공개/보호 범위,"호환 schema/revision·자산소유, 역할/토큰과 분리",DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C02,브랜드 초안·자산 요청,현재 관리자 또는 명시 브랜드 권한,허용 필드·교회 자산·미지원형식/원문 우회 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C03,구조/의미 검사·미리보기,현재 교회/권한·지원 앱/언어,대비/시간대/메뉴·내부 명칭·권리·필수 경로,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C04,설정 반영/대체,정확한 revision·권한·호환 검증,원자 읽기·동시 변경 충돌·결과 불명 재조회,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C05,메뉴/제품 연결 표시,교회 선택·제공자 준비·개인 자격,메뉴 설정이 제품 가입/권한/동의를 대체하지 않음,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C06,언어/교회 시간대 변경,지원 번역·확인된 운영 정본,미지원 완료표시/기존 확정시각 이동 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C07,공용/전용 앱 배포 요청,교회 운영권·배포 계약·플랫폼 배포 권한,공통 소스·배포식별/서명/푸시/인증 분리,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C08,도메인/앱 링크 변경,소유/운영권·허용 목적,임의 URL을 인증/서버 주소로 신뢰하지 않음,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C09,앱/API 버전 호환 안내,현재 설치버전·지원계약·서버 권한,새 기능 추정호출/업데이트실패로 업무상태 조작 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C10,설정 롤백/배포 복구,현재 최소 복구 권한·계보·삭제/권리 근거,옛 revision 재적용/역할·원문/삭제 부활 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
+WL-C11,전용 앱 종료/이관,별도 계정/자산/데이터/지원 계약,개인 계정·다른 교회·제품 정본 포괄 이관/삭제 금지,DRAFT_EXISTING_DIRECTION,NOT_RUN
