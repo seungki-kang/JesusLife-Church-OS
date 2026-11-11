@@ -3,7 +3,10 @@ import type { ManagedKind, MutationAction } from './lifecycle.js';
 import { actorRef, fingerprint, createResponse, CommandError } from './commands.js';
 import type { Pool, PoolClient } from 'pg';
 import { DependencyUnavailable } from './errors.js';
-import type { StorePort, SessionPort, Scope, Kind, PageRequest } from './ports.js';
+import type { StorePort, SessionPort, Scope, Kind, PageRequest, ManagePageRequest, ListRow } from './ports.js';
+
+/** UTC timestamp text with microseconds, used as an exact keyset sort key. */
+const SORT_KEY_SQL = (column: string) => `to_char(${column} at time zone 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 class PgSession implements SessionPort {
   constructor(
     private readonly client: PoolClient,
@@ -196,13 +199,17 @@ class PgSession implements SessionPort {
     );
     return r.rows[0] ?? null;
   }
-  async list(kind: Kind, page: PageRequest, roles: readonly string[]) {
-    const args: unknown[] = [this.scope.tenant, page.after ?? null, page.limit + 1];
+  async list(kind: Kind, page: PageRequest, roles: readonly string[]): Promise<ListRow[]> {
+    const sort = page.after?.sort ?? null,
+      after = page.after?.id ?? null;
     if (kind === 'memberships')
       return (
         await this.client.query(
-          `select id,tenant_id as "tenantId",person_ref as "personRef",status,to_char(joined_on,'YYYY-MM-DD') as "joinedOn",created_at as "createdAt" from church_core.membership where tenant_id=$1 and ($2::uuid is null or id>$2::uuid) order by id limit $3`,
-          args,
+          `select id,tenant_id as "tenantId",person_ref as "personRef",status,to_char(joined_on,'YYYY-MM-DD') as "joinedOn",created_at as "createdAt"
+           from church_core.membership
+           where tenant_id=$1 and ($2::uuid is null or id>$2::uuid)
+           order by id limit $3`,
+          [this.scope.tenant, after, page.limit + 1],
         )
       ).rows.map(({ joinedOn, ...row }) => (joinedOn ? { ...row, joinedOn } : row));
     if (kind === 'notices') {
@@ -210,22 +217,52 @@ class PgSession implements SessionPort {
       if (roles.some((r) => ['LEADER', 'GROUP_LEADER', 'MINISTRY_LEADER', 'PASTOR', 'TENANT_ADMIN'].includes(r)))
         allowed.push('LEADERS');
       if (roles.some((r) => ['PASTOR', 'TENANT_ADMIN'].includes(r))) allowed.push('STAFF');
-      args.push(allowed);
+      // COS-CHURCH-042: newest publication first.
       return (
         await this.client.query(
-          `select id,tenant_id as "tenantId",title,body,audience,publish_at as "publishAt",expires_at as "expiresAt",status from church_core.notice where tenant_id=$1 and ($2::uuid is null or id>$2::uuid) and status='PUBLISHED' and publish_at<=now() and (expires_at is null or expires_at>now()) and audience=any($4::text[]) order by id limit $3`,
-          args,
+          `select id,tenant_id as "tenantId",title,body,audience,publish_at as "publishAt",expires_at as "expiresAt",status,${SORT_KEY_SQL('publish_at')} as "_sortKey"
+           from church_core.notice
+           where tenant_id=$1 and status='PUBLISHED' and publish_at<=now() and (expires_at is null or expires_at>now())
+             and audience=any($4::text[])
+             and ($2::timestamptz is null or (publish_at,id)<($2::timestamptz,$3::uuid))
+           order by publish_at desc,id desc limit $5`,
+          [this.scope.tenant, sort, after, allowed, page.limit + 1],
         )
       ).rows;
     }
-    args.push(page.from ?? null, page.to ?? null);
+    // COS-CHURCH-042: start time order. Without `from`, only events that have not ended.
     // Community-restricted events are excluded until community ACL is implemented.
     return (
       await this.client.query(
-        `select id,tenant_id as "tenantId",kind,title,starts_at as "startsAt",ends_at as "endsAt",timezone,status,community_id as "communityId",campus_id as "campusId" from church_core.church_event where tenant_id=$1 and ($2::uuid is null or id>$2::uuid) and status='PUBLISHED' and community_id is null and ($4::timestamptz is null or starts_at>=$4) and ($5::timestamptz is null or starts_at<=$5) order by id limit $3`,
-        args,
+        `select id,tenant_id as "tenantId",kind,title,starts_at as "startsAt",ends_at as "endsAt",timezone,status,community_id as "communityId",campus_id as "campusId",${SORT_KEY_SQL('starts_at')} as "_sortKey"
+         from church_core.church_event
+         where tenant_id=$1 and status='PUBLISHED' and community_id is null
+           and (case when $4::timestamptz is null then coalesce(ends_at,starts_at)>=now() else starts_at>=$4::timestamptz end)
+           and ($5::timestamptz is null or starts_at<=$5::timestamptz)
+           and ($2::timestamptz is null or (starts_at,id)>($2::timestamptz,$3::uuid))
+         order by starts_at,id limit $6`,
+        [this.scope.tenant, sort, after, page.from ?? null, page.to ?? null, page.limit + 1],
       )
     ).rows.map(({ endsAt, ...row }) => (endsAt ? { ...row, endsAt } : row));
+  }
+  async manageList(kind: ManagedKind, page: ManagePageRequest): Promise<ListRow[]> {
+    // COS-CHURCH-043: summaries only (no notice body), most recently edited first.
+    const columns =
+      kind === 'notices'
+        ? `id,tenant_id as "tenantId",status,title,audience,publish_at as "publishAt",expires_at as "expiresAt"`
+        : `id,tenant_id as "tenantId",status,kind,title,starts_at as "startsAt",ends_at as "endsAt",timezone`;
+    const table = kind === 'notices' ? 'church_core.notice' : 'church_core.church_event';
+    const rows = (
+      await this.client.query(
+        `select ${columns},updated_at as "updatedAt",row_version::text as "rowVersion",${SORT_KEY_SQL('updated_at')} as "_sortKey"
+         from ${table}
+         where tenant_id=$1 and status=any($4::text[])
+           and ($2::timestamptz is null or (updated_at,id)<($2::timestamptz,$3::uuid))
+         order by updated_at desc,id desc limit $5`,
+        [this.scope.tenant, page.after?.sort ?? null, page.after?.id ?? null, page.statuses, page.limit + 1],
+      )
+    ).rows;
+    return kind === 'events' ? rows.map(({ endsAt, ...row }) => (endsAt ? { ...row, endsAt } : row)) : rows;
   }
 }
 /** How long a successful database-role safety check is reused. Failures are never cached. */

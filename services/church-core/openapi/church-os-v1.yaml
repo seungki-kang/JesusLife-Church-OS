@@ -186,6 +186,11 @@ paths:
       - Event
       operationId: listEvents
       summary: List authorized worship services and events
+      description: >-
+        Published church-wide events ordered by start time ascending, then id
+        (COS-CHURCH-042). Without `from`, only events that have not ended
+        (end time, or start time when there is no end, is now or later). With
+        `from`, events starting at or after `from`.
       parameters:
       - $ref: '#/components/parameters/PurposeCode'
       - $ref: '#/components/parameters/TenantHeader'
@@ -823,6 +828,9 @@ paths:
       - Notice
       operationId: listNotices
       summary: List published church notices
+      description: >-
+        Notices currently published to the caller's audience, newest
+        publication first, then id descending (COS-CHURCH-042).
       parameters:
       - $ref: '#/components/parameters/PurposeCode'
       - $ref: '#/components/parameters/TenantHeader'
@@ -1231,6 +1239,67 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/EmptyLifecycleCommand'
+  /manage/notices:
+    get:
+      tags:
+      - Notice
+      operationId: listManagedNotices
+      summary: List notices for church administrators, including drafts
+      description: >-
+        TENANT_ADMIN only (COS-CHURCH-043). Summaries without the notice body,
+        most recently edited first, then id descending. Separate from the
+        member list; open a notice with the detail endpoint.
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/ManageStatus'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Managed notice page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedNoticePage'
+  /manage/events:
+    get:
+      tags:
+      - Event
+      operationId: listManagedEvents
+      summary: List events for church administrators, including drafts
+      description: >-
+        TENANT_ADMIN only (COS-CHURCH-043). Summaries, most recently edited
+        first, then id descending. Includes community-restricted events.
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/ManageStatus'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Managed event page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagedEventPage'
 components:
   securitySchemes:
     churchOidc:
@@ -1264,9 +1333,22 @@ components:
     Cursor:
       name: cursor
       in: query
+      description: >-
+        Opaque keyset cursor from the previous page's `nextCursor`. It is bound
+        to the church and the list; clients must not parse or build it.
       schema:
         type: string
         maxLength: 512
+    ManageStatus:
+      name: status
+      in: query
+      description: >-
+        Comma-separated statuses to include. Defaults to `DRAFT,PUBLISHED`.
+        Unknown or repeated values return 400 INVALID_STATUS_FILTER.
+      schema:
+        type: string
+        maxLength: 64
+        pattern: ^[A-Z]+(,[A-Z]+)*$
     Limit:
       name: limit
       in: query
@@ -1383,6 +1465,85 @@ components:
           schema:
             $ref: '#/components/schemas/Problem'
   schemas:
+    ManagedNoticeSummary:
+      type: object
+      additionalProperties: false
+      required: [id, tenantId, status, title, audience, publishAt, expiresAt, updatedAt, rowVersion]
+      properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        status:
+          enum: [DRAFT, PUBLISHED, EXPIRED, CANCELLED]
+        title:
+          type: string
+          minLength: 1
+          maxLength: 160
+        audience:
+          enum: [ALL_MEMBERS, LEADERS, STAFF]
+        publishAt:
+          $ref: '#/components/schemas/Timestamp'
+        expiresAt:
+          type: [string, 'null']
+          format: date-time
+        updatedAt:
+          $ref: '#/components/schemas/Timestamp'
+        rowVersion:
+          type: string
+          pattern: ^[1-9][0-9]*$
+    ManagedEventSummary:
+      type: object
+      additionalProperties: false
+      required: [id, tenantId, status, kind, title, startsAt, timezone, updatedAt, rowVersion]
+      properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        status:
+          enum: [DRAFT, PUBLISHED, CANCELLED, COMPLETED]
+        kind:
+          enum: [WORSHIP, GATHERING, CLASS, SERVICE, OTHER]
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        startsAt:
+          $ref: '#/components/schemas/Timestamp'
+        endsAt:
+          $ref: '#/components/schemas/Timestamp'
+        timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+        updatedAt:
+          $ref: '#/components/schemas/Timestamp'
+        rowVersion:
+          type: string
+          pattern: ^[1-9][0-9]*$
+    ManagedNoticePage:
+      type: object
+      additionalProperties: false
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedNoticeSummary'
+        nextCursor:
+          type: [string, 'null']
+    ManagedEventPage:
+      type: object
+      additionalProperties: false
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedEventSummary'
+        nextCursor:
+          type: [string, 'null']
     Uuid:
       type: string
       format: uuid

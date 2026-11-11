@@ -14,7 +14,7 @@ import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 // never from the repository's legacy root db/ lineage.
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const output = process.env.API_DB_EVIDENCE;
-import { assess } from './evidence.js';
+import { MIGRATION_COUNT, assess } from './evidence.js';
 const report: { [key: string]: any } = {
   artifact: 'ChurchOS_church-core_active',
   runtime: 'INCOMPLETE',
@@ -98,12 +98,12 @@ try {
     await admin.query(`create database ${db} owner ${owner}`);
     dbCreated = true;
   });
-  await check('migrate15', async () => {
+  await check('migrate', async () => {
     const migrator = new Client({ ...connection, database: db, user: owner, password });
     await migrator.connect();
     try {
       const files = (await readdir(resolve(root, 'db/migrations'))).filter((n) => /^V\d+.*\.sql$/.test(n)).sort();
-      assert.equal(files.length, 15);
+      assert.equal(files.length, MIGRATION_COUNT);
       for (const name of files) {
         const sql = await readFile(resolve(root, 'db/migrations', name), 'utf8');
         report.migration_hashes[name] = createHash('sha256').update(sql).digest('hex');
@@ -156,7 +156,7 @@ try {
         [tenant],
       );
       await source!.query(
-        `insert into church_core.church_event(tenant_id,kind,title,starts_at,timezone,status) values($1,'WORSHIP','public-event','2026-11-01T00:00:00Z','Asia/Seoul','PUBLISHED'),($1,'WORSHIP','draft-event','2026-11-01T00:00:00Z','Asia/Seoul','DRAFT')`,
+        `insert into church_core.church_event(tenant_id,kind,title,starts_at,timezone,status) values($1,'WORSHIP','public-event',now()+interval '7 days','Asia/Seoul','PUBLISHED'),($1,'WORSHIP','draft-event',now()+interval '7 days','Asia/Seoul','DRAFT')`,
         [tenant],
       );
     }
@@ -247,7 +247,7 @@ try {
     );
   });
   await check('event-date-range', async () => {
-    const r = await request('events?from=2026-12-01T00:00:00Z');
+    const r = await request('events?from=' + encodeURIComponent(new Date(Date.now() + 30 * 86400000).toISOString()));
     assert.equal(r.status, 200);
     assert.deepEqual(r.body.items, []);
   });
@@ -259,6 +259,109 @@ try {
     assert.equal(second.status, 200);
     assert.notEqual(first.body.items[0].id, second.body.items[0].id);
     assert.equal(second.body.nextCursor, null);
+  });
+
+  const titles = (r: { body: any }) => r.body.items.map((x: any) => x.title);
+  async function collect(path: string, t = ta) {
+    const seen: any[] = [];
+    let cursor: string | null = null;
+    for (let i = 0; i < 50; i++) {
+      const sep = path.includes('?') ? '&' : '?';
+      const r = await request(path + sep + 'limit=1' + (cursor ? '&cursor=' + encodeURIComponent(cursor) : ''), t);
+      assert.equal(r.status, 200);
+      seen.push(...r.body.items);
+      cursor = r.body.nextCursor;
+      if (!cursor) return seen;
+    }
+    throw new Error('pagination did not terminate');
+  }
+  await check('event-default-excludes-ended', async () => {
+    await source!.query(
+      `insert into church_core.church_event(tenant_id,kind,title,starts_at,ends_at,timezone,status) values($1,'GATHERING','ended-event',now()-interval '2 days',now()-interval '1 day','Asia/Seoul','PUBLISHED')`,
+      [A],
+    );
+    assert.deepEqual(titles(await request('events')), ['public-event']);
+    const past = await request('events?from=' + encodeURIComponent(new Date(Date.now() - 3 * 86400000).toISOString()));
+    assert.deepEqual(titles(past), ['ended-event', 'public-event']);
+  });
+  await check('event-order-keyset', async () => {
+    // Two events share a start time to prove the id tie-breaker neither skips nor repeats rows.
+    await source!.query(
+      `insert into church_core.church_event(tenant_id,kind,title,starts_at,timezone,status) values
+       ($1,'CLASS','order-2',date_trunc('second',now())+interval '3 days','Asia/Seoul','PUBLISHED'),
+       ($1,'CLASS','order-3',date_trunc('second',now())+interval '3 days','Asia/Seoul','PUBLISHED'),
+       ($1,'CLASS','order-1',now()+interval '2 days','Asia/Seoul','PUBLISHED')`,
+      [A],
+    );
+    const expected = (
+      await source!.query(
+        `select title from church_core.church_event where tenant_id=$1 and status='PUBLISHED' and community_id is null and coalesce(ends_at,starts_at)>=now() order by starts_at,id`,
+        [A],
+      )
+    ).rows.map((x) => x.title);
+    assert.deepEqual(expected.slice(0, 3).sort(), ['order-1', 'order-2', 'order-3']);
+    assert.equal(expected[0], 'order-1');
+    assert.deepEqual(
+      (await collect('events')).map((x) => x.title),
+      expected,
+    );
+  });
+  await check('notice-order-keyset', async () => {
+    await source!.query(
+      `insert into church_core.notice(tenant_id,title,body,audience,status,publish_at) values($1,'notice-newest','Synthetic','ALL_MEMBERS','PUBLISHED',now()-interval '1 minute')`,
+      [A],
+    );
+    const items = await collect('notices');
+    assert.equal(items[0].title, 'notice-newest');
+    assert.equal(items.length, 4);
+    assert.equal(new Set(items.map((x) => x.id)).size, 4);
+    for (let i = 1; i < items.length; i++)
+      assert.ok(Date.parse(items[i - 1].publishAt) >= Date.parse(items[i].publishAt));
+  });
+  await check('manage-notices-summary', async () => {
+    const r = await request('manage/notices');
+    assert.equal(r.status, 200);
+    assert.ok(titles(r).includes('draft-hidden'));
+    assert.ok(titles(r).includes('future-hidden'));
+    assert.ok(r.body.items.every((x: any) => x.tenantId === A && ['DRAFT', 'PUBLISHED'].includes(x.status)));
+    const keys = ['audience', 'expiresAt', 'id', 'publishAt', 'rowVersion', 'status', 'tenantId', 'title', 'updatedAt'];
+    assert.ok(r.body.items.every((x: any) => JSON.stringify(Object.keys(x).sort()) === JSON.stringify(keys)));
+    for (let i = 1; i < r.body.items.length; i++)
+      assert.ok(Date.parse(r.body.items[i - 1].updatedAt) >= Date.parse(r.body.items[i].updatedAt));
+  });
+  await check('manage-status-filter', async () => {
+    const drafts = await request('manage/notices?status=DRAFT');
+    assert.equal(drafts.status, 200);
+    assert.deepEqual(titles(drafts), ['draft-hidden']);
+    assert.equal((await request('manage/notices?status=COMPLETED')).status, 400);
+  });
+  await check('manage-access-denied', async () => {
+    assert.equal((await request('manage/notices', tm)).status, 403);
+    assert.equal((await request('manage/events', tm)).status, 403);
+    assert.equal((await request('manage/notices', tb, A)).status, 403);
+    const b = await request('manage/notices', tb, B);
+    assert.equal(b.status, 200);
+    assert.ok(b.body.items.length > 0 && b.body.items.every((x: any) => x.tenantId === B));
+  });
+  await check('manage-events-summary', async () => {
+    const r = await request('manage/events');
+    assert.equal(r.status, 200);
+    assert.ok(titles(r).includes('draft-event'));
+    assert.ok(titles(r).includes('restricted-event'));
+    assert.ok(r.body.items.every((x: any) => x.tenantId === A && !('communityId' in x) && 'rowVersion' in x));
+  });
+  await check('manage-keyset', async () => {
+    const expected = Number(
+      (
+        await source!.query(
+          `select count(*) from church_core.notice where tenant_id=$1 and status in ('DRAFT','PUBLISHED')`,
+          [A],
+        )
+      ).rows[0].count,
+    );
+    const items = await collect('manage/notices');
+    assert.equal(items.length, expected);
+    assert.equal(new Set(items.map((x) => x.id)).size, expected);
   });
   await check('concurrent-tenants', async () => {
     for (let i = 0; i < 5; i++) {

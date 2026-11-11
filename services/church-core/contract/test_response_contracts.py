@@ -23,6 +23,13 @@ class ResponseContracts(unittest.TestCase):
                       "timezone": "Asia/Seoul", "status": "PUBLISHED"},
             "Notice": {"id": uuid, "tenantId": uuid, "title": "Notice", "body": "Church event",
                        "audience": "ALL_MEMBERS", "publishAt": ts, "status": "PUBLISHED"},
+            # COS-CHURCH-043 manage summaries, shaped as PgSession.manageList returns them.
+            "ManagedNoticeSummary": {"id": uuid, "tenantId": uuid, "status": "DRAFT", "title": "Draft",
+                                     "audience": "ALL_MEMBERS", "publishAt": ts, "expiresAt": None,
+                                     "updatedAt": ts, "rowVersion": "1"},
+            "ManagedEventSummary": {"id": uuid, "tenantId": uuid, "status": "DRAFT", "kind": "WORSHIP",
+                                    "title": "Sunday", "startsAt": ts, "timezone": "Asia/Seoul",
+                                    "updatedAt": ts, "rowVersion": "2"},
         }
         for name, row in samples.items():
             with self.subTest(name=name):
@@ -30,6 +37,17 @@ class ResponseContracts(unittest.TestCase):
                                                  format_checker=FormatChecker())
                 self.assertEqual([], list(validator.iter_errors(row)))
                 self.assertTrue(list(validator.iter_errors({**row, "privateDiary": "forbidden"})))
+
+    def test_managed_notice_summary_never_carries_the_body(self):
+        api = yaml.safe_load((ROOT / "openapi/church-os-v1.yaml").read_text(encoding="utf-8"))
+        self.assertNotIn("body", api["components"]["schemas"]["ManagedNoticeSummary"]["properties"])
+
+    def test_openapi_document_is_valid(self):
+        from openapi_spec_validator import validate
+        from openapi_spec_validator.readers import read_from_filename
+
+        document, _ = read_from_filename(str(ROOT / "openapi/church-os-v1.yaml"))
+        validate(document)
 
 
 if __name__ == "__main__":

@@ -25,8 +25,20 @@ import { CommandError, validateCommand } from './commands.js';
 import { randomUUID } from 'node:crypto';
 import { IDENTITY, STORE, AUDIT } from './ports.js';
 import { consoleErrorLog, errorEntry, isDependencyFailure } from './errors.js';
+import { decodeCursor, encodeCursor, MANAGE_STATUSES, parseStatuses } from './paging.js';
+import type { ListName } from './paging.js';
 import type { ErrorLog } from './errors.js';
-import type { IdentityPort, StorePort, AuditPort, Scope, Kind, SessionPort, PageRequest } from './ports.js';
+import type {
+  IdentityPort,
+  StorePort,
+  AuditPort,
+  Scope,
+  Kind,
+  SessionPort,
+  PageRequest,
+  ManagePageRequest,
+  ListRow,
+} from './ports.js';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function fail(status: number, code: string): never {
   throw new HttpException(code, status);
@@ -47,6 +59,19 @@ function classify(error: unknown): { status: number; code: string } {
   }
   if (isDependencyFailure(error)) return { status: 503, code: 'SERVICE_UNAVAILABLE' };
   return { status: 500, code: 'INTERNAL_ERROR' };
+}
+function parseLimit(raw: unknown): number {
+  const limit = raw === undefined ? 20 : Number(raw);
+  if (typeof raw === 'object' || !Number.isInteger(limit) || limit < 1 || limit > 100) fail(400, 'INVALID_LIMIT');
+  return limit;
+}
+/** Trims the look-ahead row, builds the next cursor and removes internal sort keys. */
+function pageOf(rows: ListRow[], limit: number, tenant: string, list: ListName) {
+  const page = rows.slice(0, limit);
+  const last = page.at(-1);
+  const nextCursor =
+    rows.length > limit && last ? encodeCursor(tenant, list, { sort: last._sortKey, id: last.id }) : null;
+  return { items: page.map(({ _sortKey, ...item }) => item), nextCursor };
 }
 @Catch()
 class Problems implements ExceptionFilter {
@@ -130,24 +155,8 @@ class CoreController {
     if (typeof tenant !== 'string') fail(400, 'INVALID_TENANT');
     const allowed = kind === 'events' ? ['cursor', 'limit', 'from', 'to'] : ['cursor', 'limit'];
     if (Object.keys(query).some((k) => !allowed.includes(k))) fail(400, 'INVALID_QUERY');
-    const limit = query.limit === undefined ? 20 : Number(query.limit);
-    if (!Number.isInteger(limit) || limit < 1 || limit > 100) fail(400, 'INVALID_LIMIT');
-    const page: PageRequest = { limit };
-    if (query.cursor) {
-      try {
-        const decoded = JSON.parse(Buffer.from(query.cursor, 'base64url').toString());
-        if (
-          query.cursor.length > 512 ||
-          decoded.tenant !== tenant ||
-          decoded.kind !== kind ||
-          !uuid.test(decoded.after)
-        )
-          throw Error();
-        page.after = decoded.after;
-      } catch {
-        fail(400, 'INVALID_CURSOR');
-      }
-    }
+    const page: PageRequest = { limit: parseLimit(query.limit) };
+    if (query.cursor !== undefined) page.after = decodeCursor(String(query.cursor), tenant, kind);
     for (const name of ['from', 'to'] as const)
       if (query[name]) {
         if (!/^\d{4}-\d{2}-\d{2}T.*(Z|[+-]\d{2}:\d{2})$/.test(query[name]) || !Number.isFinite(Date.parse(query[name])))
@@ -155,14 +164,26 @@ class CoreController {
         page[name] = query[name];
       }
     if (page.from && page.to && Date.parse(page.from) > Date.parse(page.to)) fail(400, 'INVALID_DATE_RANGE');
-    return this.scoped(req, tenant, kind, async (s, roles) => {
-      const rows = await s.list(kind, page, roles);
-      const items = rows.slice(0, limit);
-      const nextCursor =
-        rows.length > limit
-          ? Buffer.from(JSON.stringify({ tenant, kind, after: items.at(-1)!.id })).toString('base64url')
-          : null;
-      return { items, nextCursor };
+    return this.scoped(req, tenant, kind, async (s, roles) =>
+      pageOf(await s.list(kind, page, roles), page.limit, tenant, kind),
+    );
+  }
+  async managePage(req: FastifyRequest, query: Record<string, unknown>, kind: ManagedKind) {
+    const tenant = req.headers['x-church-tenant'];
+    if (typeof tenant !== 'string') fail(400, 'INVALID_TENANT');
+    if (Object.keys(query).some((k) => !['cursor', 'limit', 'status'].includes(k))) fail(400, 'INVALID_QUERY');
+    if (Object.values(query).some((v) => typeof v !== 'string')) fail(400, 'INVALID_QUERY');
+    const q = query as Record<string, string | undefined>;
+    const list = kind === 'notices' ? 'manage-notices' : 'manage-events';
+    const page: ManagePageRequest = {
+      limit: parseLimit(q.limit),
+      statuses: parseStatuses(q.status, MANAGE_STATUSES[kind]),
+      ...(q.cursor !== undefined ? { after: decodeCursor(q.cursor, tenant, list) } : {}),
+    };
+    return this.scoped(req, tenant, 'write', async (s, roles) => {
+      // COS-CHURCH-043: same permission as notice/event writes until delegated capabilities exist (S04).
+      if (!roles.includes('TENANT_ADMIN')) fail(403, 'ROLE_DENIED');
+      return pageOf(await s.manageList(kind, page), page.limit, tenant, list);
     });
   }
   async create(req: FastifyRequest, kind: Kind) {
@@ -289,6 +310,18 @@ class CoreController {
   }
   @Get('/api/v1/church/events') events(@Req() req: FastifyRequest, @Query() query: Record<string, string>) {
     return this.page(req, query, 'events');
+  }
+  @Get('/api/v1/church/manage/notices') manageNotices(
+    @Req() req: FastifyRequest,
+    @Query() query: Record<string, unknown>,
+  ) {
+    return this.managePage(req, query, 'notices');
+  }
+  @Get('/api/v1/church/manage/events') manageEvents(
+    @Req() req: FastifyRequest,
+    @Query() query: Record<string, unknown>,
+  ) {
+    return this.managePage(req, query, 'events');
   }
 }
 export async function buildApp(

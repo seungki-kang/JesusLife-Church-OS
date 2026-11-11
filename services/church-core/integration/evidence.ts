@@ -1,7 +1,9 @@
+/** Number of migrations in db/migrations that the integration run must apply. */
+export const MIGRATION_COUNT = 16;
 export const EXPECTED = [
   'postgres16',
   'bootstrap',
-  'migrate15',
+  'migrate',
   'seed',
   'runtime-role-safe',
   'listen',
@@ -15,6 +17,14 @@ export const EXPECTED = [
   'public-events-only',
   'event-date-range',
   'pagination',
+  'event-default-excludes-ended',
+  'event-order-keyset',
+  'notice-order-keyset',
+  'manage-notices-summary',
+  'manage-status-filter',
+  'manage-access-denied',
+  'manage-events-summary',
+  'manage-keyset',
   'concurrent-tenants',
   'pool-context-reset',
   'role-expiry',
@@ -71,8 +81,8 @@ export function assess(report: any, hashes: Record<string, string>): boolean {
     Array.isArray(report.checks) &&
     report.checks.length === EXPECTED.length &&
     report.checks.every((c: any, i: number) => c.id === EXPECTED[i] && c.status === 'PASS') &&
-    Object.keys(hashes).length === 15 &&
-    Object.keys(report.migration_hashes ?? {}).length === 15 &&
+    Object.keys(hashes).length === MIGRATION_COUNT &&
+    Object.keys(report.migration_hashes ?? {}).length === MIGRATION_COUNT &&
     Object.entries(hashes).every(([key, value]) => report.migration_hashes[key] === value)
   );
 }
