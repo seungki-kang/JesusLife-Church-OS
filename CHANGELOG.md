@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased - 2026-11-11
+
+- Added `docs/governance/DUPLICATE_COPY_REGISTER.md`/`.csv`: 20 copied files with their source of truth. The unreferenced B-04 copy in `tests/contract` is recorded as partly STALE (manifest template 1.0 vs 1.1). No files were deleted.
+- Added `tools/validation/validate_duplicate_copies.py` and its tests; the design-documents CI now fails when a registered copy diverges or an unregistered copy appears, and also runs on `.sql` changes.
+- Noted in `STRUCTURE_GUIDE.md` that workflows under `canonical/.../.github` do not run.
+
 ## 3.0 - 2026-10-17
 
 - Repository renamed from `CHGO-Platform` to `JesusLife-Church-OS` and narrowed to Church OS.

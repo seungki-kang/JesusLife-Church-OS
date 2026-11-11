@@ -41,3 +41,5 @@ Start with [current design guidance](START_RECOVERY_CURRENT.md). [canonical v2.6
 - Candidate is not evidence and NOT_RUN is not PASS.
 - Applied migrations are immutable; use forward migrations.
 - Do not commit secrets, `.pytest_cache`, `__pycache__` or `.pyc` files.
+- Files that exist in more than one folder are listed in the [duplicate copy register](docs/governance/DUPLICATE_COPY_REGISTER.md). Change only the source of truth; CI fails when a registered copy diverges or an unregistered copy appears.
+- GitHub runs only the workflows in the root `.github/workflows`. The four workflows under `canonical/ChurchOS_Canonical_v2.6/.github/workflows` are preserved snapshot files and do not run; the root `canonical-v26.yml` runs the snapshot checks.
