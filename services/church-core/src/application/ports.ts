@@ -52,6 +52,9 @@ export interface StorePort {
 export interface AuditPort {
   record(event: { traceId: string; action: string; status: number }): void;
 }
+/** OIDC: a real provider. SYNTHETIC: local development keys only (see adapters/oidc/config.ts). */
+export type IdentityMode = 'OIDC' | 'SYNTHETIC';
+export const IDENTITY_MODE = Symbol('IDENTITY_MODE');
 export const IDENTITY = Symbol('IDENTITY'),
   STORE = Symbol('STORE'),
   AUDIT = Symbol('AUDIT');

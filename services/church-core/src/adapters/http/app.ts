@@ -23,7 +23,7 @@ import type { Kind, ManagedKind, MutationAction } from '../../domain/types.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { CommandError, validateCommand } from '../../domain/commands.js';
 import { randomUUID } from 'node:crypto';
-import { IDENTITY, STORE, AUDIT } from '../../application/ports.js';
+import { IDENTITY, IDENTITY_MODE, STORE, AUDIT } from '../../application/ports.js';
 import { consoleErrorLog, errorEntry, isDependencyFailure } from './problems.js';
 import { decodeCursor, encodeCursor, MANAGE_STATUSES, parseStatuses } from '../../domain/paging.js';
 import type { ListName } from '../../domain/paging.js';
@@ -37,6 +37,7 @@ import type {
   PageRequest,
   ManagePageRequest,
   ListRow,
+  IdentityMode,
 } from '../../application/ports.js';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function fail(status: number, code: string): never {
@@ -106,13 +107,14 @@ class CoreController {
   constructor(
     @Inject(IDENTITY) private identity: IdentityPort,
     @Inject(STORE) private store: StorePort,
+    @Inject(IDENTITY_MODE) private identityMode: IdentityMode,
   ) {}
   @Get('/health/live') live() {
     return { status: 'LIVE' };
   }
   @Get('/health/ready') async ready() {
     if (!(await this.store.ready())) fail(503, 'NOT_READY');
-    return { status: 'READY', scope: 'DATABASE_ONLY' };
+    return { status: 'READY', scope: 'DATABASE_ONLY', identity: this.identityMode };
   }
   /** Verifies the bearer token and the purpose header. Token tenant/role claims are ignored. */
   async authenticate(req: FastifyRequest) {
@@ -339,6 +341,7 @@ export async function buildApp(
   store: StorePort,
   audit: AuditPort,
   errorLog: ErrorLog = consoleErrorLog,
+  identityMode: IdentityMode = 'OIDC',
 ): Promise<NestFastifyApplication> {
   @Module({
     controllers: [CoreController],
@@ -346,6 +349,7 @@ export async function buildApp(
       { provide: IDENTITY, useValue: identity },
       { provide: STORE, useValue: store },
       { provide: AUDIT, useValue: audit },
+      { provide: IDENTITY_MODE, useValue: identityMode },
     ],
   })
   class AppModule {}
@@ -353,6 +357,8 @@ export async function buildApp(
   const fastify = adapter.getInstance();
   fastify.addHook('onRequest', async (_req, reply) => {
     reply.header('cache-control', 'no-store');
+    // S02: make synthetic sessions visible to every client so they are never mistaken for real accounts.
+    if (identityMode === 'SYNTHETIC') reply.header('x-identity-mode', 'SYNTHETIC');
   });
   fastify.addHook('onResponse', async (req, reply) => {
     audit.record({ traceId: req.id, action: req.routeOptions.url ?? 'UNMATCHED', status: reply.statusCode });

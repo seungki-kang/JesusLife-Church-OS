@@ -1,14 +1,20 @@
 import { Pool } from 'pg';
 import { buildApp } from './adapters/http/app.js';
 import { PgStore } from './adapters/postgres/postgres.js';
-import { remoteIdentity } from './adapters/oidc/identity.js';
-const required = ['DATABASE_URL', 'OIDC_ISSUER', 'OIDC_AUDIENCE', 'OIDC_JWKS_URL'] as const;
-for (const key of required) if (!process.env[key]) throw new Error(`Missing required configuration: ${key}`);
+import { identityFromEnv } from './adapters/oidc/config.js';
+if (!process.env.DATABASE_URL) throw new Error('Missing required configuration: DATABASE_URL');
+const { mode, identity } = identityFromEnv(process.env);
+if (mode === 'SYNTHETIC')
+  console.warn(
+    JSON.stringify({ level: 'WARN', event: 'SYNTHETIC_IDENTITY', note: 'development only; not real accounts' }),
+  );
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 10, connectionTimeoutMillis: 5000 });
 const app = await buildApp(
-  remoteIdentity(process.env.OIDC_ISSUER!, process.env.OIDC_AUDIENCE!, process.env.OIDC_JWKS_URL!),
+  identity,
   new PgStore(pool),
   { record: (e) => console.info(JSON.stringify({ level: 'AUDIT', ...e })) },
+  undefined,
+  mode,
 );
 const port = Number(process.env.PORT ?? 3000);
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid port');
