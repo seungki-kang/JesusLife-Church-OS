@@ -1,5 +1,5 @@
 /** Number of migrations in db/migrations that the integration run must apply. */
-export const MIGRATION_COUNT = 16;
+export const MIGRATION_COUNT = 17;
 export const EXPECTED = [
   'postgres16',
   'bootstrap',

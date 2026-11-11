@@ -32,7 +32,11 @@ async function appThatThrows(failure: unknown, log: (e: ErrorLogEntry) => void) 
     detail: async () => null,
     tenant: async () => null,
   };
-  const store: StorePort = { ready: async () => true, scoped: async (_scope, work) => work(session as any) };
+  const store: StorePort = {
+    ready: async () => true,
+    myChurches: async () => [],
+    scoped: async (_scope, work) => work(session as any),
+  };
   const app = await buildApp(identity, store, { record: () => {} }, log);
   const response = await app
     .getHttpAdapter()

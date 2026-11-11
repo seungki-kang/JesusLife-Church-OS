@@ -114,12 +114,8 @@ class CoreController {
     if (!(await this.store.ready())) fail(503, 'NOT_READY');
     return { status: 'READY', scope: 'DATABASE_ONLY' };
   }
-  async scoped<T>(
-    req: FastifyRequest,
-    tenant: string,
-    kind: string,
-    work: (s: SessionPort, roles: string[]) => Promise<T>,
-  ) {
+  /** Verifies the bearer token and the purpose header. Token tenant/role claims are ignored. */
+  async authenticate(req: FastifyRequest) {
     const auth = req.headers.authorization;
     if (!auth?.startsWith('Bearer ') || auth.length > 16384) fail(401, 'UNAUTHORIZED');
     let principal;
@@ -128,9 +124,24 @@ class CoreController {
     } catch {
       fail(401, 'UNAUTHORIZED');
     }
-    if (!uuid.test(tenant)) fail(400, 'INVALID_TENANT');
     const purpose = req.headers['x-purpose-code'];
     if (purpose !== 'CHURCH_OPERATION') fail(403, 'PURPOSE_DENIED');
+    return { principal, purpose };
+  }
+  /** S02: churches the caller belongs to, for choosing the active church (COS-JOIN-021). */
+  @Get('/api/v1/church/me/churches') async myChurches(@Req() req: FastifyRequest) {
+    if (Object.keys(req.query as object).length) fail(400, 'INVALID_QUERY');
+    const { principal } = await this.authenticate(req);
+    return { items: await this.store.myChurches(principal) };
+  }
+  async scoped<T>(
+    req: FastifyRequest,
+    tenant: string,
+    kind: string,
+    work: (s: SessionPort, roles: string[]) => Promise<T>,
+  ) {
+    const { principal, purpose } = await this.authenticate(req);
+    if (!uuid.test(tenant)) fail(400, 'INVALID_TENANT');
     const scope: Scope = Object.freeze({ tenant, principal, purpose, trace: req.id });
     return this.store.scoped(scope, async (session) => {
       const roles = await session.roles();

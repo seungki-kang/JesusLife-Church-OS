@@ -1300,6 +1300,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ManagedEventPage'
+  /me/churches:
+    get:
+      tags:
+      - Membership
+      operationId: listMyChurches
+      summary: Churches the signed-in person belongs to
+      description: >-
+        S02 / COS-JOIN-021. Lists active churches where the verified caller has an
+        active identity binding and an ACTIVE or PENDING membership. Used to choose the
+        active church; every church-scoped request is still authorized per church.
+        Needs no X-Church-Tenant header. Roles are empty unless the membership is ACTIVE.
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Churches of the caller
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyChurchList'
 components:
   securitySchemes:
     churchOidc:
@@ -1465,6 +1493,37 @@ components:
           schema:
             $ref: '#/components/schemas/Problem'
   schemas:
+    MyChurch:
+      type: object
+      additionalProperties: false
+      required: [tenantId, name, timezone, membershipStatus, roles]
+      properties:
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+        membershipStatus:
+          enum: [ACTIVE, PENDING]
+        roles:
+          type: array
+          items:
+            type: string
+            pattern: ^[A-Z][A-Z0-9_]{1,63}$
+    MyChurchList:
+      type: object
+      additionalProperties: false
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyChurch'
     ManagedNoticeSummary:
       type: object
       additionalProperties: false

@@ -1,5 +1,5 @@
 import { present, visible, mergeMutation, validatePatch } from '../../domain/lifecycle.js';
-import type { Kind, ManagedKind, MutationAction } from '../../domain/types.js';
+import type { Kind, ManagedKind, MutationAction, Principal } from '../../domain/types.js';
 import { actorRef, fingerprint, createResponse, CommandError } from '../../domain/commands.js';
 import type { Pool, PoolClient } from 'pg';
 import { DependencyUnavailable } from '../../application/errors.js';
@@ -10,6 +10,7 @@ import type {
   PageRequest,
   ManagePageRequest,
   ListRow,
+  ChurchMembershipSummary,
 } from '../../application/ports.js';
 
 /** UTC timestamp text with microseconds, used as an exact keyset sort key. */
@@ -294,6 +295,42 @@ export class PgStore implements StorePort {
     }
   }
   async scoped<T>(scope: Scope, work: (s: SessionPort) => Promise<T>) {
+    return this.transaction(
+      "select set_config('church.tenant_id',$1,true),set_config('church.actor_ref',$2,true),set_config('statement_timeout','5000',true)",
+      [scope.tenant, actorRef(scope.principal)],
+      (c) => work(new PgSession(c, scope)),
+    );
+  }
+  /**
+   * S02 / COS-JOIN-021: the churches the verified caller belongs to. Runs without a tenant
+   * context; V017's SELECT-only policies expose only rows bound to this issuer and subject.
+   */
+  async myChurches(principal: Principal): Promise<ChurchMembershipSummary[]> {
+    return this.transaction(
+      "select set_config('church.subject_issuer',$1,true),set_config('church.subject_ref',$2,true),set_config('church.actor_ref',$3,true),set_config('statement_timeout','5000',true)",
+      [principal.issuer, principal.subject, actorRef(principal)],
+      async (c) =>
+        (
+          await c.query(
+            `select t.id as "tenantId",t.name,t.timezone,m.status as "membershipStatus",
+                    case when m.status='ACTIVE'
+                      then array['MEMBER']||coalesce(array_agg(r.code order by r.code) filter(where r.code is not null),'{}')
+                      else '{}'::text[] end as roles
+             from church_access.external_subject_binding b
+             join church_core.membership m on (m.tenant_id,m.id)=(b.tenant_id,b.membership_id)
+             join church_core.tenant t on t.id=b.tenant_id and t.status='ACTIVE'
+             left join church_access.membership_role mr on (mr.tenant_id,mr.membership_id)=(m.tenant_id,m.id)
+               and mr.valid_from<=now() and (mr.valid_until is null or mr.valid_until>now())
+             left join church_access.tenant_role r on (r.tenant_id,r.id)=(mr.tenant_id,mr.role_id)
+             where b.status='ACTIVE' and b.issuer=$1 and b.subject_ref=$2 and m.status in ('ACTIVE','PENDING')
+             group by t.id,t.name,t.timezone,m.status
+             order by t.name,t.id`,
+            [principal.issuer, principal.subject],
+          )
+        ).rows,
+    );
+  }
+  private async transaction<T>(contextSql: string, contextArgs: unknown[], work: (c: PoolClient) => Promise<T>) {
     // Re-check the role only when the last successful check is stale: avoids an extra
     // query and pool connection on every request while still refusing unsafe roles.
     if (this.now() >= this.safeUntil && !(await this.ready()))
@@ -302,11 +339,8 @@ export class PgStore implements StorePort {
     let broken: Error | undefined;
     try {
       await c.query('BEGIN');
-      await c.query(
-        "select set_config('church.tenant_id',$1,true),set_config('church.actor_ref',$2,true),set_config('statement_timeout','5000',true)",
-        [scope.tenant, actorRef(scope.principal)],
-      );
-      const result = await work(new PgSession(c, scope));
+      await c.query(contextSql, contextArgs);
+      const result = await work(c);
       await c.query('COMMIT');
       return result;
     } catch (e) {
