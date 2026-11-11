@@ -15,7 +15,15 @@ export class DependencyUnavailable extends Error {
 }
 
 const SQLSTATE = /^[0-9A-Z]{5}$/;
-const NETWORK_CODES = new Set(['ECONNREFUSED', 'ECONNRESET', 'ETIMEDOUT', 'EPIPE', 'ENOTFOUND', 'EAI_AGAIN', 'EHOSTUNREACH']);
+const NETWORK_CODES = new Set([
+  'ECONNREFUSED',
+  'ECONNRESET',
+  'ETIMEDOUT',
+  'EPIPE',
+  'ENOTFOUND',
+  'EAI_AGAIN',
+  'EHOSTUNREACH',
+]);
 // node-postgres raises these as plain Errors without a code.
 const PG_CONNECTION_MESSAGES = /^(Connection terminated|timeout exceeded when trying to connect)/;
 
@@ -48,12 +56,22 @@ export type ErrorLog = (entry: ErrorLogEntry) => void;
  * which may contain tokens or personal data. Stack frames (file:line) are kept
  * because they carry code locations only.
  */
-export function errorEntry(error: unknown, ctx: { traceId: string; method: string; route: string; status: number; code: string }): ErrorLogEntry {
+export function errorEntry(
+  error: unknown,
+  ctx: { traceId: string; method: string; route: string; status: number; code: string },
+): ErrorLogEntry {
   const e = error as { code?: unknown; severity?: unknown } | null;
-  const sqlState = typeof e?.code === 'string' && SQLSTATE.test(e.code) && typeof e.severity === 'string' ? e.code : undefined;
-  const stack = error instanceof Error && error.stack
-    ? error.stack.split('\n').slice(1).map((line) => line.trim()).filter((line) => line.startsWith('at ')).slice(0, 15)
-    : undefined;
+  const sqlState =
+    typeof e?.code === 'string' && SQLSTATE.test(e.code) && typeof e.severity === 'string' ? e.code : undefined;
+  const stack =
+    error instanceof Error && error.stack
+      ? error.stack
+          .split('\n')
+          .slice(1)
+          .map((line) => line.trim())
+          .filter((line) => line.startsWith('at '))
+          .slice(0, 15)
+      : undefined;
   return Object.freeze({
     level: 'ERROR',
     ...ctx,
