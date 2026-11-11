@@ -19,7 +19,7 @@
 | B-02 마이그레이션 V001–V010 | `docs/handoff/packages/B-02_PostgreSQL_Clean_Execution_Pack_2.0/migrations/` (E5 CI 실행 경로) | `db/migrations/church_os/` | 10개 동일 |
 | B-02 검증 SQL V011·V012 | 같은 B-02 팩 | `db/validation/`, `tests/contract/DEV-002A_Contract_Test_SQL_Pack_2.0.sql` | 3개 동일 |
 
-검사 제외: Flutter가 생성한 Android/iOS 플랫폼 템플릿, 바이트 보존 대상인 `canonical/` 스냅샷, `.gitkeep`, 이미지.
+검사 제외: Flutter가 생성한 Android/iOS 플랫폼 템플릿, 바이트 보존 대상인 `canonical/` 스냅샷, `.gitkeep`, 이미지. `services/church-core`는 스냅샷에서 한 번 파생한 활성 소스로, 원본과 같게 유지하는 사본이 아니므로 이 원장이 아니라 [파생 기록](../../services/church-core/PROVENANCE.md)으로 추적한다.
 
 ## 검증
 

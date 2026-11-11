@@ -1,0 +1,2430 @@
+openapi: 3.1.0
+info:
+  title: Church OS Public API
+  version: 1.3.0
+  description: ChurchOS independent church operations API; six specialist products
+    integrate through versioned APIs and own their data.
+  contact:
+    name: Church OS API Governance
+jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+servers:
+- url: https://api.example.invalid/api/v1/church
+  description: Placeholder only; deployment host is not approved.
+security:
+- churchOidc: []
+tags:
+- name: Tenant
+- name: Membership
+- name: Community
+- name: Event
+- name: Attendance
+- name: Care
+- name: Ministry
+- name: Experience
+- name: Integration
+- name: Brand
+- name: Notice
+- name: Campus
+- name: Governance
+paths:
+  /tenants/{tenantId}:
+    get:
+      tags:
+      - Tenant
+      operationId: getTenant
+      summary: Read an authorized church tenant
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantId'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Tenant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /memberships:
+    get:
+      tags:
+      - Membership
+      operationId: listMemberships
+      summary: List memberships within the verified tenant context
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Membership page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipPage'
+    post:
+      tags:
+      - Membership
+      operationId: createMembership
+      summary: Create a church membership
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Created membership
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      description: Requires current TENANT_ADMIN and Idempotency-Key. Writes, receipt
+        metadata and ALLOW audit commit atomically. Replays return original 201 response;
+        changed body or expired key returns 409. Creates an identity-unbound membership.
+  /communities:
+    get:
+      tags:
+      - Community
+      operationId: listCommunities
+      summary: List groups teams and departments
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Community page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityPage'
+    post:
+      tags:
+      - Community
+      operationId: createCommunity
+      summary: Create a group team or department
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommunityCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Created community
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Community'
+  /events:
+    get:
+      tags:
+      - Event
+      operationId: listEvents
+      summary: List authorized worship services and events
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Event page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventPage'
+    post:
+      tags:
+      - Event
+      operationId: createEvent
+      summary: Create a worship service or event
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      description: Requires current TENANT_ADMIN and Idempotency-Key. Writes, receipt
+        metadata and ALLOW audit commit atomically. Replays return original 201 response;
+        changed body or expired key returns 409. Creates DRAFT only; publication is
+        not implemented.
+  /attendance/check-ins:
+    post:
+      tags:
+      - Attendance
+      operationId: checkInAttendance
+      summary: Record event attendance without inferring growth
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceCheckIn'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Attendance record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /care-tasks:
+    get:
+      tags:
+      - Care
+      operationId: listCareTasks
+      summary: List purpose-authorized care workflow tasks
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - name: status
+        in: query
+        schema:
+          $ref: '#/components/schemas/TaskStatus'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Care task page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareTaskPage'
+    post:
+      tags:
+      - Care
+      operationId: createCareTask
+      summary: Create a care task with minimized operational text
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CareTaskCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Created task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareTask'
+  /ministries/assignments:
+    post:
+      tags:
+      - Ministry
+      operationId: createMinistryAssignment
+      summary: Assign a voluntary ministry role
+      description: Growth scores and private reflection data are prohibited assignment
+        inputs.
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MinistryAssignmentCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinistryAssignment'
+  /today:
+    get:
+      tags:
+      - Experience
+      operationId: getMemberToday
+      summary: Get the signed-in member's prioritized action feed
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Personal Today feed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodayFeed'
+  /pastor-overview:
+    get:
+      tags:
+      - Experience
+      operationId: getPastorOverview
+      summary: Get aggregate-only church operational overview
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - name: period
+        in: query
+        required: true
+        schema:
+          type: string
+          pattern: ^P([1-9][0-9]*D|[1-9][0-9]*W|[1-9][0-9]*M)$
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Suppression-aware aggregate overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PastorOverview'
+  /integrations:
+    get:
+      tags:
+      - Integration
+      operationId: listIntegrations
+      summary: List professional-app connections without protected content
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Integration states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntegrationConnection'
+  /integrations/{provider}/handoffs:
+    post:
+      tags:
+      - Integration
+      operationId: createIntegrationHandoff
+      summary: Create a short-lived one-time handoff
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - name: provider
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Provider'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HandoffRequest'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: One-time handoff
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Handoff'
+  /integrations/{provider}/return-uris:
+    get:
+      tags:
+      - Integration
+      operationId: listRegisteredReturnUris
+      summary: List tenant and provider return URI registrations
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - name: provider
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Provider'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Registered return URIs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReturnUriRegistration'
+    post:
+      tags:
+      - Integration
+      operationId: registerReturnUri
+      summary: Register an administrator-approved HTTPS return URI
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - name: provider
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Provider'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnUriRegistrationCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Registered return URI
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReturnUriRegistration'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /brand-config:
+    get:
+      tags:
+      - Brand
+      operationId: getBrandConfig
+      summary: Read bounded white-label configuration
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Brand configuration
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandConfig'
+    put:
+      tags:
+      - Brand
+      operationId: replaceBrandConfig
+      summary: Replace bounded white-label configuration
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - name: If-Match
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandConfigReplace'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Updated configuration
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandConfig'
+        '412':
+          description: Version conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /care-tasks/{taskId}/status:
+    patch:
+      tags:
+      - Care
+      operationId: changeCareTaskStatus
+      summary: Assign progress complete or cancel a care task
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/TaskId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CareTaskStatusChange'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Updated task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareTask'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /ministries/assignments/{assignmentId}/decision:
+    patch:
+      tags:
+      - Ministry
+      operationId: decideMinistryAssignment
+      summary: Accept or decline a proposed ministry assignment
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/AssignmentId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MinistryDecision'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Updated assignment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinistryAssignment'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /events/{eventId}:
+    patch:
+      operationId: updateEvent
+      tags:
+      - Event
+      summary: updateEvent
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/EventId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/LifecycleIfMatch'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+        '428':
+          $ref: '#/components/responses/PreconditionRequired'
+      description: TENANT_ADMIN only. Atomic mutation, successful audit and receipt.
+        Same key retries replay only while resulting resource revision remains current;
+        later revisions cause 409 REPLAY_SUPERSEDED without content snapshots. Cancelled
+        resources cannot be edited or republished. COMPLETED/EXPIRED transitions are
+        reserved.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventUpdate'
+    get:
+      operationId: getEvent
+      tags:
+      - Event
+      summary: getEvent
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/EventId'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+  /notices:
+    get:
+      tags:
+      - Notice
+      operationId: listNotices
+      summary: List published church notices
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Notice page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoticePage'
+    post:
+      tags:
+      - Notice
+      operationId: createNotice
+      summary: Create a bounded church notice
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoticeCreate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '201':
+          description: Created notice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notice'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      description: Requires current TENANT_ADMIN and Idempotency-Key. Writes, receipt
+        metadata and ALLOW audit commit atomically. Replays return original 201 response;
+        changed body or expired key returns 409. Creates DRAFT only; publication is
+        not implemented.
+  /campuses:
+    get:
+      tags:
+      - Campus
+      operationId: listCampuses
+      summary: List tenant campuses
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Campuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Campus'
+  /audit-records:
+    get:
+      tags:
+      - Governance
+      operationId: listAuditRecords
+      summary: Read append-only authorized audit metadata
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/Cursor'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '200':
+          description: Audit page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditPage'
+  /notices/{noticeId}:
+    get:
+      operationId: getNotice
+      tags:
+      - Notice
+      summary: getNotice
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/NoticeId'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notice'
+    patch:
+      operationId: updateNotice
+      tags:
+      - Notice
+      summary: updateNotice
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/NoticeId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/LifecycleIfMatch'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notice'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+        '428':
+          $ref: '#/components/responses/PreconditionRequired'
+      description: TENANT_ADMIN only. Atomic mutation, successful audit and receipt.
+        Same key retries replay only while resulting resource revision remains current;
+        later revisions cause 409 REPLAY_SUPERSEDED without content snapshots. Cancelled
+        resources cannot be edited or republished. COMPLETED/EXPIRED transitions are
+        reserved.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoticeUpdate'
+  /notices/{noticeId}/publish:
+    post:
+      operationId: publishNotice
+      tags:
+      - Notice
+      summary: publishNotice
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/NoticeId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/LifecycleIfMatch'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notice'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+        '428':
+          $ref: '#/components/responses/PreconditionRequired'
+      description: TENANT_ADMIN only. Atomic mutation, successful audit and receipt.
+        Same key retries replay only while resulting resource revision remains current;
+        later revisions cause 409 REPLAY_SUPERSEDED without content snapshots. Cancelled
+        resources cannot be edited or republished. COMPLETED/EXPIRED transitions are
+        reserved.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyLifecycleCommand'
+  /notices/{noticeId}/cancel:
+    post:
+      operationId: cancelNotice
+      tags:
+      - Notice
+      summary: cancelNotice
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/NoticeId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/LifecycleIfMatch'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notice'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+        '428':
+          $ref: '#/components/responses/PreconditionRequired'
+      description: TENANT_ADMIN only. Atomic mutation, successful audit and receipt.
+        Same key retries replay only while resulting resource revision remains current;
+        later revisions cause 409 REPLAY_SUPERSEDED without content snapshots. Cancelled
+        resources cannot be edited or republished. COMPLETED/EXPIRED transitions are
+        reserved.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyLifecycleCommand'
+  /events/{eventId}/publish:
+    post:
+      operationId: publishEvent
+      tags:
+      - Event
+      summary: publishEvent
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/EventId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/LifecycleIfMatch'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+        '428':
+          $ref: '#/components/responses/PreconditionRequired'
+      description: TENANT_ADMIN only. Atomic mutation, successful audit and receipt.
+        Same key retries replay only while resulting resource revision remains current;
+        later revisions cause 409 REPLAY_SUPERSEDED without content snapshots. Cancelled
+        resources cannot be edited or republished. COMPLETED/EXPIRED transitions are
+        reserved.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyLifecycleCommand'
+  /events/{eventId}/cancel:
+    post:
+      operationId: cancelEvent
+      tags:
+      - Event
+      summary: cancelEvent
+      parameters:
+      - $ref: '#/components/parameters/PurposeCode'
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/EventId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/LifecycleIfMatch'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '200':
+          description: Authorized current resource revision
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '412':
+          $ref: '#/components/responses/PreconditionFailed'
+        '428':
+          $ref: '#/components/responses/PreconditionRequired'
+      description: TENANT_ADMIN only. Atomic mutation, successful audit and receipt.
+        Same key retries replay only while resulting resource revision remains current;
+        later revisions cause 409 REPLAY_SUPERSEDED without content snapshots. Cancelled
+        resources cannot be edited or republished. COMPLETED/EXPIRED transitions are
+        reserved.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyLifecycleCommand'
+components:
+  securitySchemes:
+    churchOidc:
+      type: openIdConnect
+      openIdConnectUrl: https://identity.example.invalid/.well-known/openid-configuration
+      description: Placeholder 내부 공통 인증·계정 기반 OIDC discovery URL.
+  parameters:
+    TenantId:
+      name: tenantId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/Uuid'
+    TenantHeader:
+      name: X-Church-Tenant
+      in: header
+      required: true
+      description: Requested tenant; the server must bind it to verified token claims
+        and membership.
+      schema:
+        $ref: '#/components/schemas/Uuid'
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 16
+        maxLength: 128
+        pattern: ^[!-~]{16,128}$
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+        maxLength: 512
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/Uuid'
+    AssignmentId:
+      name: assignmentId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/Uuid'
+    EventId:
+      name: eventId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/Uuid'
+    PurposeCode:
+      name: X-Purpose-Code
+      in: header
+      required: true
+      description: Authorized processing purpose, validated and written to audit context.
+      schema:
+        type: string
+        pattern: ^[A-Z][A-Z0-9_]{2,63}$
+    NoticeId:
+      name: noticeId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/Uuid'
+    LifecycleIfMatch:
+      name: If-Match
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^"rv-[1-9][0-9]{0,18}"$
+      description: Single strong ETag returned by detail GET. Missing=428, malformed=400,
+        stale=412. Wildcards and lists are unsupported.
+  headers:
+    ETag:
+      description: Strong entity tag used with If-Match.
+      schema:
+        type: string
+        pattern: ^"[A-Za-z0-9._:-]+"$
+  responses:
+    BadRequest:
+      description: Malformed request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unauthorized:
+      description: Missing or invalid authentication
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Forbidden:
+      description: Tenant role purpose consent or policy denied
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: Not found or intentionally concealed
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Conflict:
+      description: State or idempotency conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unprocessable:
+      description: Semantically invalid request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    PreconditionRequired:
+      description: If-Match required
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    PreconditionFailed:
+      description: Resource version changed
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    Uuid:
+      type: string
+      format: uuid
+    Timestamp:
+      type: string
+      format: date-time
+    TaskStatus:
+      type: string
+      enum:
+      - OPEN
+      - ASSIGNED
+      - IN_PROGRESS
+      - DONE
+      - CANCELLED
+    Provider:
+      type: string
+      enum:
+      - JLPRAYER
+      - JLBIBLE
+      - LIFE_DIARY
+      - NEORANG_NARANG
+      - CHGO
+      - JLACADEMY
+    Problem:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - title
+      - status
+      - code
+      - traceId
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        detail:
+          type: string
+        code:
+          type: string
+          pattern: ^[A-Z][A-Z0-9_]{2,63}$
+        traceId:
+          type: string
+    Tenant:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - name
+      - status
+      - timezone
+      - createdAt
+      properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        status:
+          type: string
+          enum:
+          - PROVISIONING
+          - ACTIVE
+          - SUSPENDED
+          - CLOSED
+        timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+        createdAt:
+          $ref: '#/components/schemas/Timestamp'
+    MembershipCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - personRef
+      - status
+      properties:
+        personRef: &id001
+          $ref: '#/components/schemas/Uuid'
+        status: &id002
+          type: string
+          enum:
+          - PENDING
+          - ACTIVE
+          - INACTIVE
+        joinedOn: &id003
+          type: string
+          format: date
+    Membership:
+      type: object
+      additionalProperties: false
+      required:
+      - personRef
+      - status
+      - id
+      - tenantId
+      - createdAt
+      properties:
+        personRef: *id001
+        status: *id002
+        joinedOn: *id003
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        createdAt:
+          $ref: '#/components/schemas/Timestamp'
+    MembershipPage:
+      type: object
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    CommunityCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - kind
+      - name
+      properties:
+        kind:
+          type: string
+          enum:
+          - GROUP
+          - CELL
+          - DEPARTMENT
+          - TEAM
+          - MINISTRY
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        parentId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+    Community:
+      unevaluatedProperties: false
+      allOf:
+      - $ref: '#/components/schemas/CommunityCreate'
+      - type: object
+        required:
+        - id
+        - tenantId
+        - status
+        properties:
+          id:
+            $ref: '#/components/schemas/Uuid'
+          tenantId:
+            $ref: '#/components/schemas/Uuid'
+          status:
+            type: string
+            enum:
+            - ACTIVE
+            - ARCHIVED
+    CommunityPage:
+      type: object
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Community'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    EventCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - kind
+      - title
+      - startsAt
+      - timezone
+      properties:
+        kind: &id004
+          type: string
+          enum:
+          - WORSHIP
+          - GATHERING
+          - CLASS
+          - SERVICE
+          - OTHER
+        title: &id005
+          type: string
+          minLength: 1
+          maxLength: 200
+        startsAt: &id006
+          $ref: '#/components/schemas/Timestamp'
+        endsAt: &id007
+          $ref: '#/components/schemas/Timestamp'
+        timezone: &id008
+          type: string
+          minLength: 1
+          maxLength: 64
+        communityId: &id009
+          type:
+          - string
+          - 'null'
+          format: uuid
+        campusId: &id010
+          type:
+          - string
+          - 'null'
+          format: uuid
+    Event:
+      type: object
+      additionalProperties: false
+      required:
+      - kind
+      - title
+      - startsAt
+      - timezone
+      - id
+      - tenantId
+      - status
+      properties:
+        kind: *id004
+        title: *id005
+        startsAt: *id006
+        endsAt: *id007
+        timezone: *id008
+        communityId: *id009
+        campusId: *id010
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        status:
+          type: string
+          enum:
+          - DRAFT
+          - PUBLISHED
+          - CANCELLED
+          - COMPLETED
+        rowVersion:
+          type: string
+          pattern: ^[1-9][0-9]*$
+          description: Opaque positive PostgreSQL row version; use ETag for If-Match.
+    EventPage:
+      type: object
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    AttendanceCheckIn:
+      type: object
+      additionalProperties: false
+      required:
+      - eventId
+      - membershipId
+      - occurredAt
+      - method
+      properties:
+        eventId:
+          $ref: '#/components/schemas/Uuid'
+        membershipId:
+          $ref: '#/components/schemas/Uuid'
+        occurredAt:
+          $ref: '#/components/schemas/Timestamp'
+        method:
+          type: string
+          enum:
+          - SELF
+          - LEADER
+          - QR
+          - IMPORT
+    Attendance:
+      unevaluatedProperties: false
+      allOf:
+      - $ref: '#/components/schemas/AttendanceCheckIn'
+      - type: object
+        required:
+        - id
+        - tenantId
+        properties:
+          id:
+            $ref: '#/components/schemas/Uuid'
+          tenantId:
+            $ref: '#/components/schemas/Uuid'
+    CareTaskCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - subjectMembershipId
+      - category
+      - priority
+      properties:
+        subjectMembershipId:
+          $ref: '#/components/schemas/Uuid'
+        category:
+          type: string
+          enum:
+          - WELCOME
+          - CONTACT
+          - VISIT
+          - PRACTICAL_SUPPORT
+          - SAFETY_HANDOFF
+          - OTHER
+        priority:
+          type: string
+          enum:
+          - LOW
+          - NORMAL
+          - HIGH
+          - URGENT
+        assigneeMembershipId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        dueAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        operationalCode:
+          type:
+          - string
+          - 'null'
+          enum:
+          - WELCOME_CALL
+          - CONTACT_ATTEMPTED
+          - VISIT_SCHEDULED
+          - REFERRED
+          - NO_RESPONSE
+          - OTHER_NO_TEXT
+          - null
+    CareTask:
+      unevaluatedProperties: false
+      allOf:
+      - $ref: '#/components/schemas/CareTaskCreate'
+      - type: object
+        required:
+        - id
+        - tenantId
+        - status
+        - createdAt
+        properties:
+          id:
+            $ref: '#/components/schemas/Uuid'
+          tenantId:
+            $ref: '#/components/schemas/Uuid'
+          status:
+            $ref: '#/components/schemas/TaskStatus'
+          createdAt:
+            $ref: '#/components/schemas/Timestamp'
+    CareTaskPage:
+      type: object
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CareTask'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    MinistryAssignmentCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - membershipId
+      - communityId
+      - roleCode
+      - basis
+      - startsOn
+      properties:
+        membershipId:
+          $ref: '#/components/schemas/Uuid'
+        communityId:
+          $ref: '#/components/schemas/Uuid'
+        roleCode:
+          type: string
+          pattern: ^[A-Z][A-Z0-9_]{1,63}$
+        basis:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - VOLUNTEERED
+            - GIFT
+            - SKILL
+            - EXPERIENCE
+            - AVAILABILITY
+            - COMMUNITY_NEED
+            - LEADER_DISCERNMENT
+        startsOn:
+          type: string
+          format: date
+        endsOn:
+          type:
+          - string
+          - 'null'
+          format: date
+    MinistryAssignment:
+      unevaluatedProperties: false
+      allOf:
+      - $ref: '#/components/schemas/MinistryAssignmentCreate'
+      - type: object
+        required:
+        - id
+        - tenantId
+        - status
+        properties:
+          id:
+            $ref: '#/components/schemas/Uuid'
+          tenantId:
+            $ref: '#/components/schemas/Uuid'
+          status:
+            type: string
+            enum:
+            - PROPOSED
+            - ACCEPTED
+            - ACTIVE
+            - ENDED
+            - DECLINED
+    TodayCard:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - kind
+      - title
+      - action
+      - priority
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          enum:
+          - CHURCH
+          - JLBIBLE
+          - LIFE_DIARY
+          - JLPRAYER
+          - COMMUNITY
+          - MINISTRY
+          - JLACADEMY
+        title:
+          type: string
+        subtitle:
+          type:
+          - string
+          - 'null'
+        action:
+          $ref: '#/components/schemas/SafeAction'
+        priority:
+          type: integer
+          minimum: 1
+          maximum: 100
+    TodayFeed:
+      type: object
+      additionalProperties: false
+      required:
+      - generatedAt
+      - cards
+      properties:
+        generatedAt:
+          $ref: '#/components/schemas/Timestamp'
+        cards:
+          type: array
+          maxItems: 5
+          items:
+            $ref: '#/components/schemas/TodayCard'
+    AggregateMetric:
+      type: object
+      additionalProperties: false
+      required:
+      - code
+      - state
+      - coverage
+      properties:
+        code:
+          type: string
+        state:
+          type: string
+          enum:
+          - AVAILABLE
+          - MISSING
+          - SUPPRESSED
+        value:
+          type:
+          - number
+          - 'null'
+        sampleSize:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        coverage:
+          type: number
+          minimum: 0
+          maximum: 1
+        suppressionReason:
+          type:
+          - string
+          - 'null'
+    PastorOverview:
+      type: object
+      additionalProperties: false
+      required:
+      - periodStart
+      - periodEnd
+      - metrics
+      - pendingTasks
+      - generatedAt
+      properties:
+        periodStart:
+          $ref: '#/components/schemas/Timestamp'
+        periodEnd:
+          $ref: '#/components/schemas/Timestamp'
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/AggregateMetric'
+        pendingTasks:
+          type: integer
+          minimum: 0
+        generatedAt:
+          $ref: '#/components/schemas/Timestamp'
+    IntegrationConnection:
+      type: object
+      additionalProperties: false
+      required:
+      - provider
+      - status
+      - capabilities
+      properties:
+        provider:
+          $ref: '#/components/schemas/Provider'
+        status:
+          type: string
+          enum:
+          - CONNECTED
+          - DEGRADED
+          - DISCONNECTED
+          - NOT_CONFIGURED
+        capabilities:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        lastSuccessfulAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    HandoffRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - capability
+      - returnUri
+      - purposeCode
+      properties:
+        capability:
+          type: string
+          minLength: 1
+          maxLength: 80
+        returnUri:
+          type: string
+          format: uri
+          pattern: ^https://
+          maxLength: 500
+          description: Must match a pre-registered HTTPS return URI for the provider
+            and tenant.
+        purposeCode:
+          type: string
+          pattern: ^[A-Z][A-Z0-9_]{2,63}$
+    ReturnUriRegistrationCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - returnUri
+      properties:
+        returnUri:
+          type: string
+          format: uri
+          pattern: ^https://
+          maxLength: 500
+    ReturnUriRegistration:
+      type: object
+      additionalProperties: false
+      required:
+      - provider
+      - returnUri
+      - enabled
+      - createdAt
+      properties:
+        provider:
+          $ref: '#/components/schemas/Provider'
+        returnUri:
+          type: string
+          format: uri
+          pattern: ^https://
+          maxLength: 500
+        enabled:
+          type: boolean
+        createdAt:
+          $ref: '#/components/schemas/Timestamp'
+    Handoff:
+      type: object
+      additionalProperties: false
+      required:
+      - handoffUri
+      - expiresAt
+      properties:
+        handoffUri:
+          type: string
+          format: uri
+          pattern: ^https://
+          description: Short-lived one-time HTTPS handoff URI; it must be rejected
+            after use or expiry.
+        expiresAt:
+          $ref: '#/components/schemas/Timestamp'
+          description: Server-controlled expiry for the one-time handoff.
+    SafeAction:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - target
+      properties:
+        type:
+          type: string
+          enum:
+          - IN_APP
+          - HANDOFF
+        target:
+          type: string
+          minLength: 1
+          maxLength: 500
+    BrandConfigReplace:
+      type: object
+      additionalProperties: false
+      required:
+      - schemaVersion
+      - display
+      - colors
+      - navigation
+      - modules
+      - locale
+      - distribution
+      properties:
+        schemaVersion:
+          const: '1.0'
+        display:
+          type: object
+          additionalProperties: false
+          required:
+          - churchName
+          - appLabel
+          properties:
+            churchName:
+              type: string
+              minLength: 1
+              maxLength: 80
+            appLabel:
+              type: string
+              minLength: 1
+              maxLength: 30
+            logoAssetRef:
+              type:
+              - string
+              - 'null'
+              pattern: ^asset:[a-zA-Z0-9/_-]{1,180}$
+            iconAssetRef:
+              type:
+              - string
+              - 'null'
+              pattern: ^asset:[a-zA-Z0-9/_-]{1,180}$
+        colors:
+          type: object
+          additionalProperties: false
+          required:
+          - primary
+          - onPrimary
+          - secondary
+          - onSecondary
+          - surface
+          - onSurface
+          properties:
+            primary:
+              $ref: '#/components/schemas/Color'
+            onPrimary:
+              $ref: '#/components/schemas/Color'
+            secondary:
+              $ref: '#/components/schemas/Color'
+            onSecondary:
+              $ref: '#/components/schemas/Color'
+            surface:
+              $ref: '#/components/schemas/Color'
+            onSurface:
+              $ref: '#/components/schemas/Color'
+        navigation:
+          type: array
+          minItems: 3
+          maxItems: 5
+          uniqueItems: true
+          items:
+            enum:
+            - TODAY
+            - CHURCH
+            - COMMUNITY
+            - MINISTRY
+            - ME
+        modules:
+          type: object
+          additionalProperties: false
+          required:
+          - church
+          - community
+          - ministry
+          - integrations
+          properties:
+            church:
+              type: boolean
+            community:
+              type: boolean
+            ministry:
+              type: boolean
+            integrations:
+              type: boolean
+        locale:
+          type: object
+          additionalProperties: false
+          required:
+          - defaultLocale
+          - timezone
+          properties:
+            defaultLocale:
+              enum:
+              - ko-KR
+              - ja-JP
+              - en-US
+              - es-MX
+            timezone:
+              type: string
+              minLength: 1
+              maxLength: 64
+            displayAliases:
+              type: object
+              maxProperties: 20
+              propertyNames:
+                pattern: ^[A-Z][A-Z0-9_]{1,63}$
+              additionalProperties:
+                type: string
+                minLength: 1
+                maxLength: 40
+        distribution:
+          type: object
+          additionalProperties: false
+          required:
+          - mode
+          properties:
+            mode:
+              enum:
+              - INSTANT
+              - DEDICATED_NATIVE
+            customDomain:
+              type:
+              - string
+              - 'null'
+              format: hostname
+    BrandConfig:
+      unevaluatedProperties: false
+      allOf:
+      - $ref: '#/components/schemas/BrandConfigReplace'
+      - type: object
+        required:
+        - tenantId
+        - version
+        - updatedAt
+        properties:
+          tenantId:
+            $ref: '#/components/schemas/Uuid'
+          version:
+            type: integer
+            minimum: 1
+          updatedAt:
+            $ref: '#/components/schemas/Timestamp'
+    Color:
+      type: string
+      pattern: ^#[0-9A-Fa-f]{6}$
+    CareTaskStatusChange:
+      type: object
+      additionalProperties: false
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        assigneeMembershipId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+    MinistryDecision:
+      type: object
+      additionalProperties: false
+      required:
+      - decision
+      properties:
+        decision:
+          enum:
+          - ACCEPT
+          - DECLINE
+    EventUpdate:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        startsAt:
+          $ref: '#/components/schemas/Timestamp'
+        endsAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        campusId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        status:
+          enum:
+          - DRAFT
+          - PUBLISHED
+          - CANCELLED
+          - COMPLETED
+    NoticeCreate:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - body
+      - audience
+      - publishAt
+      properties:
+        title: &id011
+          type: string
+          minLength: 1
+          maxLength: 160
+        body: &id012
+          type: string
+          minLength: 1
+          maxLength: 4000
+          description: Church-authored notice only; no diary prayer or counseling
+            content.
+        audience: &id013
+          enum:
+          - ALL_MEMBERS
+          - LEADERS
+          - STAFF
+        publishAt: &id014
+          $ref: '#/components/schemas/Timestamp'
+        expiresAt: &id015
+          type:
+          - string
+          - 'null'
+          format: date-time
+    Notice:
+      type: object
+      additionalProperties: false
+      required:
+      - title
+      - body
+      - audience
+      - publishAt
+      - id
+      - tenantId
+      - status
+      properties:
+        title: *id011
+        body: *id012
+        audience: *id013
+        publishAt: *id014
+        expiresAt: *id015
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        status:
+          enum:
+          - DRAFT
+          - PUBLISHED
+          - EXPIRED
+          - CANCELLED
+        rowVersion:
+          type: string
+          pattern: ^[1-9][0-9]*$
+          description: Opaque positive PostgreSQL row version; use ETag for If-Match.
+    NoticePage:
+      type: object
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notice'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    Campus:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - tenantId
+      - name
+      - status
+      properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 160
+        status:
+          enum:
+          - ACTIVE
+          - ARCHIVED
+    AuditRecord:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - tenantId
+      - actorRef
+      - action
+      - resourceType
+      - occurredAt
+      - purposeCode
+      properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
+        tenantId:
+          $ref: '#/components/schemas/Uuid'
+        actorRef:
+          type: string
+        action:
+          type: string
+        resourceType:
+          type: string
+        resourceRef:
+          type:
+          - string
+          - 'null'
+        occurredAt:
+          $ref: '#/components/schemas/Timestamp'
+        purposeCode:
+          type: string
+    AuditPage:
+      type: object
+      additionalProperties: false
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditRecord'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    NoticeUpdate:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 160
+        body:
+          type: string
+          minLength: 1
+          maxLength: 4000
+          description: Church-authored notice only; no diary prayer or counseling
+            content.
+        audience:
+          enum:
+          - ALL_MEMBERS
+          - LEADERS
+          - STAFF
+        publishAt:
+          $ref: '#/components/schemas/Timestamp'
+        expiresAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        status:
+          enum:
+          - DRAFT
+          - PUBLISHED
+          - CANCELLED
+    EmptyLifecycleCommand:
+      type: object
+      additionalProperties: false
+      maxProperties: 0

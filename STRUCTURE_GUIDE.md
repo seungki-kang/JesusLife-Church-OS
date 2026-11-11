@@ -22,7 +22,7 @@ Start with [current design guidance](START_RECOVERY_CURRENT.md). [canonical v2.6
 | `db` | Earlier migration lineage and validation. Do not merge it with canonical v2.6 migrations without a separately verified forward migration |
 | `api` | Earlier OpenAPI v2 and compatibility records. Current implementation must be compared with canonical v2.6 and its actual routes |
 | `apps` | Flutter church app; admin-console is an inactive historical reservation. Church administrators use the mobile app |
-| `services` | Reserved service boundaries, not running services. Actual church-core implementation is under canonical v2.6 |
+| `services` | `services/church-core` is the single active ChurchOS backend, derived once from canonical v2.6 (see its PROVENANCE.md). The other folders are reserved boundary notes, not running services |
 | `packages` | Shared types and UI components |
 | `localization` | Locales, glossary and regional privacy overlays |
 | `tests` | Contract, integration, security, acceptance, regression and database tests |

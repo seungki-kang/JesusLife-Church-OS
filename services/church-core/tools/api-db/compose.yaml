@@ -1,0 +1,32 @@
+# Disposable API + PostgreSQL 16 verification for the active church-core service.
+# Run from services/church-core:
+#   docker compose -p church-core-verify -f tools/api-db/compose.yaml up --build --abort-on-container-exit --exit-code-from verify
+services:
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: disposable-integration-only
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  verify:
+    build:
+      context: ../..
+      dockerfile: tools/api-db/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      PGHOST: database
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: disposable-integration-only
+      PGDATABASE: postgres
+      COS_DISPOSABLE_CLUSTER: '1'
+      API_DB_EVIDENCE: /evidence/api-db-result.json
+    volumes:
+      - ../../.evidence:/evidence
