@@ -1,0 +1,7 @@
+node_modules
+dist
+.evidence
+package-lock.json
+db/migrations
+openapi
+*.md

@@ -14,7 +14,7 @@ import type {NestFastifyApplication} from '@nestjs/platform-fastify';
 // never from the repository's legacy root db/ lineage.
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 const output=process.env.API_DB_EVIDENCE;
-import {EXPECTED,assess} from './evidence.js';
+import {assess} from './evidence.js';
 const report:{[key:string]:any}={artifact:'ChurchOS_church-core_active',runtime:'INCOMPLETE',started_at:new Date().toISOString(),transport:'HTTP over loopback TCP; real PostgreSQL protocol',oidc:'LOCAL_RSA_TEST_KEYS; EXTERNAL_PROVIDER_NOT_RUN',checks:[],migration_hashes:{}};
 async function save(){if(output){await mkdir(dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report,null,2)+'\n');}}
 async function check(id:string,fn:()=>Promise<void>){try{await fn();report.checks.push({id,status:'PASS'});}catch(error){report.checks.push({id,status:'FAIL'});report.failed_check=id;const code=(error as any)?.code;report.failure_code=typeof code==='string'&&/^[A-Z0-9_]+$/.test(code)?code:'CHECK_FAILED';throw error;}finally{await save();}}
