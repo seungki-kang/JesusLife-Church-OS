@@ -33,6 +33,8 @@ jobs:
       - name: Lint (any in src may not grow)
         run: npm run lint
       - run: npm test
+      - name: Architecture rules (layers, packages, cycles, church_* SQL only)
+        run: node dist/tools/architecture/check.js
       - name: OpenAPI response contracts
         run: python -m unittest discover -s contract -p 'test_*.py'
       - name: Disposable API and PostgreSQL 16 verification

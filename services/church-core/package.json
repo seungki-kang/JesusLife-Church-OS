@@ -13,7 +13,8 @@
     "test:integration": "npm run build && node dist/integration/verify.js",
     "lint": "eslint . --max-warnings 19",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "arch": "npm run build && node dist/tools/architecture/check.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.2.8",

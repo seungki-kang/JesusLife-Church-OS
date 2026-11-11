@@ -8,7 +8,10 @@ ChurchOS 백엔드의 **단일 활성 소스**다. 후속 기능과 버그 수�
 
 | 경로 | 내용 |
 |---|---|
-| `src/` | NestJS·Fastify 서버 (IdentityPort·StorePort·AuditPort) |
+| `src/domain/` | 업무 규칙(검증·상태 전이·커서). 프레임워크·DB를 모름 |
+| `src/application/` | 포트(IdentityPort·StorePort·SessionPort·AuditPort)와 경계 오류 |
+| `src/adapters/` | `http`(NestJS·Fastify), `postgres`(SQL·트랜잭션), `oidc`(JWT) |
+| `tools/architecture/` | 계층 방향·패키지·순환·`church_*` SQL 규칙 검사 ([S01 경계 계약](../../docs/development/S01_MODULE_BOUNDARY_CONTRACT.md)) |
 | `test/` | 서버 단위·HTTP 테스트 (`npm test`) |
 | `integration/` | 실제 PostgreSQL 16 통합 검증 71개 검사 |
 | `db/migrations/` | 이 서비스 전용 DB 계보 V001–V016. 루트 `db/`의 과거 계보와 섞지 않는다 |
@@ -46,7 +49,7 @@ docker compose -p church-core-verify -f tools/api-db/compose.yaml down --volumes
 
 ## 변경 규칙
 
-- PR 전에 `npm run format`, `npm run lint`, `npm test`를 실행한다. CI는 `format:check`와 `lint`가 실패하면 멈춘다.
+- PR 전에 `npm run format`, `npm run lint`, `npm test`, `npm run arch`를 실행한다. CI는 `format:check`와 `lint`가 실패하면 멈춘다.
 - `src/`의 `any`는 현재 19개가 상한이다(`package.json`의 `--max-warnings`). 새로 추가하지 않고, 코드를 고칠 때 줄인 만큼 상한도 낮춘다.
 - 마이그레이션은 적용된 파일을 고치지 않고 V016부터 새 파일로 추가한다.
 - API 변경은 `openapi/church-os-v1.yaml`과 테스트를 같은 PR에서 바꾼다.

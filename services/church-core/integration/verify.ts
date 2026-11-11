@@ -6,9 +6,9 @@ import { resolve, dirname } from 'node:path';
 import { createHash, randomBytes } from 'node:crypto';
 import { Pool, Client } from 'pg';
 import { generateKeyPair, exportJWK, createLocalJWKSet, SignJWT } from 'jose';
-import { buildApp } from '../src/app.js';
-import { JwtIdentity } from '../src/identity.js';
-import { PgStore } from '../src/postgres.js';
+import { buildApp } from '../src/adapters/http/app.js';
+import { JwtIdentity } from '../src/adapters/oidc/identity.js';
+import { PgStore } from '../src/adapters/postgres/postgres.js';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 // Active service root (dist/integration -> service). Migrations are read from <service>/db/migrations,
 // never from the repository's legacy root db/ lineage.

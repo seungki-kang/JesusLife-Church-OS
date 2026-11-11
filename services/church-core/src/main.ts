@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
-import { buildApp } from './app.js';
-import { PgStore } from './postgres.js';
-import { remoteIdentity } from './identity.js';
+import { buildApp } from './adapters/http/app.js';
+import { PgStore } from './adapters/postgres/postgres.js';
+import { remoteIdentity } from './adapters/oidc/identity.js';
 const required = ['DATABASE_URL', 'OIDC_ISSUER', 'OIDC_AUDIENCE', 'OIDC_JWKS_URL'] as const;
 for (const key of required) if (!process.env[key]) throw new Error(`Missing required configuration: ${key}`);
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 10, connectionTimeoutMillis: 5000 });

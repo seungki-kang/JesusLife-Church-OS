@@ -1,3 +1,5 @@
+import { DependencyUnavailable } from '../../application/errors.js';
+
 /**
  * Error classification and server-side error logging.
  *
@@ -5,14 +7,6 @@
  * Anything else that is not an expected HTTP/command error is a defect and maps
  * to 500, so clients do not retry bugs and operators can find them.
  */
-
-/** A dependency cannot safely serve the request (for example an unsafe DB role). */
-export class DependencyUnavailable extends Error {
-  constructor(reason = 'DEPENDENCY_UNAVAILABLE') {
-    super(reason);
-    this.name = 'DependencyUnavailable';
-  }
-}
 
 const SQLSTATE = /^[0-9A-Z]{5}$/;
 const NETWORK_CODES = new Set([

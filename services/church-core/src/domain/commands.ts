@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import type { Kind, Principal } from './ports.js';
+import type { Kind, Principal } from './types.js';
 export class CommandError extends Error {
   constructor(
     public readonly status: number,

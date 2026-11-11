@@ -1,12 +1,13 @@
 import 'reflect-metadata';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildApp } from '../src/app.js';
-import { CommandError } from '../src/commands.js';
-import { DependencyUnavailable, isDependencyFailure } from '../src/errors.js';
-import type { ErrorLogEntry } from '../src/errors.js';
-import { PgStore, READY_CACHE_MS } from '../src/postgres.js';
-import type { IdentityPort, StorePort } from '../src/ports.js';
+import { buildApp } from '../src/adapters/http/app.js';
+import { CommandError } from '../src/domain/commands.js';
+import { DependencyUnavailable } from '../src/application/errors.js';
+import { isDependencyFailure } from '../src/adapters/http/problems.js';
+import type { ErrorLogEntry } from '../src/adapters/http/problems.js';
+import { PgStore, READY_CACHE_MS } from '../src/adapters/postgres/postgres.js';
+import type { IdentityPort, StorePort } from '../src/application/ports.js';
 
 const TENANT = '10000000-0000-0000-0000-000000000001';
 const ID = '30000000-0000-0000-0000-000000000003';

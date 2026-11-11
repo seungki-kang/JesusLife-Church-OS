@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { expectedVersion, etag, validatePatch, mergeMutation, visible } from '../src/lifecycle.js';
+import { expectedVersion, etag, validatePatch, mergeMutation, visible } from '../src/domain/lifecycle.js';
 const notice = {
   id: 'id',
   tenant_id: 'tenant',

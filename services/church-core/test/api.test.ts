@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { generateKeyPair, exportJWK, createLocalJWKSet, SignJWT } from 'jose';
-import { CommandError } from '../src/commands.js';
-import { buildApp } from '../src/app.js';
-import { JwtIdentity } from '../src/identity.js';
-import type { Scope, StorePort } from '../src/ports.js';
+import { CommandError } from '../src/domain/commands.js';
+import { buildApp } from '../src/adapters/http/app.js';
+import { JwtIdentity } from '../src/adapters/oidc/identity.js';
+import type { Scope, StorePort } from '../src/application/ports.js';
 const A = '10000000-0000-0000-0000-000000000001',
   B = '20000000-0000-0000-0000-000000000002',
   ID = '30000000-0000-0000-0000-000000000003';

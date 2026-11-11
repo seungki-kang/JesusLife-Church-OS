@@ -1,12 +1,9 @@
-import type { ManagedKind, MutationAction } from './lifecycle.js';
-export type Principal = Readonly<{ issuer: string; subject: string }>;
+/** Application boundary: what the HTTP layer needs from identity, storage and audit. */
+import type { CursorKey, Kind, ManagedKind, MutationAction, Principal } from '../domain/types.js';
 export type Scope = Readonly<{ tenant: string; principal: Principal; purpose: string; trace: string }>;
-export type Kind = 'memberships' | 'notices' | 'events';
 export interface IdentityPort {
   verify(token: string): Promise<Principal>;
 }
-/** Last row of the previous page: timestamp sort key (UTC, microseconds) and id. */
-export type CursorKey = Readonly<{ sort?: string; id: string }>;
 export interface PageRequest {
   limit: number;
   after?: CursorKey;

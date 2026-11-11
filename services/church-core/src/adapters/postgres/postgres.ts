@@ -1,9 +1,16 @@
-import { present, visible, mergeMutation, validatePatch } from './lifecycle.js';
-import type { ManagedKind, MutationAction } from './lifecycle.js';
-import { actorRef, fingerprint, createResponse, CommandError } from './commands.js';
+import { present, visible, mergeMutation, validatePatch } from '../../domain/lifecycle.js';
+import type { Kind, ManagedKind, MutationAction } from '../../domain/types.js';
+import { actorRef, fingerprint, createResponse, CommandError } from '../../domain/commands.js';
 import type { Pool, PoolClient } from 'pg';
-import { DependencyUnavailable } from './errors.js';
-import type { StorePort, SessionPort, Scope, Kind, PageRequest, ManagePageRequest, ListRow } from './ports.js';
+import { DependencyUnavailable } from '../../application/errors.js';
+import type {
+  StorePort,
+  SessionPort,
+  Scope,
+  PageRequest,
+  ManagePageRequest,
+  ListRow,
+} from '../../application/ports.js';
 
 /** UTC timestamp text with microseconds, used as an exact keyset sort key. */
 const SORT_KEY_SQL = (column: string) => `to_char(${column} at time zone 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
