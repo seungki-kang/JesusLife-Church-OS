@@ -1,6 +1,6 @@
 # 공지·일정 목록 정렬과 관리용 목록 — 계약 제안
 
-2026-11-11. 상태: 결정 1 **AGREED** ([COS-CHURCH-042](../decisions/DESIGN_DECISIONS.md#cos-church-042), 안 A), 결정 2 **AGREED** ([COS-CHURCH-043](../decisions/DESIGN_DECISIONS.md#cos-church-043), 안 A). 구현·실행 NOT_RUN. 이 문서는 COS·REC 결정을 대신하지 않으며, 결정이 나면 [결정 원장](../decisions/DESIGN_DECISIONS.md)에 기록한 뒤 구현한다.
+2026-11-11. 상태: 결정 1 **AGREED** ([COS-CHURCH-042](../decisions/DESIGN_DECISIONS.md#cos-church-042), 안 A), 결정 2 **AGREED** ([COS-CHURCH-043](../decisions/DESIGN_DECISIONS.md#cos-church-043), 안 A). 두 결정은 `services/church-core` 0.6.0에 구현했다(V016, 실제 PostgreSQL 16 통합 71개 검사). 구현·실행 NOT_RUN. 이 문서는 COS·REC 결정을 대신하지 않으며, 결정이 나면 [결정 원장](../decisions/DESIGN_DECISIONS.md)에 기록한 뒤 구현한다.
 
 S03(공지·일정 읽기의 모바일 수직 연결) 전에 정해야 할 두 가지를 다룬다. 편집본/게시본 분리(S05)·고정글·읽음 통계·달력 화면 세부는 다루지 않는다.
 

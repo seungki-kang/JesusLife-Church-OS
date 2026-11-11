@@ -2,6 +2,7 @@
 
 ## Unreleased - 2026-11-11
 
+- church-core 0.6.0 (COS-CHURCH-042/043): notices newest first, events by start time with ended events hidden by default, keyset cursors; new `GET /manage/notices` and `/manage/events` for TENANT_ADMIN (drafts included, no notice body). Migration V016 adds three indexes. OpenAPI updated and validated in CI. Integration grows to 71 checks; seed events no longer use a fixed date that had already passed.
 - church-core: added Prettier and ESLint (dev-only, pinned; minimatch override → npm audit 0). Reformatted the code with no behavior change (compiled output identical). CI now runs `format:check` and `lint`; `any` in `src` is capped at 19. `.git-blame-ignore-revs` skips the formatting commit.
 - S00: derived the single active backend `services/church-core` once from canonical v2.6 (server, tests, integration verifier, V001–V015 migrations, OpenAPI). Source hashes in `services/church-core/PROVENANCE.md`. The snapshot is unchanged. New CI `.github/workflows/church-core.yml` runs unit tests, the OpenAPI contract test and the real PostgreSQL 16 integration (63 checks).
 - church-core 0.5.0: unexpected errors return 500 instead of 503 and every 5xx is logged as JSON without message/body; DB role safety check is cached for 30s on success; a connection is destroyed when ROLLBACK fails; `HOST` sets the listen address.

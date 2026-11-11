@@ -10,10 +10,10 @@ ChurchOS 백엔드의 **단일 활성 소스**다. 후속 기능과 버그 수�
 |---|---|
 | `src/` | NestJS·Fastify 서버 (IdentityPort·StorePort·AuditPort) |
 | `test/` | 서버 단위·HTTP 테스트 (`npm test`) |
-| `integration/` | 실제 PostgreSQL 16 통합 검증 63개 검사 |
-| `db/migrations/` | 이 서비스 전용 DB 계보 V001–V015. 루트 `db/`의 과거 계보와 섞지 않는다 |
+| `integration/` | 실제 PostgreSQL 16 통합 검증 71개 검사 |
+| `db/migrations/` | 이 서비스 전용 DB 계보 V001–V016. 루트 `db/`의 과거 계보와 섞지 않는다 |
 | `openapi/` | API 계약 `church-os-v1.yaml` |
-| `contract/` | OpenAPI 응답 스키마 검사 (Python) |
+| `contract/` | OpenAPI 문서 유효성·응답 스키마 검사 (Python) |
 | `tools/api-db/` | Docker 기반 일회용 API+DB 검증 실행기 |
 
 ## 실행
@@ -33,6 +33,12 @@ docker compose -p church-core-verify -f tools/api-db/compose.yaml down --volumes
 ```
 
 결과는 `.evidence/api-db-result.json`에 저장되며 커밋하지 않는다. CI는 같은 검증을 실행하고 결과를 artifact로 올린다.
+
+## 목록 계약
+
+- 교인용 `GET /notices`는 최신 게시 순, `GET /events`는 시작 시각 순이며 `from`이 없으면 끝나지 않은 일정만 준다([COS-CHURCH-042](../../docs/decisions/DESIGN_DECISIONS.md#cos-church-042)).
+- 관리자용 `GET /manage/notices`, `GET /manage/events`는 `TENANT_ADMIN`만 쓰며 초안을 포함하고 최근 수정 순이다. 공지 본문은 목록에 없다([COS-CHURCH-043](../../docs/decisions/DESIGN_DECISIONS.md#cos-church-043)).
+- `cursor`는 교회·목록에 묶인 keyset 값이며 클라이언트가 해석하지 않는다.
 
 ## 서버 설정
 

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { EXPECTED, assess } from '../integration/evidence.js';
-const hashes = Object.fromEntries(Array.from({ length: 15 }, (_, i) => ['V' + i, 'digest' + i]));
+import { EXPECTED, MIGRATION_COUNT, assess } from '../integration/evidence.js';
+const hashes = Object.fromEntries(Array.from({ length: MIGRATION_COUNT }, (_, i) => ['V' + i, 'digest' + i]));
 function fixture() {
   return {
     postgres_version_num: 160015,

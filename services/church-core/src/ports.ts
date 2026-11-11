@@ -5,12 +5,24 @@ export type Kind = 'memberships' | 'notices' | 'events';
 export interface IdentityPort {
   verify(token: string): Promise<Principal>;
 }
+/** Last row of the previous page: timestamp sort key (UTC, microseconds) and id. */
+export type CursorKey = Readonly<{ sort?: string; id: string }>;
 export interface PageRequest {
   limit: number;
-  after?: string;
+  after?: CursorKey;
   from?: string;
   to?: string;
 }
+export interface ManagePageRequest {
+  limit: number;
+  after?: CursorKey;
+  statuses: readonly string[];
+}
+/**
+ * A list row. `_sortKey` is the row's timestamp sort key for the next cursor; the HTTP
+ * layer removes it before responding.
+ */
+export type ListRow = Record<string, unknown> & { id: string; _sortKey?: string };
 export interface SessionPort {
   detail(kind: ManagedKind, id: string, roles: readonly string[]): Promise<Record<string, any> | null>;
   mutate(
@@ -24,7 +36,8 @@ export interface SessionPort {
   create(kind: Kind, body: Record<string, any>, key: string): Promise<Record<string, any>>;
   roles(): Promise<string[] | null>;
   tenant(): Promise<unknown | null>;
-  list(kind: Kind, page: PageRequest, roles: readonly string[]): Promise<Record<string, unknown>[]>;
+  list(kind: Kind, page: PageRequest, roles: readonly string[]): Promise<ListRow[]>;
+  manageList(kind: ManagedKind, page: ManagePageRequest): Promise<ListRow[]>;
 }
 export interface StorePort {
   scoped<T>(scope: Scope, work: (session: SessionPort) => Promise<T>): Promise<T>;
