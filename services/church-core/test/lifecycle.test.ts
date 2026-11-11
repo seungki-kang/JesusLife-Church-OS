@@ -1,0 +1,15 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {expectedVersion,etag,validatePatch,mergeMutation,visible} from '../src/lifecycle.js';
+const notice={id:'id',tenant_id:'tenant',row_version:'1',title:'Title',body:'Notice',audience:'ALL_MEMBERS',status:'DRAFT',publish_at:new Date('2020-01-01T00:00:00Z'),expires_at:null};
+const event={id:'id',tenant_id:'tenant',row_version:'1',title:'Worship',kind:'WORSHIP',timezone:'Asia/Seoul',status:'DRAFT',starts_at:new Date('2026-11-01T00:00:00Z'),ends_at:null,campus_id:null,community_id:null};
+test('strong ETag supports bigint without Number precision loss',()=>{assert.equal(expectedVersion('"rv-9007199254740993"'),'9007199254740993');assert.equal(etag('2'),'"rv-2"');});
+test('missing, weak, wildcard and overflowing preconditions rejected',()=>{for(const v of [undefined,'W/"rv-1"','*','"rv-0"','"rv-9223372036854775808"'])assert.throws(()=>expectedVersion(v));});
+test('empty and unknown patch fields rejected',()=>{assert.throws(()=>validatePatch('notices',{}));assert.throws(()=>validatePatch('notices',{tenantId:'bad'}));});
+test('published notice cannot move back to draft',()=>assert.throws(()=>mergeMutation('notices',{...notice,status:'PUBLISHED'},{status:'DRAFT'},'patch')));
+test('cancelled or expired resources are terminal',()=>{for(const status of ['CANCELLED','EXPIRED','COMPLETED'])assert.throws(()=>mergeMutation('notices',{...notice,status},{title:'Edit'},'patch'));});
+test('draft notice can be published and expired publication is refused',()=>{assert.equal(mergeMutation('notices',notice,{status:'PUBLISHED'},'publish').status,'PUBLISHED');assert.throws(()=>mergeMutation('notices',{...notice,expires_at:new Date('2020-01-02T00:00:00Z')},{status:'PUBLISHED'},'publish'));});
+test('event nullable end time clears existing end',()=>{assert.equal(mergeMutation('events',{...event,ends_at:new Date('2026-11-02T00:00:00Z')},{endsAt:null},'patch').endsAt,null);});
+test('merged event chronology validated',()=>assert.throws(()=>mergeMutation('events',{...event,ends_at:new Date('2026-11-02T00:00:00Z')},{startsAt:'2026-12-01T00:00:00Z'},'patch')));
+test('member cannot read draft, private audience, future or cancelled notice',()=>{for(const row of [notice,{...notice,status:'PUBLISHED',audience:'STAFF'},{...notice,status:'PUBLISHED',publish_at:new Date('2099-01-01T00:00:00Z')},{...notice,status:'CANCELLED'}])assert.equal(visible('notices',row,['MEMBER']),false);});
+test('admin sees own draft while member sees published public notice',()=>{assert.equal(visible('notices',notice,['TENANT_ADMIN']),true);assert.equal(visible('notices',{...notice,status:'PUBLISHED'},['MEMBER']),true);});
+test('community event stays hidden from member before community ACL exists',()=>assert.equal(visible('events',{...event,status:'PUBLISHED',community_id:'restricted'},['MEMBER']),false));
