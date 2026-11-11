@@ -10,7 +10,10 @@
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test dist/test/*.test.js",
     "start": "node dist/src/main.js",
-    "test:integration": "npm run build && node dist/integration/verify.js"
+    "test:integration": "npm run build && node dist/integration/verify.js",
+    "lint": "eslint . --max-warnings 19",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@nestjs/common": "^11.2.8",
@@ -22,13 +25,18 @@
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@types/node": "^24.19.2",
     "@types/pg": "^8.23.1",
-    "typescript": "^5.9.3"
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "8.72.2"
   },
   "overrides": {
     "@nestjs/platform-fastify": {
       "fastify": "5.12.7"
-    }
+    },
+    "minimatch": "11.0.7"
   }
 }

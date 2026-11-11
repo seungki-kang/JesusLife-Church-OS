@@ -40,6 +40,8 @@ docker compose -p church-core-verify -f tools/api-db/compose.yaml down --volumes
 
 ## 변경 규칙
 
+- PR 전에 `npm run format`, `npm run lint`, `npm test`를 실행한다. CI는 `format:check`와 `lint`가 실패하면 멈춘다.
+- `src/`의 `any`는 현재 19개가 상한이다(`package.json`의 `--max-warnings`). 새로 추가하지 않고, 코드를 고칠 때 줄인 만큼 상한도 낮춘다.
 - 마이그레이션은 적용된 파일을 고치지 않고 V016부터 새 파일로 추가한다.
 - API 변경은 `openapi/church-os-v1.yaml`과 테스트를 같은 PR에서 바꾼다.
 - PASS는 실제 실행 근거가 있을 때만 쓴다.
