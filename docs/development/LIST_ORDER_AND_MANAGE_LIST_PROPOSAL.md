@@ -1,6 +1,6 @@
 # 공지·일정 목록 정렬과 관리용 목록 — 계약 제안
 
-2026-11-11. 상태: 결정 1 **AGREED** ([COS-CHURCH-042](../decisions/DESIGN_DECISIONS.md#cos-church-042), 안 A), 결정 2 **PROPOSED**. 구현·실행 NOT_RUN. 이 문서는 COS·REC 결정을 대신하지 않으며, 결정이 나면 [결정 원장](../decisions/DESIGN_DECISIONS.md)에 기록한 뒤 구현한다.
+2026-11-11. 상태: 결정 1 **AGREED** ([COS-CHURCH-042](../decisions/DESIGN_DECISIONS.md#cos-church-042), 안 A), 결정 2 **AGREED** ([COS-CHURCH-043](../decisions/DESIGN_DECISIONS.md#cos-church-043), 안 A). 구현·실행 NOT_RUN. 이 문서는 COS·REC 결정을 대신하지 않으며, 결정이 나면 [결정 원장](../decisions/DESIGN_DECISIONS.md)에 기록한 뒤 구현한다.
 
 S03(공지·일정 읽기의 모바일 수직 연결) 전에 정해야 할 두 가지를 다룬다. 편집본/게시본 분리(S05)·고정글·읽음 통계·달력 화면 세부는 다루지 않는다.
 
@@ -51,6 +51,8 @@ OpenAPI는 정렬을 정의하지 않고 `cursor`를 길이 512 이하 문자열
 
 ## 3. 결정 2 — 관리자용 공지·일정 목록
 
+> 2026-11-11 사용자가 안 A 진행을 승인했다. 기록: [COS-CHURCH-043](../decisions/DESIGN_DECISIONS.md#cos-church-043).
+
 ### 제안
 일반 목록과 **분리된 관리 경로**를 추가한다.
 
@@ -85,4 +87,4 @@ OpenAPI는 정렬을 정의하지 않고 `cursor`를 길이 512 이하 문자열
 ## 5. 결정해야 할 질문
 
 1. ~~목록 정렬·기본 범위~~ → 안 A로 결정 (COS-CHURCH-042).
-2. 관리자 목록: 안 A(분리된 `/manage/*` 경로, `TENANT_ADMIN`, 최근 수정 순, 본문 제외)로 할까요?
+2. ~~관리자 목록~~ → 안 A로 결정 (COS-CHURCH-043).
