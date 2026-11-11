@@ -12,7 +12,8 @@
 
 **[ChurchOS v2.6](canonical/ChurchOS_Canonical_v2.6/README.md)** 은 검증된 백엔드 구현 스냅샷입니다. 후속 제품 운영 방향은 아래 운영 v1.4·상세 v1.5를 따르며, 구현 여부는 기능표로 구분합니다. 먼저 [핵심 사용자 흐름](canonical/ChurchOS_Canonical_v2.6/ux/02_핵심사용자흐름.md)과 [실행 안내](canonical/ChurchOS_Canonical_v2.6/START_LIFECYCLE.md)를 읽으세요.
 
-- 실제 구현 소스: `canonical/ChurchOS_Canonical_v2.6/services/church-core/`
+- 활성 백엔드 소스: `services/church-core/` — 후속 기능과 수정은 여기에서만 한다. v2.6에서 한 번 파생했다([파생 기록](services/church-core/PROVENANCE.md)).
+- 검증 스냅샷 소스: `canonical/ChurchOS_Canonical_v2.6/services/church-core/` — 바이트 보존, 고치지 않음
 - API 계약: `canonical/ChurchOS_Canonical_v2.6/api/openapi/church-os-v1.yaml`
 - 신규 전용 DB 계보: `canonical/ChurchOS_Canonical_v2.6/db/migrations/` (V001–V015)
 - 사용자 제공 실행 결과: 2026-10-24 v2.6 / PostgreSQL 16.15 / 63개 검사 PASS. 원본 JSON은 사용자 컴퓨터에 있으며 저장소에 업로드된 증거는 아닙니다.

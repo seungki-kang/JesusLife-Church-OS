@@ -1,0 +1,55 @@
+name: ChurchOS church-core (active)
+on:
+  push:
+    paths:
+      - 'services/church-core/**'
+      - '.github/workflows/church-core.yml'
+  pull_request:
+    paths:
+      - 'services/church-core/**'
+      - '.github/workflows/church-core.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  church-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/church-core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install PyYAML==6.0.3 jsonschema==4.26.0
+      - run: npm ci
+      - run: npm test
+      - name: OpenAPI response contracts
+        run: python -m unittest discover -s contract -p 'test_*.py'
+      - name: Disposable API and PostgreSQL 16 verification
+        run: docker compose -p church-core-ci -f tools/api-db/compose.yaml up --build --abort-on-container-exit --exit-code-from verify
+      - name: Require complete evidence
+        run: |
+          python - <<'PYCODE'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('.evidence/api-db-result.json').read_text())
+          assert r['artifact'] == 'ChurchOS_church-core_active'
+          assert r['runtime'] == 'PASS'
+          assert len(r['checks']) == 63
+          assert all(c['status'] == 'PASS' for c in r['checks'])
+          PYCODE
+      - name: Cleanup disposable containers
+        if: always()
+        run: docker compose -p church-core-ci -f tools/api-db/compose.yaml down --volumes --remove-orphans
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: church-core-api-db-evidence
+          path: services/church-core/.evidence/
+          if-no-files-found: warn
