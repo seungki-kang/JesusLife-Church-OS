@@ -1,6 +1,5 @@
 import { CommandError, reject, validateCommand } from './commands.js';
-export type ManagedKind = 'notices' | 'events';
-export type MutationAction = 'patch' | 'publish' | 'cancel';
+import type { ManagedKind, MutationAction } from './types.js';
 export function expectedVersion(header: unknown): string {
   if (header === undefined) throw new CommandError(428, 'IF_MATCH_REQUIRED');
   if (typeof header !== 'string' || !/^"rv-[1-9][0-9]{0,18}"$/.test(header))

@@ -1,6 +1,7 @@
 import { jwtVerify, createRemoteJWKSet } from 'jose';
 import type { JWTVerifyGetKey } from 'jose';
-import type { IdentityPort, Principal } from './ports.js';
+import type { IdentityPort } from '../../application/ports.js';
+import type { Principal } from '../../domain/types.js';
 export class JwtIdentity implements IdentityPort {
   constructor(
     private readonly keys: JWTVerifyGetKey,

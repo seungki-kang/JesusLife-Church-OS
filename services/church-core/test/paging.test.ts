@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildApp } from '../src/app.js';
-import { CommandError } from '../src/commands.js';
-import { decodeCursor, encodeCursor, parseStatuses, MANAGE_STATUSES } from '../src/paging.js';
-import type { IdentityPort, ListRow, ManagePageRequest, PageRequest, StorePort } from '../src/ports.js';
+import { buildApp } from '../src/adapters/http/app.js';
+import { CommandError } from '../src/domain/commands.js';
+import { decodeCursor, encodeCursor, parseStatuses, MANAGE_STATUSES } from '../src/domain/paging.js';
+import type { IdentityPort, ListRow, ManagePageRequest, PageRequest, StorePort } from '../src/application/ports.js';
 
 const A = '10000000-0000-0000-0000-000000000001';
 const B = '20000000-0000-0000-0000-000000000002';

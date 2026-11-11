@@ -7,7 +7,7 @@
  * database, because JavaScript Date would truncate them to milliseconds.
  */
 import { CommandError } from './commands.js';
-import type { CursorKey } from './ports.js';
+import type { CursorKey } from './types.js';
 
 export type ListName = 'memberships' | 'notices' | 'events' | 'manage-notices' | 'manage-events';
 

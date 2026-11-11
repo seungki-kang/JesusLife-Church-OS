@@ -18,27 +18,26 @@ import type { ExceptionFilter, ArgumentsHost } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { expectedVersion, etag, validatePatch } from './lifecycle.js';
-import type { ManagedKind, MutationAction } from './lifecycle.js';
+import { expectedVersion, etag, validatePatch } from '../../domain/lifecycle.js';
+import type { Kind, ManagedKind, MutationAction } from '../../domain/types.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
-import { CommandError, validateCommand } from './commands.js';
+import { CommandError, validateCommand } from '../../domain/commands.js';
 import { randomUUID } from 'node:crypto';
-import { IDENTITY, STORE, AUDIT } from './ports.js';
-import { consoleErrorLog, errorEntry, isDependencyFailure } from './errors.js';
-import { decodeCursor, encodeCursor, MANAGE_STATUSES, parseStatuses } from './paging.js';
-import type { ListName } from './paging.js';
-import type { ErrorLog } from './errors.js';
+import { IDENTITY, STORE, AUDIT } from '../../application/ports.js';
+import { consoleErrorLog, errorEntry, isDependencyFailure } from './problems.js';
+import { decodeCursor, encodeCursor, MANAGE_STATUSES, parseStatuses } from '../../domain/paging.js';
+import type { ListName } from '../../domain/paging.js';
+import type { ErrorLog } from './problems.js';
 import type {
   IdentityPort,
   StorePort,
   AuditPort,
   Scope,
-  Kind,
   SessionPort,
   PageRequest,
   ManagePageRequest,
   ListRow,
-} from './ports.js';
+} from '../../application/ports.js';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function fail(status: number, code: string): never {
   throw new HttpException(code, status);

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PgStore } from '../src/postgres.js';
-import { fingerprint, CommandError } from '../src/commands.js';
+import { PgStore } from '../src/adapters/postgres/postgres.js';
+import { fingerprint, CommandError } from '../src/domain/commands.js';
 const tenant = '10000000-0000-0000-0000-000000000001',
   id = '20000000-0000-0000-0000-000000000002',
   date = new Date('2026-10-24T00:00:00Z');

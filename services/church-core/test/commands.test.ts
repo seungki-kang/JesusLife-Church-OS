@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { validateCommand, fingerprint, actorRef, createResponse } from '../src/commands.js';
+import { validateCommand, fingerprint, actorRef, createResponse } from '../src/domain/commands.js';
 const id = '10000000-0000-0000-0000-000000000001';
 const member = { personRef: id, status: 'ACTIVE' };
 const event = { kind: 'WORSHIP', title: 'Sunday', startsAt: '2026-11-01T00:00:00Z', timezone: 'Asia/Seoul' };

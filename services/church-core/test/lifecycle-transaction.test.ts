@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PgStore } from '../src/postgres.js';
-import { CommandError, fingerprint } from '../src/commands.js';
+import { PgStore } from '../src/adapters/postgres/postgres.js';
+import { CommandError, fingerprint } from '../src/domain/commands.js';
 const id = '10000000-0000-0000-0000-000000000001',
   scope = {
     tenant: id,

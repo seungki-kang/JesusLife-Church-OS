@@ -1,7 +1,7 @@
-import { actorRef } from '../src/commands.js';
+import { actorRef } from '../src/domain/commands.js';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PgStore } from '../src/postgres.js';
+import { PgStore } from '../src/adapters/postgres/postgres.js';
 const scope = {
   tenant: 'tenant-a',
   principal: { issuer: 'issuer', subject: 'subject' },
