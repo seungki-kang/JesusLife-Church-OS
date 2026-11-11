@@ -47,8 +47,8 @@ jobs:
           r = json.loads(Path('.evidence/api-db-result.json').read_text())
           assert r['artifact'] == 'ChurchOS_church-core_active'
           assert r['runtime'] == 'PASS'
-          assert len(r['checks']) == 71
-          assert len(r['migration_hashes']) == 16
+          assert len(r['checks']) == 77
+          assert len(r['migration_hashes']) == 17
           assert all(c['status'] == 'PASS' for c in r['checks'])
           PYCODE
       - name: Dev stack smoke (synthetic identity)

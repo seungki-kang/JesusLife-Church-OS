@@ -180,12 +180,12 @@ try {
   const jwk = await exportJWK(key.publicKey);
   jwk.kid = 'integration';
   const identity = new JwtIdentity(createLocalJWKSet({ keys: [jwk] }), issuer, audience);
-  const token = async (sub: string) =>
+  const token = async (sub: string, aud = audience) =>
     new SignJWT({ roles: ['TENANT_ADMIN'], tenant: B })
       .setProtectedHeader({ alg: 'RS256', kid: 'integration' })
       .setSubject(sub)
       .setIssuer(issuer)
-      .setAudience(audience)
+      .setAudience(aud)
       .setIssuedAt()
       .setExpirationTime('5m')
       .sign(key.privateKey);
@@ -363,6 +363,133 @@ try {
     assert.equal(items.length, expected);
     assert.equal(new Set(items.map((x) => x.id)).size, expected);
   });
+  // S02 / COS-JOIN-021: the caller's church list, church switching and revocation.
+  const C = '30000000-0000-0000-0000-000000000003';
+  async function bind(
+    tenant: string,
+    subject: string,
+    status: 'ACTIVE' | 'PENDING',
+    binding: 'ACTIVE' | 'REVOKED' = 'ACTIVE',
+  ) {
+    const m = await source!.query(
+      `insert into church_core.membership(tenant_id,person_ref,status) values($1,gen_random_uuid(),$2) returning id`,
+      [tenant, status],
+    );
+    await source!.query(
+      `insert into church_access.external_subject_binding(tenant_id,membership_id,issuer,subject_ref,status,revoked_at) values($1,$2,$3,$4,$5,case when $5='REVOKED' then now() end)`,
+      [tenant, m.rows[0].id, issuer, subject, binding],
+    );
+    return m.rows[0].id as string;
+  }
+  const mine = async (subject: string) => {
+    const r = await request('me/churches', await token(subject));
+    assert.equal(r.status, 200);
+    return r.body.items as any[];
+  };
+  await check('my-churches-multi', async () => {
+    await bind(A, 'multi-c', 'ACTIVE');
+    const inB = await bind(B, 'multi-c', 'ACTIVE');
+    await source!.query(`insert into church_access.membership_role(tenant_id,membership_id,role_id) values($1,$2,$3)`, [
+      B,
+      inB,
+      RB,
+    ]);
+    assert.deepEqual(await mine('multi-c'), [
+      { tenantId: A, name: 'Church A', timezone: 'Asia/Seoul', membershipStatus: 'ACTIVE', roles: ['MEMBER'] },
+      {
+        tenantId: B,
+        name: 'Church B',
+        timezone: 'Asia/Seoul',
+        membershipStatus: 'ACTIVE',
+        roles: ['MEMBER', 'TENANT_ADMIN'],
+      },
+    ]);
+  });
+  await check('my-churches-pending', async () => {
+    await bind(A, 'pending-c', 'PENDING');
+    const items = await mine('pending-c');
+    assert.deepEqual(
+      items.map((x) => [x.tenantId, x.membershipStatus, x.roles]),
+      [[A, 'PENDING', []]],
+    );
+    const r = await request('notices', await token('pending-c'), A);
+    assert.equal(r.status, 403);
+    assert.equal(r.body.code, 'MEMBERSHIP_REQUIRED');
+  });
+  await check('my-churches-excluded', async () => {
+    await bind(A, 'revoked-c', 'ACTIVE', 'REVOKED');
+    assert.deepEqual(await mine('revoked-c'), []);
+    assert.equal((await request('notices', await token('revoked-c'), A)).status, 403);
+    await source!.query(
+      `insert into church_core.tenant(id,slug,name,status,timezone) values($1,'integration-c','Church C','SUSPENDED','Asia/Seoul')`,
+      [C],
+    );
+    await bind(C, 'multi-c', 'ACTIVE');
+    assert.deepEqual(
+      (await mine('multi-c')).map((x) => x.tenantId),
+      [A, B],
+    );
+    const ended = await bind(A, 'ended-c', 'ACTIVE');
+    await source!.query(`update church_core.membership set status='INACTIVE' where tenant_id=$1 and id=$2`, [A, ended]);
+    assert.deepEqual(await mine('ended-c'), []);
+    assert.deepEqual(await mine('nobody-c'), []);
+  });
+  await check('my-churches-own-only', async () => {
+    assert.deepEqual(
+      (await mine('admin-a')).map((x) => [x.tenantId, x.roles]),
+      [[A, ['MEMBER', 'TENANT_ADMIN']]],
+    );
+    assert.deepEqual(
+      (await mine('admin-b')).map((x) => x.tenantId),
+      [B],
+    );
+    const foreign = await request('me/churches', await token('multi-c', 'other-api'));
+    assert.equal(foreign.status, 401);
+  });
+  await check('subject-context-read-only', async () => {
+    const c = await pool!.connect();
+    try {
+      await c.query('BEGIN');
+      await c.query("select set_config('church.subject_issuer',$1,true),set_config('church.subject_ref',$2,true)", [
+        issuer,
+        'multi-c',
+      ]);
+      // Only the caller's own bindings and memberships become visible; content stays tenant-scoped.
+      const bindings = await c.query(`select distinct subject_ref from church_access.external_subject_binding`);
+      assert.deepEqual(
+        bindings.rows.map((r) => r.subject_ref),
+        ['multi-c'],
+      );
+      assert.equal((await c.query(`select count(*)::int as n from church_core.membership`)).rows[0].n, 3);
+      assert.equal((await c.query(`select count(*)::int as n from church_core.notice`)).rows[0].n, 0);
+      assert.equal((await c.query(`select count(*)::int as n from church_core.church_event`)).rows[0].n, 0);
+      const write = await c.query(`update church_core.membership set status=status where tenant_id=$1`, [B]);
+      assert.equal(write.rowCount, 0);
+      await assert.rejects(
+        c.query(
+          `insert into church_core.membership(tenant_id,person_ref,status) values($1,gen_random_uuid(),'ACTIVE')`,
+          [B],
+        ),
+      );
+    } finally {
+      await c.query('ROLLBACK').catch(() => {});
+      c.release();
+    }
+  });
+  await check('church-switch', async () => {
+    const t = await token('multi-c');
+    const inA = await request('notices', t, A),
+      inB = await request('notices', t, B);
+    assert.equal(inA.status, 200);
+    assert.equal(inB.status, 200);
+    assert.ok(inA.body.items.length > 0 && inA.body.items.every((x: any) => x.tenantId === A));
+    assert.ok(inB.body.items.length > 0 && inB.body.items.every((x: any) => x.tenantId === B));
+    // Admin in B only: the same person cannot manage A.
+    assert.equal((await request('manage/notices', t, B)).status, 200);
+    assert.equal((await request('manage/notices', t, A)).status, 403);
+    const cursor = (await request('notices?limit=1', t, A)).body.nextCursor;
+    assert.equal((await request('notices?cursor=' + encodeURIComponent(cursor), t, B)).status, 400);
+  });
   await check('concurrent-tenants', async () => {
     for (let i = 0; i < 5; i++) {
       const [a, b] = await Promise.all([request('memberships'), request('memberships', tb, B)]);
@@ -377,9 +504,10 @@ try {
     try {
       for (const c of clients) {
         const r = await c.query(
-          `select nullif(current_setting('church.tenant_id',true),'') as tenant,nullif(current_setting('church.actor_ref',true),'') as actor`,
+          `select nullif(current_setting('church.tenant_id',true),'') as tenant,nullif(current_setting('church.actor_ref',true),'') as actor,
+                  nullif(current_setting('church.subject_issuer',true),'') as issuer,nullif(current_setting('church.subject_ref',true),'') as subject`,
         );
-        assert.deepEqual(r.rows[0], { tenant: null, actor: null });
+        assert.deepEqual(r.rows[0], { tenant: null, actor: null, issuer: null, subject: null });
       }
     } finally {
       clients.forEach((c) => c.release());
