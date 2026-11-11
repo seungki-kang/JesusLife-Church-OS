@@ -7,5 +7,7 @@ for(const key of required)if(!process.env[key])throw new Error(`Missing required
 const pool=new Pool({connectionString:process.env.DATABASE_URL,max:10,connectionTimeoutMillis:5000});
 const app=await buildApp(remoteIdentity(process.env.OIDC_ISSUER!,process.env.OIDC_AUDIENCE!,process.env.OIDC_JWKS_URL!),new PgStore(pool),{record:e=>console.info(JSON.stringify({level:'AUDIT',...e}))});
 const port=Number(process.env.PORT??3000);if(!Number.isInteger(port)||port<1||port>65535)throw new Error('Invalid port');
+// Loopback by default; set HOST (for example 0.0.0.0) when running in a container behind a proxy.
+const host=process.env.HOST??'127.0.0.1';if(!/^[0-9A-Za-z.:-]{1,253}$/.test(host))throw new Error('Invalid host');
 const close=async()=>{await app.close();await pool.end();};process.once('SIGTERM',()=>void close());process.once('SIGINT',()=>void close());
-await app.listen(port,'127.0.0.1');
+await app.listen(port,host);

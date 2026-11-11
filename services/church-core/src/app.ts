@@ -10,16 +10,33 @@ import type {FastifyReply,FastifyRequest} from 'fastify';
 import {CommandError,validateCommand} from './commands.js';
 import {randomUUID} from 'node:crypto';
 import {IDENTITY,STORE,AUDIT} from './ports.js';
+import {consoleErrorLog,errorEntry,isDependencyFailure} from './errors.js';
+import type {ErrorLog} from './errors.js';
 import type {IdentityPort,StorePort,AuditPort,Scope,Kind,SessionPort,PageRequest} from './ports.js';
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function fail(status:number,code:string):never{throw new HttpException(code,status);}
+const INVALID_VALUE_SQLSTATES=['23503','23514','22007','22008'];
+function classify(error:unknown):{status:number;code:string}{
+  if(error instanceof CommandError)return {status:error.status,code:error.code};
+  const dbCode=(error as {code?:unknown}|null)?.code;
+  if(dbCode==='23505')return {status:409,code:'RESOURCE_CONFLICT'};
+  if(typeof dbCode==='string'&&INVALID_VALUE_SQLSTATES.includes(dbCode))return {status:422,code:'INVALID_REFERENCE_OR_VALUE'};
+  if(error instanceof HttpException){
+    const response=error.getResponse();
+    return {status:error.getStatus(),code:typeof response==='string'&&/^[A-Z_]+$/.test(response)?response:'HTTP_ERROR'};
+  }
+  if(isDependencyFailure(error))return {status:503,code:'SERVICE_UNAVAILABLE'};
+  return {status:500,code:'INTERNAL_ERROR'};
+}
 @Catch()
 class Problems implements ExceptionFilter {
+  constructor(private readonly log:ErrorLog){}
   catch(error:unknown,host:ArgumentsHost){
     const ctx=host.switchToHttp(),req=ctx.getRequest<FastifyRequest>(),res=ctx.getResponse();
-    const dbCode=(error as any)?.code;
-    const status=error instanceof CommandError?error.status:error instanceof HttpException?error.getStatus():dbCode==='23505'?409:['23503','23514','22007','22008'].includes(dbCode)?422:503;
-    const code=error instanceof CommandError?error.code:dbCode==='23505'?'RESOURCE_CONFLICT':['23503','23514','22007','22008'].includes(dbCode)?'INVALID_REFERENCE_OR_VALUE':error instanceof HttpException && typeof error.getResponse()==='string' && /^[A-Z_]+$/.test(error.getResponse() as string)?error.getResponse():(error instanceof HttpException?'HTTP_ERROR':'SERVICE_UNAVAILABLE');
+    const {status,code}=classify(error);
+    if(status>=500){
+      try{this.log(errorEntry(error,{traceId:req.id,method:req.method,route:req.routeOptions?.url??'UNMATCHED',status,code}));}catch{/* logging must not change the response */}
+    }
     res.status(status).header('content-type','application/problem+json').send({type:'about:blank',title:code,status,code,traceId:req.id});
   }
 }
@@ -102,10 +119,10 @@ class CoreController {
  @Get('/api/v1/church/notices')notices(@Req()req:FastifyRequest,@Query()query:Record<string,string>){return this.page(req,query,'notices');}
  @Get('/api/v1/church/events')events(@Req()req:FastifyRequest,@Query()query:Record<string,string>){return this.page(req,query,'events');}
 }
-export async function buildApp(identity:IdentityPort,store:StorePort,audit:AuditPort):Promise<NestFastifyApplication>{
+export async function buildApp(identity:IdentityPort,store:StorePort,audit:AuditPort,errorLog:ErrorLog=consoleErrorLog):Promise<NestFastifyApplication>{
  @Module({controllers:[CoreController],providers:[{provide:IDENTITY,useValue:identity},{provide:STORE,useValue:store},{provide:AUDIT,useValue:audit}]})class AppModule{}
  const adapter=new FastifyAdapter({logger:false,bodyLimit:32768,genReqId:()=>randomUUID()});
  const fastify=adapter.getInstance();fastify.addHook('onRequest',async(_req,reply)=>{reply.header('cache-control','no-store');});
  fastify.addHook('onResponse',async(req,reply)=>{audit.record({traceId:req.id,action:req.routeOptions.url??'UNMATCHED',status:reply.statusCode});});
- const app=await NestFactory.create<NestFastifyApplication>(AppModule,adapter,{logger:false});app.useGlobalFilters(new Problems());await app.init();await fastify.ready();return app;
+ const app=await NestFactory.create<NestFastifyApplication>(AppModule,adapter,{logger:false});app.useGlobalFilters(new Problems(errorLog));await app.init();await fastify.ready();return app;
 }

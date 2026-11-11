@@ -2,6 +2,7 @@ import {present,visible,mergeMutation,validatePatch} from './lifecycle.js';
 import type {ManagedKind,MutationAction} from './lifecycle.js';
 import {actorRef,fingerprint,createResponse,CommandError} from './commands.js';
 import type {Pool,PoolClient} from 'pg';
+import {DependencyUnavailable} from './errors.js';
 import type {StorePort,SessionPort,Scope,Kind,PageRequest} from './ports.js';
 class PgSession implements SessionPort {
   constructor(private readonly client:PoolClient,private readonly scope:Scope){}
@@ -75,16 +76,34 @@ class PgSession implements SessionPort {
     return (await this.client.query(`select id,tenant_id as "tenantId",kind,title,starts_at as "startsAt",ends_at as "endsAt",timezone,status,community_id as "communityId",campus_id as "campusId" from church_core.church_event where tenant_id=$1 and ($2::uuid is null or id>$2::uuid) and status='PUBLISHED' and community_id is null and ($4::timestamptz is null or starts_at>=$4) and ($5::timestamptz is null or starts_at<=$5) order by id limit $3`,args)).rows.map(({endsAt,...row})=>endsAt?{...row,endsAt}:row);
   }
 }
+/** How long a successful database-role safety check is reused. Failures are never cached. */
+export const READY_CACHE_MS=30_000;
 export class PgStore implements StorePort {
-  constructor(private readonly pool:Pool){}
-  async ready(){try{const result=await this.pool.query(`select not r.rolsuper and not r.rolbypassrls and not exists(select 1 from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname like 'church_%' and c.relowner=r.oid) as safe from pg_roles r where r.rolname=current_user`);return result.rows[0]?.safe===true;}catch{return false;}}
+  private safeUntil=0;
+  constructor(private readonly pool:Pool,private readonly now:()=>number=Date.now){}
+  async ready(){
+    try{
+      const result=await this.pool.query(`select not r.rolsuper and not r.rolbypassrls and not exists(select 1 from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname like 'church_%' and c.relowner=r.oid) as safe from pg_roles r where r.rolname=current_user`);
+      const safe=result.rows[0]?.safe===true;
+      this.safeUntil=safe?this.now()+READY_CACHE_MS:0;
+      return safe;
+    }catch{this.safeUntil=0;return false;}
+  }
   async scoped<T>(scope:Scope,work:(s:SessionPort)=>Promise<T>){
-    if(!await this.ready())throw new Error('Unsafe or unavailable database role');
+    // Re-check the role only when the last successful check is stale: avoids an extra
+    // query and pool connection on every request while still refusing unsafe roles.
+    if(this.now()>=this.safeUntil&&!await this.ready())throw new DependencyUnavailable('UNSAFE_OR_UNAVAILABLE_DATABASE_ROLE');
     const c=await this.pool.connect();
+    let broken:Error|undefined;
     try{
       await c.query('BEGIN');
       await c.query("select set_config('church.tenant_id',$1,true),set_config('church.actor_ref',$2,true),set_config('statement_timeout','5000',true)",[scope.tenant,actorRef(scope.principal)]);
       const result=await work(new PgSession(c,scope));await c.query('COMMIT');return result;
-    }catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}
+    }catch(e){
+      // If ROLLBACK fails the connection state is unknown: keep the original error
+      // and destroy the connection instead of returning it to the pool.
+      try{await c.query('ROLLBACK');}catch(rollbackError){broken=rollbackError instanceof Error?rollbackError:new Error('ROLLBACK_FAILED');}
+      throw e;
+    }finally{c.release(broken);}
   }
 }
