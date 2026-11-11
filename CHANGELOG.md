@@ -2,6 +2,7 @@
 
 ## Unreleased - 2026-11-11
 
+- S01: church-core `src/` split into `domain/`, `application/` and `adapters/{http,postgres,oidc}` (no behavior change; a type-level import cycle removed). `tools/architecture/check.ts` enforces layer direction, per-layer packages, no cycles and church_* schemas only in SQL, in `npm test` and CI. `docs/development/S01_MODULE_BOUNDARY_CONTRACT.md` records the permission, DTO, error, transaction, device-context contracts and the S03 screen states.
 - church-core 0.6.0 (COS-CHURCH-042/043): notices newest first, events by start time with ended events hidden by default, keyset cursors; new `GET /manage/notices` and `/manage/events` for TENANT_ADMIN (drafts included, no notice body). Migration V016 adds three indexes. OpenAPI updated and validated in CI. Integration grows to 71 checks; seed events no longer use a fixed date that had already passed.
 - church-core: added Prettier and ESLint (dev-only, pinned; minimatch override → npm audit 0). Reformatted the code with no behavior change (compiled output identical). CI now runs `format:check` and `lint`; `any` in `src` is capped at 19. `.git-blame-ignore-revs` skips the formatting commit.
 - S00: derived the single active backend `services/church-core` once from canonical v2.6 (server, tests, integration verifier, V001–V015 migrations, OpenAPI). Source hashes in `services/church-core/PROVENANCE.md`. The snapshot is unchanged. New CI `.github/workflows/church-core.yml` runs unit tests, the OpenAPI contract test and the real PostgreSQL 16 integration (63 checks).
