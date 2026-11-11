@@ -1,5 +1,5 @@
 /** Number of migrations in db/migrations that the integration run must apply. */
-export const MIGRATION_COUNT = 16;
+export const MIGRATION_COUNT = 17;
 export const EXPECTED = [
   'postgres16',
   'bootstrap',
@@ -25,6 +25,12 @@ export const EXPECTED = [
   'manage-access-denied',
   'manage-events-summary',
   'manage-keyset',
+  'my-churches-multi',
+  'my-churches-pending',
+  'my-churches-excluded',
+  'my-churches-own-only',
+  'subject-context-read-only',
+  'church-switch',
   'concurrent-tenants',
   'pool-context-reset',
   'role-expiry',

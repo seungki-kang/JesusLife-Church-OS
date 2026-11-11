@@ -30,6 +30,18 @@ let revoked = false,
 const audits: unknown[] = [];
 const store: StorePort = {
   ready: async () => available,
+  myChurches: async (p) =>
+    p.subject === 'admin'
+      ? [
+          {
+            tenantId: A,
+            name: 'Synthetic Church',
+            timezone: 'Asia/Seoul',
+            membershipStatus: 'ACTIVE',
+            roles: ['MEMBER', 'TENANT_ADMIN'],
+          },
+        ]
+      : [],
   scoped: async <T>(scope: Scope, work: any): Promise<T> =>
     work(
       {
@@ -92,6 +104,35 @@ test('HTTP authorization and tenant boundary', async (t) => {
     available = true;
   });
   await t.test('missing token denied', async () => assert.equal((await get(root + '/memberships')).statusCode, 401));
+  await t.test('my churches lists only the verified caller and needs no church header', async () => {
+    const r = await server.inject({
+      method: 'GET',
+      url: root + '/me/churches',
+      headers: { authorization: 'Bearer ' + (await token()), 'x-purpose-code': 'CHURCH_OPERATION' },
+    });
+    assert.equal(r.statusCode, 200);
+    assert.deepEqual(
+      r.json().items.map((x: { tenantId: string }) => x.tenantId),
+      [A],
+    );
+    const other = await server.inject({
+      method: 'GET',
+      url: root + '/me/churches',
+      headers: { authorization: 'Bearer ' + (await token('member')), 'x-purpose-code': 'CHURCH_OPERATION' },
+    });
+    assert.deepEqual(other.json().items, []);
+  });
+  await t.test('my churches requires a token, the purpose header and no query', async () => {
+    assert.equal((await server.inject({ method: 'GET', url: root + '/me/churches' })).statusCode, 401);
+    const auth = { authorization: 'Bearer ' + (await token()) };
+    assert.equal((await server.inject({ method: 'GET', url: root + '/me/churches', headers: auth })).statusCode, 403);
+    const q = await server.inject({
+      method: 'GET',
+      url: root + '/me/churches?tenant=' + B,
+      headers: { ...auth, 'x-purpose-code': 'CHURCH_OPERATION' },
+    });
+    assert.equal(q.statusCode, 400);
+  });
   await t.test('forged token denied', async () =>
     assert.equal((await get(root + '/memberships', 'not-a-jwt')).statusCode, 401),
   );

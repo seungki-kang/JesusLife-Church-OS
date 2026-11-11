@@ -36,13 +36,25 @@ export interface SessionPort {
   list(kind: Kind, page: PageRequest, roles: readonly string[]): Promise<ListRow[]>;
   manageList(kind: ManagedKind, page: ManagePageRequest): Promise<ListRow[]>;
 }
+/** One church the caller belongs to (S02). Roles are empty unless the membership is ACTIVE. */
+export type ChurchMembershipSummary = Readonly<{
+  tenantId: string;
+  name: string;
+  timezone: string;
+  membershipStatus: 'ACTIVE' | 'PENDING';
+  roles: readonly string[];
+}>;
 export interface StorePort {
   scoped<T>(scope: Scope, work: (session: SessionPort) => Promise<T>): Promise<T>;
+  myChurches(principal: Principal): Promise<ChurchMembershipSummary[]>;
   ready(): Promise<boolean>;
 }
 export interface AuditPort {
   record(event: { traceId: string; action: string; status: number }): void;
 }
+/** OIDC: a real provider. SYNTHETIC: local development keys only (see adapters/oidc/config.ts). */
+export type IdentityMode = 'OIDC' | 'SYNTHETIC';
+export const IDENTITY_MODE = Symbol('IDENTITY_MODE');
 export const IDENTITY = Symbol('IDENTITY'),
   STORE = Symbol('STORE'),
   AUDIT = Symbol('AUDIT');

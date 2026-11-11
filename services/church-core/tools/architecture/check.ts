@@ -30,7 +30,7 @@ const NODE_BUILTINS_FOR_CORE = new Set(['node:crypto']);
 export const ADAPTER_PACKAGES: Readonly<Record<string, readonly string[]>> = {
   http: ['@nestjs/common', '@nestjs/core', '@nestjs/platform-fastify', 'fastify', 'reflect-metadata', 'node:crypto'],
   postgres: ['pg'],
-  oidc: ['jose'],
+  oidc: ['jose', 'node:fs'],
 };
 const ALLOWED_SCHEMA = /^(church_[a-z]+|pg_catalog)$/;
 

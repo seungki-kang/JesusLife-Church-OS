@@ -47,10 +47,20 @@ jobs:
           r = json.loads(Path('.evidence/api-db-result.json').read_text())
           assert r['artifact'] == 'ChurchOS_church-core_active'
           assert r['runtime'] == 'PASS'
-          assert len(r['checks']) == 71
-          assert len(r['migration_hashes']) == 16
+          assert len(r['checks']) == 77
+          assert len(r['migration_hashes']) == 17
           assert all(c['status'] == 'PASS' for c in r['checks'])
           PYCODE
+      - name: Dev stack smoke (synthetic identity)
+        run: |
+          docker compose -f tools/dev/compose.yaml up --build -d
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:3000/health/ready && break; sleep 2; done
+          curl -si http://127.0.0.1:3000/health/ready | grep -i 'x-identity-mode: SYNTHETIC'
+          TOKEN_CMD="docker compose -f tools/dev/compose.yaml run --rm -T setup node dist/tools/synthetic-identity/cli.js token"
+          node tools/dev/smoke.mjs http://127.0.0.1:3000 "$($TOKEN_CMD synthetic-member --dir /keys)" "$($TOKEN_CMD synthetic-stranger --dir /keys)"
+      - name: Cleanup dev stack
+        if: always()
+        run: docker compose -f tools/dev/compose.yaml down --volumes --remove-orphans
       - name: Cleanup disposable containers
         if: always()
         run: docker compose -p church-core-ci -f tools/api-db/compose.yaml down --volumes --remove-orphans

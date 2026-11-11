@@ -23,6 +23,9 @@ class ResponseContracts(unittest.TestCase):
                       "timezone": "Asia/Seoul", "status": "PUBLISHED"},
             "Notice": {"id": uuid, "tenantId": uuid, "title": "Notice", "body": "Church event",
                        "audience": "ALL_MEMBERS", "publishAt": ts, "status": "PUBLISHED"},
+            # S02 my churches, shaped as PgStore.myChurches returns them.
+            "MyChurch": {"tenantId": uuid, "name": "Grace Church", "timezone": "Asia/Seoul",
+                         "membershipStatus": "ACTIVE", "roles": ["MEMBER", "TENANT_ADMIN"]},
             # COS-CHURCH-043 manage summaries, shaped as PgSession.manageList returns them.
             "ManagedNoticeSummary": {"id": uuid, "tenantId": uuid, "status": "DRAFT", "title": "Draft",
                                      "audience": "ALL_MEMBERS", "publishAt": ts, "expiresAt": None,

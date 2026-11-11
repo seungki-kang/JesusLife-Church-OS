@@ -53,6 +53,7 @@ const row = (id: string, extra: Record<string, unknown> = {}): ListRow => ({
 });
 const store: StorePort = {
   ready: async () => true,
+  myChurches: async () => [],
   scoped: async (scope, work) =>
     work({
       roles: async () =>
