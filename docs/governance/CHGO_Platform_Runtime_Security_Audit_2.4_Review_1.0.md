@@ -2,7 +2,7 @@
 
 Review date: 2026-10-17  
 Reviewed document: [`CHGO_Platform_Runtime_Security_Audit_2.4.md`](CHGO_Platform_Runtime_Security_Audit_2.4.md) (kept verbatim, SHA-256 `cdbf81cee975c3aabe3ee0e1d3a1c60390b39f8834dec42f703e79e39b0afe7b`)  
-Repository state at review: `main` = `9eda66f`; open [PR #1](https://github.com/seungki-kang/CHGO-Platform/pull/1) = `fix/b02-e5-ci-runtime` (`3affddf`, `d284f5a`)  
+Repository state at review: `main` = `9eda66f`; open [PR #1](https://github.com/seungki-kang/JesusLife-Church-OS/pull/1) = `fix/b02-e5-ci-runtime` (`3affddf`, `d284f5a`). This repository was then named `CHGO-Platform`. It was renamed `JesusLife-Church-OS` on 2026-10-17, and the old name now belongs to a different repository, so the link uses the current name.  
 Canonical/Governance meaning changes: none  
 Decision: **Audit 2.4 is accepted as a remediation plan, not as closure evidence.**
 
